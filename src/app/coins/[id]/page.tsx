@@ -16,7 +16,7 @@ const CoinDetailPage = async ({ params, searchParams }: Props) => {
 
   try {
     const response = await fetch(
-      `http://localhost:3000/api/coins/${id}?vs_currency=${vs_currency}`
+      `${process.env.NEXT_PUBLIC_API_URL}/api/coins/${id}?vs_currency=${vs_currency}`
     );
 
     if (!response.ok) {

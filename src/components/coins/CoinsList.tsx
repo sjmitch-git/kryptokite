@@ -16,7 +16,8 @@ const CoinsList = () => {
   useEffect(() => {
     const fetchCoins = async () => {
       try {
-        const response = await fetch("/api/coins");
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/coins`);
+
         if (!response.ok) {
           throw new Error("Failed to fetch coins list");
         }
