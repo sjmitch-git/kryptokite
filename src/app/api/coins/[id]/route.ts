@@ -5,10 +5,10 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const id = req.nextUrl.pathname.split("/").pop();
   const vs_currency = searchParams.get("vs_currency") || "usd";
-  const include_market_cap = searchParams.get("include_market_cap") || "false";
-  const include_24hr_vol = searchParams.get("include_24hr_vol") || "false";
-  const include_24hr_change = searchParams.get("include_24hr_change") || "false";
-  const include_last_updated_at = searchParams.get("include_last_updated_at") || "false";
+  const include_market_cap = true;
+  const include_24hr_vol = true;
+  const include_24hr_change = true;
+  const include_last_updated_at = true;
 
   if (!COIN_GECKO_TOKEN) {
     return NextResponse.json({ error: "CoinGecko API token is missing" }, { status: 500 });
@@ -26,6 +26,7 @@ export async function GET(req: NextRequest) {
     const data = await response.json();
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
+    console.error("Failed to fetch coin data:", error);
     return NextResponse.json(
       { error: `Failed to fetch price for coin with id ${id}` },
       { status: 500 }

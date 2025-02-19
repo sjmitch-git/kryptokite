@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { COINGECKO_API_URL, COIN_GECKO_TOKEN } from "@/lib/config";
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   if (!COIN_GECKO_TOKEN) {
     return NextResponse.json({ error: "CoinGecko API token is missing" }, { status: 500 });
   }
@@ -15,6 +15,7 @@ export async function GET(req: NextRequest) {
     const data = await response.json();
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
+    console.error("Failed to fetch supported currencies:", error);
     return NextResponse.json({ error: "Failed to fetch supported currencies" }, { status: 500 });
   }
 }

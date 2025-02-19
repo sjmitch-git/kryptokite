@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { COINGECKO_API_URL, COIN_GECKO_TOKEN } from "@/lib/config";
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   if (!COIN_GECKO_TOKEN) {
     return NextResponse.json({ error: "CoinGecko API token is missing" }, { status: 500 });
   }
@@ -12,8 +12,12 @@ export async function GET(req: NextRequest) {
       },
     });
     const data = await response.json();
-    return NextResponse.json(data, { status: 200 });
+    const res = NextResponse.json(data, { status: 200 });
+    res.headers.set("Cache-Control", "public, s-maxage=3600, stale-while-revalidate=59");
+
+    return res;
   } catch (error) {
+    console.error("Failed to fetch coins list:", error);
     return NextResponse.json({ error: "Failed to fetch coins list" }, { status: 500 });
   }
 }

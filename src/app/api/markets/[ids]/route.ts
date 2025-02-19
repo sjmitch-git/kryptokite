@@ -28,6 +28,7 @@ export async function GET(req: NextRequest) {
     const data = await response.json();
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
+    console.error("Failed to fetch coin market data", error);
     return NextResponse.json({ error: "Failed to fetch coin market data" }, { status: 500 });
   }
 }
