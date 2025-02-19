@@ -51,7 +51,12 @@ const CoinDetailPage = async ({ params, searchParams }: Props) => {
       <p>Market Cap: {coin[`${vs_currency}_market_cap`]}</p>
       <p>24h Volume: {coin[`${vs_currency}_24h_vol`]}</p>
       <p>24h Change: {coin[`${vs_currency}_24h_change`]}%</p>
-      <p>Last Updated: {new Date(coin.last_updated_at * 1000).toLocaleString()}</p>
+      <p>
+        Last Updated:{" "}
+        {typeof coin.last_updated_at === "number"
+          ? new Date(coin.last_updated_at * 1000).toLocaleString()
+          : "N/A"}
+      </p>
     </article>
   );
 };
