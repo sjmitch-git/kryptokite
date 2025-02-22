@@ -98,3 +98,23 @@ describe("API Coins Route with ID", () => {
     });
   });
 });
+
+describe("API Market Chart Route", () => {
+  it("should return market chart data for a specific coin ID", () => {
+    cy.request({
+      method: "GET",
+      url: "http://localhost:3000/api/coins/market_chart/bitcoin?vs_currency=usd&days=1",
+      headers: {
+        "x-cg-demo-api-key": Cypress.env("COIN_GECKO_TOKEN"),
+      },
+    }).then((response) => {
+      expect(response.status).to.eq(200);
+      expect(response.body).to.have.property("prices");
+      expect(response.body).to.have.property("market_caps");
+      expect(response.body).to.have.property("total_volumes");
+      expect(response.body.prices).to.be.an("array");
+      expect(response.body.market_caps).to.be.an("array");
+      expect(response.body.total_volumes).to.be.an("array");
+    });
+  });
+});

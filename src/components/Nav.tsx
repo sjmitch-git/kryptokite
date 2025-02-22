@@ -25,10 +25,20 @@ export default function Nav() {
         title="coins"
         tabIndex={pathname === "/coins" ? -1 : 0}
         className={`rounded-md text-light p-2 flex gap-2 items-center ${
-          pathname === "/saved" ? "bg-primary cursor-none" : "bg-dark hover:underline"
+          pathname === "/coins" ? "bg-primary cursor-none" : "bg-dark hover:underline"
         } focus-visible:outline-accent`}
       >
         <FaBookmark /> <span className="hidden md:inline-block">Coins</span>
+      </Link>
+      <Link
+        href="/mycoins"
+        title="My Coins"
+        tabIndex={pathname === "/mycoins" ? -1 : 0}
+        className={`rounded-md text-light p-2 flex gap-2 items-center ${
+          pathname === "/mycoins" ? "bg-primary cursor-none" : "bg-dark hover:underline"
+        } focus-visible:outline-accent`}
+      >
+        <FaBookmark /> <span className="hidden md:inline-block">My Coins</span>
       </Link>
     </nav>
   );

@@ -1,45 +1,56 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { Loading, Pagination, Alert, Input } from "@/lib/fluid";
+import { useCoins } from "@/lib/contexts/CoinsContext";
+import { useUser } from "@/lib/contexts/UserContext";
+import { FaStar } from "react-icons/fa";
 import { Coin } from "@/lib/types";
 
 const CoinsList = () => {
-  const [coins, setCoins] = useState<Coin[]>([]);
+  const { coins, loading, error } = useCoins();
+  const { addUserCoin, removeUserCoin, isCoinInCollection } = useUser();
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [page, setPage] = useState(1);
   const [perPage] = useState(10);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [filterText, setFilterText] = useState("");
 
   useEffect(() => {
-    const fetchCoins = async () => {
-      try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/coins`);
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch coins list");
-        }
-        const data = await response.json();
-        setCoins(data);
-      } catch (err: unknown) {
-        if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError("An unknown error occurred");
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCoins();
-  }, [perPage]);
+    const queryPage = parseInt(searchParams.get("page") || "1", 10);
+    if (!isNaN(queryPage) && queryPage > 0) {
+      setPage(queryPage);
+    }
+  }, [searchParams]);
 
   const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFilterText(event.target.value);
     setPage(1);
+    const query = new URLSearchParams({
+      ...Object.fromEntries(searchParams.entries()),
+      page: "1",
+    }).toString();
+    router.push(`${pathname}?${query}`);
+  };
+
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+    const query = new URLSearchParams({
+      ...Object.fromEntries(searchParams.entries()),
+      page: newPage.toString(),
+    }).toString();
+    router.push(`${pathname}?${query}`);
+  };
+
+  const handleToggleCoin = (coin: Coin) => {
+    if (isCoinInCollection(coin.id)) {
+      removeUserCoin(coin.id);
+    } else {
+      addUserCoin(coin);
+    }
   };
 
   const filteredCoins = coins.filter(
@@ -71,7 +82,10 @@ const CoinsList = () => {
           />
           <ul className="space-y-2">
             {currentCoins.map((coin) => (
-              <li key={coin.id} className="p-2 border border-gray-300">
+              <li
+                key={coin.id}
+                className="p-2 border border-gray-300 flex justify-between items-center text-lg"
+              >
                 <Link
                   href={{
                     pathname: `/coins/${coin.id}`,
@@ -80,6 +94,12 @@ const CoinsList = () => {
                 >
                   {coin.name} <small>({coin.symbol.toUpperCase()})</small>
                 </Link>
+                <button
+                  onClick={() => handleToggleCoin(coin)}
+                  className={`${isCoinInCollection(coin.id) ? "text-yellow-500" : "text-gray-500"}`}
+                >
+                  <FaStar className="h-6 w-6" />
+                </button>
               </li>
             ))}
           </ul>
@@ -89,7 +109,7 @@ const CoinsList = () => {
                 page={page.toString()}
                 results={filteredCoins.length}
                 range={perPage}
-                onChange={(newpage) => setPage(newpage)}
+                onChange={handlePageChange}
               />
             )}
           </div>

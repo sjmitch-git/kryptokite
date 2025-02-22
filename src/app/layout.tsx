@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { CoinsProvider } from "@/lib/contexts/CoinsContext";
+import { UserProvider } from "@/lib/contexts/UserContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,11 +31,15 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >
-        <Header />
-        <main className="flex-grow container mx-auto max-w-4xl md:py-8 md:px-4 lg:px-0">
-          {children}
-        </main>
-        <Footer />
+        <CoinsProvider>
+          <UserProvider>
+            <Header />
+            <main className="flex-grow container mx-auto max-w-4xl md:py-8 md:px-4 lg:px-0">
+              {children}
+            </main>
+            <Footer />
+          </UserProvider>
+        </CoinsProvider>
       </body>
     </html>
   );
