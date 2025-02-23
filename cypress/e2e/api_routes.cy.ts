@@ -2,7 +2,7 @@ describe("API Currencies Route", () => {
   it("should return supported currencies", () => {
     cy.request({
       method: "GET",
-      url: "http://localhost:3001/api/currencies",
+      url: "http://localhost:3000/api/currencies",
       headers: {
         "x-cg-demo-api-key": Cypress.env("COIN_GECKO_TOKEN"),
       },
@@ -17,7 +17,7 @@ describe("API Markets Route", () => {
   it("should return market data", () => {
     cy.request({
       method: "GET",
-      url: "http://localhost:3001/api/markets?vs_currency=usd&order=volume_desc",
+      url: "http://localhost:3000/api/markets?vs_currency=usd&order=volume_desc",
       headers: {
         "x-cg-demo-api-key": Cypress.env("COIN_GECKO_TOKEN"),
       },
@@ -30,7 +30,7 @@ describe("API Markets Route", () => {
   it("should return market data with specific parameters", () => {
     cy.request({
       method: "GET",
-      url: "http://localhost:3001/api/markets?vs_currency=gbp&order=market_cap_desc&per_page=50&page=2&sparkline=true",
+      url: "http://localhost:3000/api/markets?vs_currency=gbp&order=market_cap_desc&per_page=50&page=2&sparkline=true",
       headers: {
         "x-cg-demo-api-key": Cypress.env("COIN_GECKO_TOKEN"),
       },
@@ -45,7 +45,7 @@ describe("API Markets Route with IDs", () => {
   it("should return market data for specific coin IDs", () => {
     cy.request({
       method: "GET",
-      url: "http://localhost:3001/api/markets/bitcoin,ethereum?vs_currency=usd&order=volume_desc",
+      url: "http://localhost:3000/api/markets/bitcoin,ethereum?vs_currency=usd&order=volume_desc",
       headers: {
         "x-cg-demo-api-key": Cypress.env("COIN_GECKO_TOKEN"),
       },
@@ -64,7 +64,7 @@ describe("API Coins Route", () => {
   it("should return the list of coins", () => {
     cy.request({
       method: "GET",
-      url: "http://localhost:3001/api/coins",
+      url: "http://localhost:3000/api/coins",
       headers: {
         "x-cg-demo-api-key": Cypress.env("COIN_GECKO_TOKEN"),
       },
@@ -83,7 +83,7 @@ describe("API Coins Route with ID", () => {
   it("should return price data for a specific coin ID", () => {
     cy.request({
       method: "GET",
-      url: "http://localhost:3001/api/coins/bitcoin?vs_currency=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true&include_last_updated_at=true",
+      url: "http://localhost:3000/api/coins/bitcoin?vs_currency=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true&include_last_updated_at=true",
       headers: {
         "x-cg-demo-api-key": Cypress.env("COIN_GECKO_TOKEN"),
       },
@@ -103,7 +103,7 @@ describe("API Market Chart Route", () => {
   it("should return market chart data for a specific coin ID", () => {
     cy.request({
       method: "GET",
-      url: "http://localhost:3001/api/coins/market_chart/bitcoin?vs_currency=usd&days=1",
+      url: "http://localhost:3000/api/coins/market_chart/bitcoin?vs_currency=usd&days=1",
       headers: {
         "x-cg-demo-api-key": Cypress.env("COIN_GECKO_TOKEN"),
       },
