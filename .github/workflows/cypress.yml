@@ -20,14 +20,6 @@ jobs:
       - name: Build Next.js application
         run: npm run build
 
-      # - name: Start Next.js application
-      #  run: PORT=3000 npm start &
-      #  env:
-      #    NODE_ENV: production
-
-      #- name: Wait for Next.js application to be ready
-      #  run: npx wait-on http://localhost:3000
-
       - name: Cypress run
         # Uses the official Cypress GitHub action https://github.com/cypress-io/github-action
         uses: cypress-io/github-action@v6

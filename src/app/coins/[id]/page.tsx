@@ -1,31 +1,53 @@
+import { Metadata } from "next";
 import { Coin } from "@/lib/types";
+import { extractFirstSentence } from "@/lib/utils";
+import CoinDetail from "@/components/coins/CoinDetail";
 import { Alert } from "@/lib/fluid";
 import Hero from "@/components/Hero";
 
 type Props = {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ [key: string]: string }>;
 };
 
-const CoinDetailPage = async ({ params, searchParams }: Props) => {
+const fetchCoinData = async (id: string): Promise<Coin> => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/coins/${id}`);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch price for coin with id ${id}`);
+  }
+  const coin: Coin = await response.json();
+  return coin;
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
-  const { vs_currency, name } = await searchParams;
+  const coin = await fetchCoinData(id);
+
+  return {
+    title: `${coin.name} - Crypto currency details`,
+    description: extractFirstSentence(coin.description.en),
+    openGraph: {
+      title: `${coin.name} - Crypto currency details`,
+      description: extractFirstSentence(coin.description.en),
+      images: [
+        {
+          url: coin.image.large,
+          alt: `${coin.name} logo`,
+          width: 250,
+          height: 250,
+        },
+      ],
+    },
+  };
+}
+
+const CoinDetailPage = async ({ params }: Props) => {
+  const { id } = await params;
 
   let coin: Coin | null = null;
   let error: string | null = null;
 
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/coins/${id}?vs_currency=${vs_currency}`
-    );
-
-    if (!response.ok) {
-      throw new Error(`Failed to fetch price for coin with id ${id}`);
-    }
-
-    const data = await response.json();
-    coin = data[id];
-    console.log(data);
+    coin = await fetchCoinData(id);
   } catch (err: unknown) {
     if (err instanceof Error) {
       error = err.message;
@@ -44,19 +66,13 @@ const CoinDetailPage = async ({ params, searchParams }: Props) => {
 
   return (
     <article>
-      <Hero title={name} description="Page description" />
-      <p>
-        Current Price: {coin[vs_currency]} {vs_currency.toUpperCase()}
-      </p>
-      <p>Market Cap: {coin[`${vs_currency}_market_cap`]}</p>
-      <p>24h Volume: {coin[`${vs_currency}_24h_vol`]}</p>
-      <p>24h Change: {coin[`${vs_currency}_24h_change`]}%</p>
-      <p>
-        Last Updated:{" "}
-        {typeof coin.last_updated_at === "number"
-          ? new Date(coin.last_updated_at * 1000).toLocaleString()
-          : "N/A"}
-      </p>
+      <Hero
+        title={coin.name}
+        description={`${extractFirstSentence(coin.description.en)}`}
+        imgSrc={coin.image.large}
+      />
+
+      <CoinDetail coin={coin} />
     </article>
   );
 };

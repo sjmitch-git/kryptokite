@@ -118,3 +118,25 @@ describe("API Market Chart Route", () => {
     });
   });
 });
+
+describe("API Trending Search Route", () => {
+  it("should return trending search data", () => {
+    cy.request({
+      method: "GET",
+      url: "http://localhost:3000/api/trending_search",
+    }).then((response) => {
+      expect(response.status).to.eq(200);
+      expect(response.body).to.have.property("coins");
+      expect(response.body.coins).to.be.an("array");
+      expect(response.body.coins.length).to.be.greaterThan(0);
+      response.body.coins.forEach((coin: any) => {
+        expect(coin).to.have.property("item");
+        expect(coin.item).to.have.property("id");
+        expect(coin.item).to.have.property("name");
+        expect(coin.item).to.have.property("symbol");
+        expect(coin.item).to.have.property("market_cap_rank");
+        expect(coin.item).to.have.property("thumb");
+      });
+    });
+  });
+});

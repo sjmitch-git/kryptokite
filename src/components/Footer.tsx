@@ -2,7 +2,7 @@ import { MetaData } from "@/lib/config";
 
 export default function Footer() {
   return (
-    <footer className="bg-neutral-200 p-4 mt-8" dir="ltr">
+    <footer className="p-4 mt-8" dir="ltr">
       <div className="container mx-auto text-center space-y-4">
         <p className="text-sm" suppressHydrationWarning>
           &copy; {new Date().getFullYear()} {MetaData.defaultSitename}. All rights reserved.
@@ -18,6 +18,28 @@ export default function Footer() {
             {MetaData.defaultAuthor}
           </a>
         </p>
+        <div>
+          Built with:{" "}
+          <a
+            href="https://fluid-ui.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline"
+          >
+            Fluid UI
+          </a>
+        </div>
+        <div>
+          Powered by{" "}
+          <a
+            className="underline"
+            href="https://www.coingecko.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            CoinGecko API
+          </a>
+        </div>
       </div>
     </footer>
   );

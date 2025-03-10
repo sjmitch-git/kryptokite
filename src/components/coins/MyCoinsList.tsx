@@ -51,6 +51,7 @@ const MyCoinsList = () => {
   const startIndex = (page - 1) * perPage;
   const endIndex = startIndex + perPage;
   const currentCoins = filteredCoins.slice(startIndex, endIndex);
+  console.log("currentCoins", currentCoins);
 
   if (userCoins.length === 0) {
     return <Alert status="info" message="You have no coins in your collection." />;
@@ -74,7 +75,6 @@ const MyCoinsList = () => {
             <Link
               href={{
                 pathname: `/coins/${coin.id}`,
-                query: { vs_currency: "usd", name: coin.name },
               }}
             >
               {coin.name} <small>({coin.symbol.toUpperCase()})</small>

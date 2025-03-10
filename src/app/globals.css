@@ -25,3 +25,7 @@ body {
   color: var(--foreground);
   background: var(--background);
 }
+
+.alert a {
+  text-decoration: underline;
+}

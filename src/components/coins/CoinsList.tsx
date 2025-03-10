@@ -7,7 +7,7 @@ import { Loading, Pagination, Alert, Input } from "@/lib/fluid";
 import { useCoins } from "@/lib/contexts/CoinsContext";
 import { useUser } from "@/lib/contexts/UserContext";
 import { FaStar } from "react-icons/fa";
-import { Coin } from "@/lib/types";
+import { SimpleCoin } from "@/lib/types";
 
 const CoinsList = () => {
   const { coins, loading, error } = useCoins();
@@ -45,7 +45,7 @@ const CoinsList = () => {
     router.push(`${pathname}?${query}`);
   };
 
-  const handleToggleCoin = (coin: Coin) => {
+  const handleToggleCoin = (coin: SimpleCoin) => {
     if (isCoinInCollection(coin.id)) {
       removeUserCoin(coin.id);
     } else {
@@ -89,7 +89,6 @@ const CoinsList = () => {
                 <Link
                   href={{
                     pathname: `/coins/${coin.id}`,
-                    query: { vs_currency: "usd", name: coin.name },
                   }}
                 >
                   {coin.name} <small>({coin.symbol.toUpperCase()})</small>

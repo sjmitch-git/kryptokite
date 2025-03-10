@@ -1,10 +1,10 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import { Coin } from "@/lib/types";
+import { SimpleCoin } from "@/lib/types";
 
 type CoinsContextType = {
-  coins: Coin[];
+  coins: SimpleCoin[];
   loading: boolean;
   error: string | null;
 };
@@ -12,7 +12,7 @@ type CoinsContextType = {
 const CoinsContext = createContext<CoinsContextType | undefined>(undefined);
 
 export const CoinsProvider = ({ children }: { children: ReactNode }) => {
-  const [coins, setCoins] = useState<Coin[]>([]);
+  const [coins, setCoins] = useState<SimpleCoin[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
