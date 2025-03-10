@@ -10,7 +10,7 @@ type CoinDetailProps = {
 
 const CoinTabs = ({ coin }: CoinDetailProps) => {
   const { preferredCurrency } = useUser();
-  const labels = coin.market_data.sparkline_7d.price.map((_price, _index) => ``);
+  const labels = coin.market_data.sparkline_7d.price.map(() => ``);
   console.log("coin", coin);
 
   return (
