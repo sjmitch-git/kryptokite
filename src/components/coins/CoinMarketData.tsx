@@ -1,3 +1,5 @@
+"use client";
+
 import { Coin } from "@/lib/types";
 import { formatNumber } from "@/lib/utils";
 
