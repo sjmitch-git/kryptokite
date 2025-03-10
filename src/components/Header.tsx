@@ -1,5 +1,5 @@
-import React, { Suspense } from "react";
-import dynamic from "next/dynamic";
+import React from "react";
+//import dynamic from "next/dynamic";
 import Nav from "./Nav";
 import CurrencySelector from "./user/CurrencySelector";
 // import SelectCoin from "./coins/SelectCoin";

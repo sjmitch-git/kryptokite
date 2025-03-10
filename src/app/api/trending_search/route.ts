@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   const url = "https://api.coingecko.com/api/v3/search/trending";
   const options = { method: "GET", headers: { accept: "application/json" } };
 
