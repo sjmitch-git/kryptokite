@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { SimpleCoin } from "@/lib/types";
+import { coinIdsToRemove } from "@/lib/constants";
 
 type CoinsContextType = {
   coins: SimpleCoin[];
@@ -24,7 +25,11 @@ export const CoinsProvider = ({ children }: { children: ReactNode }) => {
           throw new Error("Failed to fetch coins list");
         }
         const data = await response.json();
-        setCoins(data);
+        const filteredData = data.filter((coin: SimpleCoin) => {
+          return !coinIdsToRemove.includes(coin.id);
+        });
+
+        setCoins(filteredData);
       } catch (err: unknown) {
         if (err instanceof Error) {
           setError(err.message);

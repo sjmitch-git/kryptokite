@@ -33,6 +33,10 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     localStorage.setItem("userCoins", JSON.stringify(userCoins));
   }, [userCoins]);
 
+  useEffect(() => {
+    localStorage.setItem("preferredCurrency", preferredCurrency);
+  }, [preferredCurrency]);
+
   const addUserCoin = (coin: SimpleCoin) => {
     setUserCoins((prevCoins) => [...prevCoins, coin]);
   };

@@ -34,7 +34,7 @@ export default function RootLayout({
         <CoinsProvider>
           <UserProvider>
             <Header />
-            <main className="flex-grow container mx-auto max-w-4xl md:py-8 md:px-4 lg:px-0">
+            <main className="flex-grow container mx-auto max-w-4xl py-4 md:py-8 px-0">
               {children}
             </main>
             <Footer />

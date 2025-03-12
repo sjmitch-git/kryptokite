@@ -8,5 +8,7 @@ export {
   Tabs,
   TwitterEmbed,
   LineChart,
-  Autocomplete
+  Autocomplete,
+  Dialog,
+  Button,
 } from "@smitch/fluid";

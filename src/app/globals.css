@@ -29,3 +29,11 @@ body {
 .alert a {
   text-decoration: underline;
 }
+
+.selectcoin-wrapper .label {
+  display: flex !important;
+}
+
+.selectcoin-wrapper .label > span {
+  display: none !important;
+}

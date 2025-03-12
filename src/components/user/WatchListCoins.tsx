@@ -7,7 +7,7 @@ import { Pagination, Alert, Input } from "@/lib/fluid";
 import { useUser } from "@/lib/contexts/UserContext";
 import { FaStar } from "react-icons/fa";
 
-const MyCoinsList = () => {
+const WatchListCoins = () => {
   const { userCoins, removeUserCoin } = useUser();
   const router = useRouter();
   const pathname = usePathname();
@@ -99,4 +99,4 @@ const MyCoinsList = () => {
   );
 };
 
-export default MyCoinsList;
+export default WatchListCoins;

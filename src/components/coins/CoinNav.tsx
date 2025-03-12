@@ -13,7 +13,7 @@ const CoinNav = ({ id }: CoinNavProps) => {
   const nextCoin = currentIndex < coins.length - 1 ? coins[currentIndex + 1] : null;
 
   return (
-    <nav className="flex justify-between text-xl">
+    <nav className="flex justify-between text-xl px-2 md:px-4">
       <div>
         {previousCoin && (
           <Link href={`/coins/${previousCoin.id}`}>

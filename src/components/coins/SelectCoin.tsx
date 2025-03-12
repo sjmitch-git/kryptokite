@@ -4,7 +4,11 @@ import { useRouter } from "next/navigation";
 import { useCoins } from "@/lib/contexts/CoinsContext";
 import { Autocomplete } from "@/lib/fluid";
 
-const SelectCoin = () => {
+type SelectCoinProps = {
+  setIsOpen: (isOpen: boolean) => void;
+};
+
+const SelectCoin = ({ setIsOpen }: SelectCoinProps) => {
   const { coins } = useCoins();
   const router = useRouter();
 
@@ -12,6 +16,7 @@ const SelectCoin = () => {
     const selectedCoin = coins.find((coin) => coin.name === value);
     if (selectedCoin) {
       router.push(`/coins/${selectedCoin.id}`);
+      setIsOpen(false);
     }
   };
 

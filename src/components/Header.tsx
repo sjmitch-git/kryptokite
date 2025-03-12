@@ -1,9 +1,6 @@
-import React from "react";
-//import dynamic from "next/dynamic";
 import Nav from "./Nav";
 import CurrencySelector from "./user/CurrencySelector";
-// import SelectCoin from "./coins/SelectCoin";
-// const SelectCoin = dynamic(() => import("./coins/SelectCoin"), { ssr: false });
+import SearchCoins from "./coins/SearchCoins";
 
 export default function Header() {
   return (
@@ -40,12 +37,9 @@ export default function Header() {
         </picture> */}
 
         <Nav />
-        <div className="flex items-center">
+        <div className="flex items-center gap-4">
           <CurrencySelector />
-          {/* <Suspense>
-            <SelectCoin />
-            <CurrencySelector />
-          </Suspense> */}
+          <SearchCoins />
         </div>
       </div>
     </header>
