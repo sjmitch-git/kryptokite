@@ -83,7 +83,7 @@ describe("API Coins Route with ID", () => {
   it("should return price data for a specific coin ID", () => {
     cy.request({
       method: "GET",
-      url: "http://localhost:3000/api/coins/bitcoin?vs_currency=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true&include_last_updated_at=true",
+      url: "http://localhost:3000/api/coins/bitcoin",
       headers: {
         "x-cg-demo-api-key": Cypress.env("COIN_GECKO_TOKEN"),
       },
