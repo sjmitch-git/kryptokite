@@ -89,12 +89,14 @@ describe("API Coins Route with ID", () => {
       },
     }).then((response) => {
       expect(response.status).to.eq(200);
-      expect(response.body).to.have.property("bitcoin");
-      expect(response.body.bitcoin).to.have.property("usd");
-      expect(response.body.bitcoin).to.have.property("usd_market_cap");
-      expect(response.body.bitcoin).to.have.property("usd_24h_vol");
-      expect(response.body.bitcoin).to.have.property("usd_24h_change");
-      expect(response.body.bitcoin).to.have.property("last_updated_at");
+      expect(response.body).to.have.property("id", "bitcoin");
+      expect(response.body).to.have.property("name", "Bitcoin");
+      expect(response.body).to.have.property("symbol", "btc");
+      expect(response.body).to.have.property("market_cap_rank").and.to.be.a("number");
+      expect(response.body).to.have.property("last_updated");
+      expect(response.body).to.have.property("market_data");
+      expect(response.body).to.have.property("image").and.to.be.an("object");
+      expect(response.body).to.have.property("links").and.to.be.an("object");
     });
   });
 });
