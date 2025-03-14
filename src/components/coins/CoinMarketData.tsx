@@ -46,7 +46,21 @@ const CoinMarketData = ({ coin, preferredCurrency }: CoinDetailProps) => {
             <td>{coin.market_data.price_change_percentage_24h} %</td>
           </tr>
         )}
-
+        {coin.market_data.market_cap[preferredCurrency] !== null && (
+          <tr>
+            <th className="text-left pr-4 font-semibold">Market Cap:</th>
+            <td>
+              {coin.market_data.market_cap[preferredCurrency].toLocaleString()}{" "}
+              {preferredCurrency.toUpperCase()}
+            </td>
+          </tr>
+        )}
+        {coin.market_data.market_cap_change_percentage_24h !== null && (
+          <tr>
+            <th className="text-left pr-4 font-semibold">Market Cap 24h Change:</th>
+            <td>{coin.market_data.market_cap_change_percentage_24h} %</td>
+          </tr>
+        )}
         {coin.sentiment_votes_up_percentage !== null && (
           <tr>
             <th className="text-left pr-4 font-semibold">Sentiment Up:</th>

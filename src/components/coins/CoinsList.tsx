@@ -5,20 +5,16 @@ import { useState, useEffect } from "react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { Loading, Pagination, Alert, Input } from "@/lib/fluid";
 import { useCoins } from "@/lib/contexts/CoinsContext";
-import { useUser } from "@/lib/contexts/UserContext";
-import { FaStar } from "react-icons/fa";
-import { SimpleCoin } from "@/lib/types";
 
 const CoinsList = () => {
   const { coins, loading, error } = useCoins();
-  const { addUserCoin, removeUserCoin, isCoinInCollection } = useUser();
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [page, setPage] = useState(1);
   const [perPage] = useState(10);
   const [filterText, setFilterText] = useState("");
-
+  console.log("coins", coins, coins.length);
   useEffect(() => {
     const queryPage = parseInt(searchParams.get("page") || "1", 10);
     if (!isNaN(queryPage) && queryPage > 0) {
@@ -43,14 +39,6 @@ const CoinsList = () => {
       page: newPage.toString(),
     }).toString();
     router.push(`${pathname}?${query}`);
-  };
-
-  const handleToggleCoin = (coin: SimpleCoin) => {
-    if (isCoinInCollection(coin.id)) {
-      removeUserCoin(coin.id);
-    } else {
-      addUserCoin(coin);
-    }
   };
 
   const filteredCoins = coins.filter(
@@ -84,21 +72,16 @@ const CoinsList = () => {
             {currentCoins.map((coin) => (
               <li
                 key={coin.id}
-                className="p-2 border border-gray-300 flex justify-between items-center text-lg"
+                className="p-2 border relative border-gray-300 flex justify-between items-center text-xl"
               >
                 <Link
                   href={{
                     pathname: `/coins/${coin.id}`,
                   }}
+                  className="stretched-link"
                 >
                   {coin.name} <small>({coin.symbol.toUpperCase()})</small>
                 </Link>
-                <button
-                  onClick={() => handleToggleCoin(coin)}
-                  className={`${isCoinInCollection(coin.id) ? "text-yellow-500" : "text-gray-500"}`}
-                >
-                  <FaStar className="h-6 w-6" />
-                </button>
               </li>
             ))}
           </ul>

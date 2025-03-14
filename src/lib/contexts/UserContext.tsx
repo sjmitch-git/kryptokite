@@ -10,6 +10,7 @@ type UserContextType = {
   addUserCoin: (coin: SimpleCoin) => void;
   removeUserCoin: (coinId: string) => void;
   isCoinInCollection: (coinId: string) => boolean;
+  loadingCoins: boolean;
 };
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -17,8 +18,10 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [userCoins, setUserCoins] = useState<SimpleCoin[]>([]);
   const [preferredCurrency, setPreferredCurrency] = useState<string>("usd");
+  const [loadingCoins, setLoadingCoins] = useState<boolean>(true);
 
   useEffect(() => {
+    setLoadingCoins(true);
     const storedCoins = localStorage.getItem("userCoins");
     if (storedCoins) {
       setUserCoins(JSON.parse(storedCoins));
@@ -27,6 +30,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     if (storedCurrency) {
       setPreferredCurrency(storedCurrency);
     }
+    setLoadingCoins(false);
   }, []);
 
   useEffect(() => {
@@ -58,6 +62,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         addUserCoin,
         removeUserCoin,
         isCoinInCollection,
+        loadingCoins,
       }}
     >
       {children}

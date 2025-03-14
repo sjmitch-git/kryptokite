@@ -4,4 +4,11 @@ export const coinIdsToRemove = [
   "0vix-protocol",
   "movex-token",
   "aesirx",
+  "sendcrypto",
+  "all-in-one-wallet",
+  "solayer-usd",
 ];
+
+export const themeColors = {
+  primary: "#f27d0b",
+};

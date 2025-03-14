@@ -1,3 +1,5 @@
+"use client";
+
 import { Coin } from "@/lib/types";
 import CoinThumb from "@/components/ui/CoinThumb";
 import { useUser } from "@/lib/contexts/UserContext";
@@ -26,51 +28,48 @@ const CoinSummary = ({ coin }: Props) => {
           {coin.market_cap_rank > 0 && <th>Rank</th>}
           <th></th>
           <th></th>
-          <th className="text-right p-4">Price</th>
-          {coin.market_data.market_cap[preferredCurrency] > 0 && (
-            <th className="text-right p-4">Market Cap</th>
+          <th className="text-center p-4">Price</th>
+          {coin.market_data.price_change_percentage_24h && (
+            <th
+              className={`text-center p-4 ${
+                coin.market_data.price_change_percentage_24h < 0 ? "text-red-500" : "text-green-500"
+              }`}
+            >
+              24h Change
+            </th>
           )}
-          <th className="text-right p-4">Total Volume</th>
+          {coin.market_data.total_volume[preferredCurrency] > 0 && (
+            <th className="text-center p-4">24h Volume</th>
+          )}
           <th></th>
         </tr>
       </thead>
       <tbody>
-        <tr className="bg-white">
+        <tr className="bg-white shadow">
           {coin.market_cap_rank > 0 && <td className="text-center p-4">#{coin.market_cap_rank}</td>}
           <td className="hidden md:table-cell text-center p-4">
             <CoinThumb src={coin.image.small} alt={coin.name} size={50} />
           </td>
           <td className="text-left p-4 text-xl font-semibold">
-            {coin.links.homepage.length > 0 ? (
-              <a
-                href={coin.links.homepage[0]}
-                className="text-blue-500 hover:underline"
-                target="_blank"
-                rel="noreferrer"
-                title="Visit the official website. Opens in new tab."
-              >
-                {coin.name}
-              </a>
-            ) : (
-              <span>{coin.name}</span>
-            )}{" "}
-            <sup className="font-normal">{coin.symbol.toUpperCase()}</sup>
+            <span>{coin.name}</span>{" "}
+            <sup className="font-normal">({coin.symbol.toUpperCase()})</sup>
           </td>
-          <td className="text-right p-4 font-semibold">
+          <td className="text-center p-4 font-semibold">
             {formatNumber(coin.market_data.current_price[preferredCurrency])}
           </td>
-          {coin.market_data.market_cap[preferredCurrency] > 0 && (
-            <td className="hidden md:table-cell text-right p-4">
-              {coin.market_data.market_cap[preferredCurrency].toLocaleString()}
+          {coin.market_data.price_change_percentage_24h && (
+            <td className="hidden md:table-cell text-center p-4">
+              {coin.market_data.price_change_percentage_24h.toFixed(4)} %
             </td>
           )}
           {coin.market_data.total_volume[preferredCurrency] > 0 && (
-            <td className="hidden md:table-cell text-right p-4">
+            <td className="hidden md:table-cell text-center p-4">
               {coin.market_data.total_volume[preferredCurrency].toLocaleString()}
             </td>
           )}
           <td className="text-right p-4">
             <button
+              suppressHydrationWarning={true}
               onClick={() => handleToggleCoin(coin)}
               className={`${isCoinInCollection(coin.id) ? "text-yellow-500" : "text-gray-500"}`}
             >

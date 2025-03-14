@@ -28,6 +28,7 @@ export type Coin = SimpleCoin & {
     en: string;
   };
   market_data: {
+    market_cap_change_percentage_24h: number;
     current_price: {
       [key: string]: number;
     };
@@ -50,6 +51,30 @@ export type Coin = SimpleCoin & {
     price_change_percentage_60d: number;
     price_change_percentage_200d: number;
     price_change_percentage_1y: number;
+    price_change_1h_in_currency: {
+      [key: string]: number;
+    };
+    price_change_24h_in_currency: {
+      [key: string]: number;
+    };
+    price_change_7d_in_currency: {
+      [key: string]: number;
+    };
+    price_change_14d_in_currency: {
+      [key: string]: number;
+    };
+    price_change_30d_in_currency: {
+      [key: string]: number;
+    };
+    price_change_60d_in_currency: {
+      [key: string]: number;
+    };
+    price_change_200d_in_currency: {
+      [key: string]: number;
+    };
+    price_change_1y_in_currency: {
+      [key: string]: number;
+    };
     sparkline_7d: {
       price: number[];
     };
@@ -67,4 +92,13 @@ export type Coin = SimpleCoin & {
     };
     subreddit_url: string;
   };
+};
+
+export type CoinDetails = SimpleCoin & {
+  image: string;
+  current_price: number;
+  market_cap_rank: number;
+  total_volume: number;
+  price_change_percentage_24h: number;
+  last_updated: string;
 };

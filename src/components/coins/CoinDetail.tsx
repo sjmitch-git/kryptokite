@@ -4,6 +4,7 @@ import { Alert } from "@/lib/fluid";
 import { Coin } from "@/lib/types";
 import CoinNav from "@/components/coins/CoinNav";
 import CoinTabs from "@/components/coins/CoinTabs";
+import GraphTabs from "@/components/coins/GraphTabs";
 import CoinSummary from "@/components/coins/CoinSummary";
 
 type CoinDetailProps = {
@@ -18,6 +19,7 @@ const CoinDetail = ({ coin }: CoinDetailProps) => {
       )}
       <CoinSummary coin={coin} />
       <CoinTabs coin={coin} />
+      <GraphTabs coin={coin} />
       <hr className="my-8" />
       <CoinNav id={coin.id} />
     </div>

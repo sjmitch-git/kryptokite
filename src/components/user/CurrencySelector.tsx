@@ -17,16 +17,22 @@ const CurrencySelector = () => {
         }
         const data = await response.json();
         setCurrencies(data);
+        localStorage.setItem("currencies", JSON.stringify(data));
       } catch (error) {
         console.error("Failed to fetch supported currencies:", error);
       }
     };
 
-    fetchCurrencies();
+    const storedCurrencies = localStorage.getItem("currencies");
+    if (storedCurrencies) {
+      setCurrencies(JSON.parse(storedCurrencies));
+    } else {
+      fetchCurrencies();
+    }
   }, []);
 
   return (
-    <div>
+    <div suppressHydrationWarning={true}>
       <Select
         className="uppercase border-neutral"
         name="currency"

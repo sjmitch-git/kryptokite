@@ -20,7 +20,7 @@ const SearchCoins = () => {
         titleBold={true}
         onClose={() => setIsOpen(false)}
       >
-        <div className="p-4 selectcoin-wrapper">
+        <div className="p-4 selectcoin-wrapper" suppressHydrationWarning={true}>
           <SelectCoin setIsOpen={setIsOpen} />
         </div>
       </Dialog>

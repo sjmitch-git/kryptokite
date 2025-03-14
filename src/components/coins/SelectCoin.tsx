@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useCoins } from "@/lib/contexts/CoinsContext";
 import { Autocomplete } from "@/lib/fluid";
@@ -11,14 +12,19 @@ type SelectCoinProps = {
 const SelectCoin = ({ setIsOpen }: SelectCoinProps) => {
   const { coins } = useCoins();
   const router = useRouter();
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const handleSelect = (value: string) => {
-    const selectedCoin = coins.find((coin) => coin.name === value);
-    if (selectedCoin) {
-      router.push(`/coins/${selectedCoin.id}`);
-      setIsOpen(false);
-    }
-  };
+  useEffect(() => {
+    const searchCoins = setTimeout(() => {
+      const selectedCoin = coins.find((coin) => coin.name === searchTerm);
+      if (selectedCoin) {
+        router.push(`/coins/${selectedCoin.id}`);
+        setIsOpen(false);
+      }
+    }, 2000);
+
+    return () => clearTimeout(searchCoins);
+  }, [searchTerm]);
 
   return (
     <Autocomplete
@@ -28,7 +34,7 @@ const SelectCoin = ({ setIsOpen }: SelectCoinProps) => {
       autocomplete="coin-name"
       placeholder="Search for a coin"
       label=""
-      onChange={(e) => handleSelect(e.target.value)}
+      onChange={(e) => setSearchTerm(e.target.value)}
     />
   );
 };

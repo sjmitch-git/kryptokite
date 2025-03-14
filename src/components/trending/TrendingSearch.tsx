@@ -49,7 +49,7 @@ const TrendingSearch = () => {
   if (loading) {
     return (
       <div className="flex justify-center">
-        <Loading />
+        <Loading loadingColor="info" />
       </div>
     );
   }
@@ -67,22 +67,22 @@ const TrendingSearch = () => {
         {trendingCoins.map((coin) => (
           <li
             key={coin.item.id}
-            className="flex justify-between items-center space-x-2 border border-gray-300 p-2 text-lg bg-white"
+            className="flex justify-between items-center space-x-2 shadow p-4 text-xl bg-white"
           >
             <div className="flex items-center space-x-2">
-              {/* <img src={coin.item.thumb} alt={coin.item.name} width={64} height={64} /> */}
+              <div className="w-12">#{coin.item.market_cap_rank}</div>
               <CoinThumb src={coin.item.thumb} alt={coin.item.name} size={64} />
-              <div className="flex flex-col">
+              <div className="flex">
                 <Link
                   href={{
                     pathname: `/coins/${coin.item.id}`,
                   }}
+                  title="See more dtails about this coin"
+                  className="text-blue-500 hover:underline font-semibold"
                 >
-                  {coin.item.name} <sup>({coin.item.symbol.toUpperCase()})</sup>
-                </Link>
-                <small>
-                  <span>Rank: {coin.item.market_cap_rank}</span>
-                </small>
+                  {coin.item.name}
+                </Link>{" "}
+                <sup className="text-sm">({coin.item.symbol.toUpperCase()})</sup>
               </div>
             </div>
             <div className="flex items-center space-x-4">

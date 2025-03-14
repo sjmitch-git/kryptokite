@@ -23,10 +23,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const coin = await fetchCoinData(id);
 
   return {
-    title: `${coin.name} - Crypto currency details`,
+    title: `${coin.name} - cryptocurrency details`,
     description: extractFirstSentence(coin.description.en),
     openGraph: {
-      title: `${coin.name} - Crypto currency details`,
+      title: `${coin.name} - cryptocurrency details`,
       description: extractFirstSentence(coin.description.en),
       images: [
         {
