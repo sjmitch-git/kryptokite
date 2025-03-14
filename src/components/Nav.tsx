@@ -12,8 +12,8 @@ export default function Nav() {
   const pathname = usePathname();
 
   return (
-    <div className="flex items-center gap-4">
-      <nav className="flex gap-4">
+    <div className="flex items-center gap-2 md:gap-4">
+      <nav className="flex gap-2 md:gap-4">
         <Link
           href="/coins"
           title="coins"

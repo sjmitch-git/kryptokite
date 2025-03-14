@@ -6,7 +6,7 @@ import WatchListCoins from "@/components/user/WatchListCoins";
 
 const title = "Watchlist";
 const description =
-  "Keep track of your favorite cryptocurrencies in one place. View real-time data on prices, market caps, trading volumes, and price changes. Stay updated with the latest trends and make informed decisions about your investments.";
+  "Keep track of your favourite cryptocurrencies in one place. View real-time data on prices, market caps, trading volumes, and price changes. Stay updated with the latest trends and make informed decisions about your investments.";
 
 export const metadata: Metadata = {
   title: title,

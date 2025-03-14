@@ -24,7 +24,7 @@ const SelectCoin = ({ setIsOpen }: SelectCoinProps) => {
     }, 2000);
 
     return () => clearTimeout(searchCoins);
-  }, [searchTerm, coins, router, setIsOpen]);
+  }, [searchTerm]);
 
   return (
     <Autocomplete

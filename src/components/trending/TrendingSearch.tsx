@@ -59,18 +59,18 @@ const TrendingSearch = () => {
   }
 
   return (
-    <div className="w-full space-y-4 border border-gray-300 p-4">
+    <div className="w-full space-y-4 md:border border-gray-300 p-2 md:p-4">
       <Heading level={3}>Trending Search Coins</Heading>
       <p>Top {trendingCoins.length} trending searched for coins</p>
       <p>Click the star icon to add or remove from your collection</p>
-      <ul className="space-y-2">
+      <ul className="md:space-y-2">
         {trendingCoins.map((coin) => (
           <li
             key={coin.item.id}
-            className="flex justify-between items-center space-x-2 shadow p-4 text-xl bg-white"
+            className="flex justify-between items-center space-x-2 shadow p-2 md:p-4 md:text-xl bg-white border-b border-neutral"
           >
             <div className="flex items-center space-x-2">
-              <div className="w-12">#{coin.item.market_cap_rank}</div>
+              <div className="w-12 hidden md:block">#{coin.item.market_cap_rank}</div>
               <CoinThumb src={coin.item.thumb} alt={coin.item.name} size={64} />
               <div className="flex">
                 <Link
@@ -82,12 +82,12 @@ const TrendingSearch = () => {
                 >
                   {coin.item.name}
                 </Link>{" "}
-                <sup className="text-sm">({coin.item.symbol.toUpperCase()})</sup>
+                <sup className="text-sm hidden md:inline">({coin.item.symbol.toUpperCase()})</sup>
               </div>
             </div>
             <div className="flex items-center space-x-4">
               <img
-                className="bg-white border border-gray-300"
+                className="bg-white border border-gray-300 hidden md:inline-block"
                 src={coin.item.data.sparkline}
                 alt={`${coin.item.name} sparkline`}
                 title="Price change over the last 7d"

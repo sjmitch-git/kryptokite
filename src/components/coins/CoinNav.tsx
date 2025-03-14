@@ -13,11 +13,11 @@ const CoinNav = ({ id }: CoinNavProps) => {
   const nextCoin = currentIndex < coins.length - 1 ? coins[currentIndex + 1] : null;
 
   return (
-    <nav className="flex justify-between text-xl px-2 md:px-4">
+    <nav className="flex justify-between text-base md:text-xl px-2 md:px-4">
       <div>
         {previousCoin && (
           <Link href={`/coins/${previousCoin.id}`}>
-            <span className="text-blue-500 hover:underline flex items-center gap-x-4">
+            <span className="text-blue-500 hover:underline flex items-center gap-x-2 md:gap-x-4">
               <FaArrowLeft /> {previousCoin.name}
             </span>
           </Link>
@@ -26,7 +26,7 @@ const CoinNav = ({ id }: CoinNavProps) => {
       <div>
         {nextCoin && (
           <Link href={`/coins/${nextCoin.id}`}>
-            <span className="text-blue-500 hover:underline flex items-center gap-x-4">
+            <span className="text-blue-500 hover:underline flex items-center gap-x-2 md:gap-x-4">
               {nextCoin.name} <FaArrowRight />
             </span>
           </Link>

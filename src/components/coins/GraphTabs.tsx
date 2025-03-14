@@ -21,7 +21,7 @@ const GraphTabs = ({ coin }: CoinDetailProps) => {
       contentBorder={false}
       minimalTabs={true}
     >
-      <div id="graph1" title="7d Price" className="bg-white p-4">
+      <div id="graph1" title="7d Price" className="bg-white p-1 md:p-4">
         {coin.market_data.sparkline_7d.price.length !== 0 ? (
           <Chart
             data={coin.market_data.sparkline_7d.price}
@@ -33,7 +33,7 @@ const GraphTabs = ({ coin }: CoinDetailProps) => {
         )}
       </div>
 
-      <div id="graph2" title="1y Price" className="bg-white p-4">
+      <div id="graph2" title="1y Price" className="bg-white p-1 md:p-4">
         <PriceChangeChart
           priceChangeData={{
             price_24h: coin.market_data.price_change_percentage_24h,

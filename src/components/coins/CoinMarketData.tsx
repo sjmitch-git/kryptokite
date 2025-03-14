@@ -17,7 +17,7 @@ const CoinMarketData = ({ coin, preferredCurrency }: CoinDetailProps) => {
   }, [coin.last_updated]);
 
   return (
-    <table className="w-auto text-right text-lg mb-8">
+    <table className="w-auto text-right md:text-lg mb-8">
       <tbody>
         <tr>
           <th className="text-left pr-4 font-semibold">Current Price:</th>
@@ -40,6 +40,12 @@ const CoinMarketData = ({ coin, preferredCurrency }: CoinDetailProps) => {
             {preferredCurrency.toUpperCase()}
           </td>
         </tr>
+        {coin.market_cap_rank !== null && (
+          <tr>
+            <th className="text-left pr-4 font-semibold">Market Cap Rank:</th>
+            <td>{coin.market_cap_rank}</td>
+          </tr>
+        )}
         {coin.market_data.price_change_percentage_24h !== null && (
           <tr>
             <th className="text-left pr-4 font-semibold">24h Change:</th>

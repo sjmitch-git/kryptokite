@@ -6,7 +6,7 @@ type CoinLinkslProps = {
 
 const CoinLinks = ({ coin }: CoinLinkslProps) => {
   return (
-    <table className="w-auto text-right text-lg mb-8">
+    <table className="w-auto text-right md:text-lg mb-8">
       <tbody>
         {coin.links.homepage[0] && (
           <tr>

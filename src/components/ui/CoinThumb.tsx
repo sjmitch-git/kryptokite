@@ -5,7 +5,7 @@ interface CoinThumbProps {
 }
 
 const CoinThumb = ({ src, alt, size }: CoinThumbProps) => {
-  return <img src={src} alt={alt} width={size} height={size} />;
+  return <img src={src} alt={alt} width={size} height={size} className="hidden md:inline-block" />;
 };
 
 export default CoinThumb;

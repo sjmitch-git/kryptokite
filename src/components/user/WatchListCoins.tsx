@@ -38,7 +38,7 @@ const WatchListCoins = () => {
       }
     };
     fetchCoinData();
-  }, [userCoins, preferredCurrency, coinData.length]);
+  }, [userCoins]);
 
   useEffect(() => {
     const queryPage = parseInt(searchParams.get("page") || "1", 10);
@@ -113,7 +113,7 @@ const WatchListCoins = () => {
           <Alert message="No coins in your collection." />
         </div>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-4 p-2 md:p-0">
           <Input
             type="search"
             placeholder="Filter coins"
@@ -136,11 +136,11 @@ const WatchListCoins = () => {
             <tbody>
               {currentCoins.map((coin) => (
                 <tr key={coin.id} className="bg-white border-b border-neutral">
-                  <td className="text-right p-4">#{coin.market_cap_rank}</td>
+                  <td className="text-right hidden md:table-cell p-4">#{coin.market_cap_rank}</td>
                   <td className="hidden md:table-cell text-center p-4">
                     <CoinThumb src={coin.image} alt={coin.name} size={50} />
                   </td>
-                  <td className="text-left p-4 text-xl font-semibold">
+                  <td className="text-left p-2 md:p-4 text-xl font-semibold">
                     <Link
                       href={{
                         pathname: `/coins/${coin.id}`,
@@ -150,20 +150,24 @@ const WatchListCoins = () => {
                     >
                       {coin.name}
                     </Link>{" "}
-                    <sup className="font-normal">({coin.symbol.toUpperCase()})</sup>
+                    <sup className="font-normal hidden md:inline">
+                      ({coin.symbol.toUpperCase()})
+                    </sup>
                   </td>
-                  <td className="text-right p-4 font-semibold">
+                  <td className="text-right p-2 md:p-4 font-semibold">
                     {formatNumber(coin.current_price)}
                   </td>
                   <td
-                    className={`text-right p-4 ${
+                    className={`text-right p-4 hidden md:table-cell ${
                       coin.price_change_percentage_24h < 0 ? "text-red-500" : "text-green-500"
                     }`}
                   >
                     {coin.price_change_percentage_24h.toFixed(2)} %
                   </td>
-                  <td className="text-right p-4">{coin.total_volume.toLocaleString()}</td>
-                  <td className="text-right p-4">
+                  <td className="text-right p-4 hidden md:table-cell">
+                    {coin.total_volume.toLocaleString()}
+                  </td>
+                  <td className="text-right p-2 md:p-4">
                     <button
                       suppressHydrationWarning={true}
                       onClick={() => openDialog(coin.id)}
@@ -178,7 +182,7 @@ const WatchListCoins = () => {
             </tbody>
             <tfoot>
               <tr>
-                <td colSpan={7} className="text-left text-sm pt-4">
+                <td colSpan={7} className="text-left text-sm pl-2 md:pl-0 pt-4">
                   Note: Currency in {preferredCurrency.toUpperCase()}
                 </td>
               </tr>

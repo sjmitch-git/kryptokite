@@ -46,28 +46,30 @@ const CoinSummary = ({ coin }: Props) => {
       </thead>
       <tbody>
         <tr className="bg-white shadow">
-          {coin.market_cap_rank > 0 && <td className="text-center p-4">#{coin.market_cap_rank}</td>}
+          {coin.market_cap_rank > 0 && (
+            <td className="hidden md:table-cell text-center p-4">#{coin.market_cap_rank}</td>
+          )}
           <td className="hidden md:table-cell text-center p-4">
             <CoinThumb src={coin.image.small} alt={coin.name} size={50} />
           </td>
-          <td className="text-left p-4 text-xl font-semibold">
+          <td className="text-left p-2 md:p-4 text-xl font-semibold">
             <span>{coin.name}</span>{" "}
-            <sup className="font-normal">({coin.symbol.toUpperCase()})</sup>
+            <sup className="font-normal hidden md:inline">({coin.symbol.toUpperCase()})</sup>
           </td>
-          <td className="text-center p-4 font-semibold">
+          <td className="text-center p-2 md:p-4 font-semibold">
             {formatNumber(coin.market_data.current_price[preferredCurrency])}
           </td>
           {coin.market_data.price_change_percentage_24h && (
-            <td className="hidden md:table-cell text-center p-4">
+            <td className="hidden md:table-cell text-center p-2 md:p-4">
               {coin.market_data.price_change_percentage_24h.toFixed(4)} %
             </td>
           )}
           {coin.market_data.total_volume[preferredCurrency] > 0 && (
-            <td className="hidden md:table-cell text-center p-4">
+            <td className="hidden md:table-cell text-center p-2 md:p-4">
               {coin.market_data.total_volume[preferredCurrency].toLocaleString()}
             </td>
           )}
-          <td className="text-right p-4">
+          <td className="text-right p-2 md:p-4">
             <button
               suppressHydrationWarning={true}
               onClick={() => handleToggleCoin(coin)}
@@ -80,7 +82,7 @@ const CoinSummary = ({ coin }: Props) => {
       </tbody>
       <tfoot>
         <tr>
-          <td colSpan={7} className="text-left text-sm pt-4">
+          <td colSpan={7} className="text-left text-sm px-2 pt-4">
             Note: Currency in {preferredCurrency.toUpperCase()}
           </td>
         </tr>

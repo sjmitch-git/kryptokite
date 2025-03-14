@@ -14,7 +14,7 @@ const CoinsList = () => {
   const [page, setPage] = useState(1);
   const [perPage] = useState(10);
   const [filterText, setFilterText] = useState("");
-  console.log("coins", coins, coins.length);
+
   useEffect(() => {
     const queryPage = parseInt(searchParams.get("page") || "1", 10);
     if (!isNaN(queryPage) && queryPage > 0) {
@@ -55,12 +55,12 @@ const CoinsList = () => {
     <div className="space-y-4">
       {loading ? (
         <div className="flex justify-center">
-          <Loading />
+          <Loading loadingColor="info" />
         </div>
       ) : error ? (
         <Alert status="error" message={error} />
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-4 px-2 md:px-0">
           <Input
             type="search"
             placeholder="Filter coins"

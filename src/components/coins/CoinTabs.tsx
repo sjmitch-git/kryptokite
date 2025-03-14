@@ -24,15 +24,15 @@ const CoinTabs = ({ coin }: CoinDetailProps) => {
         contentBorder={false}
         minimalTabs={true}
       >
-        <div id="tab1" title="Market" className="bg-white p-4">
+        <div id="tab1" title="Market" className="bg-white p-2 md:p-4">
           <CoinMarketData coin={coin} preferredCurrency={preferredCurrency} />
         </div>
 
-        <div id="tab2" title="Info" className="bg-white p-4">
+        <div id="tab2" title="Info" className="bg-white p-2 md:p-4">
           <div>
             <Heading level={3}>{coin.name}</Heading>
             <CoinLinks coin={coin} />
-            {coin.description.en && <p className="text-lg max-w-prose">{coin.description.en}</p>}
+            {coin.description.en && <p className="md:text-lg max-w-prose">{coin.description.en}</p>}
           </div>
         </div>
 
