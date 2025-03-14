@@ -38,7 +38,7 @@ const WatchListCoins = () => {
       }
     };
     fetchCoinData();
-  }, [userCoins]);
+  }, [userCoins, preferredCurrency, coinData.length]);
 
   useEffect(() => {
     const queryPage = parseInt(searchParams.get("page") || "1", 10);
@@ -97,7 +97,6 @@ const WatchListCoins = () => {
   const startIndex = (page - 1) * perPage;
   const endIndex = startIndex + perPage;
   const currentCoins = filteredCoins.slice(startIndex, endIndex);
-  console.log("currentCoins", currentCoins);
 
   if (loadingCoins) {
     return (
