@@ -8,7 +8,7 @@ export default function Header() {
       <div className="container flex justify-between items-center">
         <NavBar
           brand={MetaData.defaultSitename}
-          brandSrc={`${process.env.NEXT_PUBLIC_API_URL}/icon.png`}
+          brandSrc={`${process.env.NEXT_PUBLIC_API_URL}icon.png`}
           links={Links}
           className="bg-[#f27d0b] p-2"
           btnBackground="light"

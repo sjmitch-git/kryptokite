@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -29,7 +30,7 @@ export const metadata: Metadata = {
     description: MetaData.defaultDescription,
     images: [
       {
-        url: `${process.env.NEXT_PUBLIC_API_URL}/icon.png`,
+        url: `${process.env.NEXT_PUBLIC_API_URL}icon.png`,
         alt: `${MetaData.defaultSitename} logo`,
         width: 400,
         height: 400,
@@ -60,6 +61,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`antialiased flex flex-col min-h-screen`}>
+        <Analytics />
         <CoinsProvider>
           <UserProvider>
             <Header />
