@@ -12,3 +12,7 @@ export const coinIdsToRemove = [
 export const themeColors = {
   primary: "#f27d0b",
 };
+
+export const URLs = {
+  base: process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
+};

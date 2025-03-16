@@ -60,7 +60,7 @@ const CoinsList = () => {
       ) : error ? (
         <Alert status="error" message={error} />
       ) : (
-        <div className="space-y-4 px-2 md:px-0">
+        <div className="space-y-4 px-2 md:px-4 lg:px-0">
           <Input
             type="search"
             placeholder="Filter coins"
@@ -72,7 +72,7 @@ const CoinsList = () => {
             {currentCoins.map((coin) => (
               <li
                 key={coin.id}
-                className="p-2 border relative border-gray-300 flex justify-between items-center text-xl"
+                className="p-4 bg-white border-b shadow relative border-gray-300 flex justify-between items-center text-xl"
               >
                 <Link
                   href={{

@@ -2,7 +2,7 @@ import { MetaData } from "@/lib/config";
 
 export default function Footer() {
   return (
-    <footer className="p-4 mt-8 bg-dark text-light" dir="ltr">
+    <footer className="p-4 mt-8 bg-gray-300" dir="ltr">
       <div className="container mx-auto text-center space-y-4">
         <p className="text-sm" suppressHydrationWarning>
           &copy; {new Date().getFullYear()} {MetaData.defaultSitename}. All rights reserved.

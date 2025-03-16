@@ -1,21 +1,11 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { CoinsProvider } from "@/lib/contexts/CoinsContext";
 import { UserProvider } from "@/lib/contexts/UserContext";
 import { MetaData } from "@/lib/config";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import { URLs } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: {
@@ -30,6 +20,36 @@ export const metadata: Metadata = {
       url: MetaData.defaultAuthorUrl,
     },
   ],
+  metadataBase: new URL(URLs.base),
+  alternates: {
+    canonical: new URL(URLs.base),
+  },
+  openGraph: {
+    title: MetaData.defaultSitename,
+    description: MetaData.defaultDescription,
+    images: [
+      {
+        url: `${process.env.NEXT_PUBLIC_API_URL}/icon.png`,
+        alt: `${MetaData.defaultSitename} logo`,
+        width: 400,
+        height: 400,
+      },
+    ],
+    siteName: MetaData.defaultSitename,
+  },
+};
+
+export const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  url: new URL(URLs.base),
+  name: MetaData.defaultSitename,
+  description: MetaData.defaultDescription,
+  author: {
+    "@type": "Person",
+    name: MetaData.defaultAuthor,
+    url: MetaData.defaultAuthorUrl,
+  },
 };
 
 export default function RootLayout({
@@ -39,18 +59,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
-      >
+      <body className={`antialiased flex flex-col min-h-screen`}>
         <CoinsProvider>
           <UserProvider>
             <Header />
-            <main className="flex-grow container mx-auto max-w-4xl py-4 md:py-16 px-0">
+            <main className="flex-grow container mx-auto max-w-4xl pt-12 pb-12 lg:py-20 px-0 relative top-12">
               {children}
             </main>
             <Footer />
           </UserProvider>
         </CoinsProvider>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
       </body>
     </html>
   );

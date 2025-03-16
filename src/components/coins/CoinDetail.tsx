@@ -15,7 +15,7 @@ const CoinDetail = ({ coin }: CoinDetailProps) => {
   return (
     <div>
       {coin.public_notice && (
-        <Alert message={coin.public_notice} title="Public Notice" className="mb-8" />
+        <Alert message={coin.public_notice} title="Public Notice" className="mb-8 mx-2" />
       )}
       <CoinSummary coin={coin} />
       <CoinTabs coin={coin} />

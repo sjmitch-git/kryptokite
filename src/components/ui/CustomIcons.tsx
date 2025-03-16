@@ -1,3 +1,27 @@
-import { FaStar, FaQuestionCircle, FaArrowLeft, FaArrowRight, FaSearch } from "react-icons/fa";
+import {
+  FaStar,
+  FaQuestionCircle,
+  FaArrowLeft,
+  FaArrowRight,
+  FaSearch,
+  FaDollarSign,
+  FaSortUp,
+  FaSortDown,
+  FaCaretDown,
+  FaCaretUp,
+  FaTrash,
+} from "react-icons/fa";
 
-export { FaStar, FaQuestionCircle, FaArrowLeft, FaArrowRight, FaSearch };
+export {
+  FaStar,
+  FaQuestionCircle,
+  FaArrowLeft,
+  FaArrowRight,
+  FaSearch,
+  FaDollarSign,
+  FaSortUp,
+  FaSortDown,
+  FaCaretDown,
+  FaCaretUp,
+  FaTrash,
+};

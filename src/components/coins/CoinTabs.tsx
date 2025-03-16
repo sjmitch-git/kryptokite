@@ -12,7 +12,6 @@ type CoinDetailProps = {
 
 const CoinTabs = ({ coin }: CoinDetailProps) => {
   const { preferredCurrency } = useUser();
-  console.log("coin", coin);
 
   return (
     <>

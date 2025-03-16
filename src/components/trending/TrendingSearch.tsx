@@ -3,9 +3,9 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useUser } from "@/lib/contexts/UserContext";
-import { Heading, Loading, Alert } from "@/lib/fluid";
+import { Loading, Alert } from "@/lib/fluid";
 import { SimpleCoin, TrendingCoin } from "@/lib/types";
-import { FaStar } from "@/components/ui/CustomIcons";
+import { FaStar, FaCaretDown, FaCaretUp } from "@/components/ui/CustomIcons";
 import CoinThumb from "@/components/ui/CoinThumb";
 
 const TrendingSearch = () => {
@@ -30,7 +30,6 @@ const TrendingSearch = () => {
           throw new Error("Failed to fetch trending coins");
         }
         const data = await response.json();
-        console.log(data);
         setTrendingCoins(data.coins);
       } catch (error) {
         if (error instanceof Error) {
@@ -49,7 +48,7 @@ const TrendingSearch = () => {
   if (loading) {
     return (
       <div className="flex justify-center">
-        <Loading loadingColor="info" />
+        <Loading loadingColor="info" size="lg" />
       </div>
     );
   }
@@ -59,11 +58,8 @@ const TrendingSearch = () => {
   }
 
   return (
-    <div className="w-full space-y-4 md:border border-gray-300 p-2 md:p-4">
-      <Heading level={3}>Trending Search Coins</Heading>
-      <p>Top {trendingCoins.length} trending searched for coins</p>
-      <p>Click the star icon to add or remove from your collection</p>
-      <ul className="md:space-y-2">
+    <div className="px-2 md:px-4 lg:px-0">
+      <ul className="space-y-2">
         {trendingCoins.map((coin) => (
           <li
             key={coin.item.id}
@@ -85,9 +81,20 @@ const TrendingSearch = () => {
                 <sup className="text-sm hidden md:inline">({coin.item.symbol.toUpperCase()})</sup>
               </div>
             </div>
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2 md:space-x-4">
+              {coin.item.data.price_change_percentage_24h.usd > 0 ? (
+                <span className="text-green-500 flex flex-row-reverse items-center md:hidden">
+                  <FaCaretUp size={"3rem"} title="24h price change %" />{" "}
+                  {coin.item.data.price_change_percentage_24h.usd.toFixed(2)}%
+                </span>
+              ) : (
+                <span className="text-red-500 flex flex-row-reverse items-center md:hidden">
+                  <FaCaretDown size={"3rem"} title="24h price change %" />{" "}
+                  {coin.item.data.price_change_percentage_24h.usd.toFixed(2)}%
+                </span>
+              )}
               <img
-                className="bg-white border border-gray-300 hidden md:inline-block"
+                className="bg-white hidden md:inline-block"
                 src={coin.item.data.sparkline}
                 alt={`${coin.item.name} sparkline`}
                 title="Price change over the last 7d"

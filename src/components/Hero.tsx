@@ -8,7 +8,7 @@ interface HeroProps {
 }
 const Hero = ({ title, description, imgSrc }: HeroProps) => {
   return (
-    <div className="flex p-2 md:p-4 lg:p-0 gap-4 md:gap-8 flex-col md:flex-row items-center mb-4 md:mb-8">
+    <div className="flex p-2 md:p-4 lg:p-0 gap-4 md:gap-8 flex-row items-center mb-4 md:mb-8">
       {imgSrc && <CoinThumb src={imgSrc} alt={title} size={200} />}
       <div className="flex flex-col gap-4">
         <Heading className="opacity-50 font-bold">{title}</Heading>

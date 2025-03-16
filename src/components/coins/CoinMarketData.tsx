@@ -17,7 +17,7 @@ const CoinMarketData = ({ coin, preferredCurrency }: CoinDetailProps) => {
   }, [coin.last_updated]);
 
   return (
-    <table className="w-auto text-right md:text-lg mb-8">
+    <table className="w-full md:w-auto text-right md:text-lg">
       <tbody>
         <tr>
           <th className="text-left pr-4 font-semibold">Current Price:</th>
@@ -48,7 +48,13 @@ const CoinMarketData = ({ coin, preferredCurrency }: CoinDetailProps) => {
         )}
         {coin.market_data.price_change_percentage_24h !== null && (
           <tr>
-            <th className="text-left pr-4 font-semibold">24h Change:</th>
+            <th
+              className={`text-left pr-4 font-semibold ${
+                coin.market_data.price_change_percentage_24h < 0 ? "text-red-500" : "text-green-500"
+              }`}
+            >
+              24h Change:
+            </th>
             <td>{coin.market_data.price_change_percentage_24h} %</td>
           </tr>
         )}
@@ -63,7 +69,15 @@ const CoinMarketData = ({ coin, preferredCurrency }: CoinDetailProps) => {
         )}
         {coin.market_data.market_cap_change_percentage_24h !== null && (
           <tr>
-            <th className="text-left pr-4 font-semibold">Market Cap 24h Change:</th>
+            <th
+              className={`text-left pr-4 font-semibold ${
+                coin.market_data.market_cap_change_percentage_24h < 0
+                  ? "text-red-500"
+                  : "text-green-500"
+              }`}
+            >
+              Market Cap 24h Change:
+            </th>
             <td>{coin.market_data.market_cap_change_percentage_24h} %</td>
           </tr>
         )}

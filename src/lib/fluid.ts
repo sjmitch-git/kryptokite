@@ -11,4 +11,10 @@ export {
   Autocomplete,
   Dialog,
   Button,
+  NavBar,
+  Card,
+  CardHeader,
+  CardBody,
+  CardImage,
+  CardFooter,
 } from "@smitch/fluid";

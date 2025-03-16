@@ -10,3 +10,13 @@ export const MetaData = {
   defaultAuthor: "Stephen Mitchell",
   defaultAuthorUrl: "https://www.linkedin.com/in/stephen-m-52a3a4192/",
 };
+
+export const Links = [
+  {
+    name: "Coins",
+    href: "/coins",
+    links: [{ name: "Trending", href: "/coins/trending" }],
+  },
+  { name: "Trending", href: "/coins/trending" },
+  { name: "Watchlist", href: "/watchlist" },
+];

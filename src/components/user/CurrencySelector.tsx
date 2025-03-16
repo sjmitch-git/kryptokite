@@ -4,7 +4,11 @@ import React, { useEffect, useState } from "react";
 import { useUser } from "@/lib/contexts/UserContext";
 import { Select } from "@/lib/fluid";
 
-const CurrencySelector = () => {
+type SelectCoinProps = {
+  setIsOpen: (isOpen: boolean) => void;
+};
+
+const CurrencySelector = ({ setIsOpen }: SelectCoinProps) => {
   const { preferredCurrency, setPreferredCurrency } = useUser();
   const [currencies, setCurrencies] = useState<string[]>([]);
 
@@ -31,15 +35,20 @@ const CurrencySelector = () => {
     }
   }, []);
 
+  const handleSelect = (currency: string) => {
+    setPreferredCurrency(currency);
+    setIsOpen(false);
+  };
+
   return (
     <div suppressHydrationWarning={true}>
       <Select
-        className="uppercase border-neutral"
+        className="uppercase border-neutral w-full"
         name="currency"
         rounded="md"
         options={currencies}
         defaultValue={preferredCurrency}
-        onChange={(e) => setPreferredCurrency(e.target.value)}
+        onChange={(e) => handleSelect(e.target.value)}
       />
     </div>
   );

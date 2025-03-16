@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { Pagination, Alert, Input, Loading, Dialog, Button } from "@/lib/fluid";
 import { useUser } from "@/lib/contexts/UserContext";
-import { FaTrash } from "react-icons/fa";
+import { FaTrash, FaCaretDown, FaCaretUp } from "@/components/ui/CustomIcons";
 import { CoinDetails as Coin } from "@/lib/types";
 import CoinThumb from "@/components/ui/CoinThumb";
 import { formatNumber } from "@/lib/utils";
@@ -113,7 +113,7 @@ const WatchListCoins = () => {
           <Alert message="No coins in your collection." />
         </div>
       ) : (
-        <div className="space-y-4 p-2 md:p-0">
+        <div className="space-y-4 px-2 md:px-4 lg:px-0">
           <Input
             type="search"
             placeholder="Filter coins"
@@ -129,7 +129,6 @@ const WatchListCoins = () => {
                 <th className="text-left p-4">Coin</th>
                 <th className="text-right p-4">Price</th>
                 <th className="text-right p-4">24h Change</th>
-                <th className="text-right p-4">Volume</th>
                 <th></th>
               </tr>
             </thead>
@@ -154,24 +153,27 @@ const WatchListCoins = () => {
                       ({coin.symbol.toUpperCase()})
                     </sup>
                   </td>
-                  <td className="text-right p-2 md:p-4 font-semibold">
+                  <td className="text-right p-4 font-semibold hidden md:table-cell">
                     {formatNumber(coin.current_price)}
                   </td>
-                  <td
-                    className={`text-right p-4 hidden md:table-cell ${
-                      coin.price_change_percentage_24h < 0 ? "text-red-500" : "text-green-500"
-                    }`}
-                  >
-                    {coin.price_change_percentage_24h.toFixed(2)} %
-                  </td>
-                  <td className="text-right p-4 hidden md:table-cell">
-                    {coin.total_volume.toLocaleString()}
+                  <td className={`text-right p-2 md:p-4`}>
+                    {coin.price_change_percentage_24h > 0 ? (
+                      <span className="text-green-500 flex flex-row-reverse items-center">
+                        <FaCaretUp size={"3rem"} title="24h price change %" />{" "}
+                        {coin.price_change_percentage_24h.toFixed(2)}%
+                      </span>
+                    ) : (
+                      <span className="text-red-500 flex flex-row-reverse items-center">
+                        <FaCaretDown size={"3rem"} title="24h price change %" />{" "}
+                        {coin.price_change_percentage_24h.toFixed(2)}%
+                      </span>
+                    )}
                   </td>
                   <td className="text-right p-2 md:p-4">
                     <button
                       suppressHydrationWarning={true}
                       onClick={() => openDialog(coin.id)}
-                      className="text-red-500"
+                      className="text-warning"
                       title="Delete coin?"
                     >
                       <FaTrash className="h-6 w-6" />

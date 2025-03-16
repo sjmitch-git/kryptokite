@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 export default function Coins() {
   return (
     <article>
-      <Hero title="Coins" description={description} />
+      <Hero title={title} description={description} />
       <Suspense>
         <CoinsList />
       </Suspense>

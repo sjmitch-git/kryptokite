@@ -14,6 +14,9 @@ export type TrendingCoin = {
     thumb: string;
     data: {
       sparkline: string;
+      price_change_percentage_24h: {
+        [key: string]: number;
+      };
     };
   };
 };
