@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardBody, CardImage, CardFooter } from "@/lib/fluid";
+import { Card, CardHeader, CardBody, CardFooter } from "@/lib/fluid";
 
 const HomeNav = () => {
   return (

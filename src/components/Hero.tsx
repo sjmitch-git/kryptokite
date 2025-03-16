@@ -12,7 +12,7 @@ const Hero = ({ title, description, imgSrc }: HeroProps) => {
       {imgSrc && <CoinThumb src={imgSrc} alt={title} size={200} />}
       <div className="flex flex-col gap-4">
         <Heading className="opacity-50 font-bold">{title}</Heading>
-        <p className="text-xl max-w-prose">{description}</p>
+        <p className="text-xl max-w-prose line-clamp-4">{description}</p>
       </div>
     </div>
   );
