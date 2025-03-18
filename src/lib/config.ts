@@ -15,8 +15,52 @@ export const Links = [
   {
     name: "Coins",
     href: "/coins",
-    links: [{ name: "Trending", href: "/coins/trending" }],
   },
   { name: "Trending", href: "/coins/trending" },
   { name: "Watchlist", href: "/watchlist" },
+];
+
+export const HomeLinks = [
+  {
+    title: "Coins",
+    href: "/coins",
+    linkLabel: "Browse",
+    body: "Browse 17,000+ crypto coins",
+    img: "/coins.svg",
+  },
+  {
+    title: "Trending",
+    href: "/coins/trending",
+    linkLabel: "Go",
+    body: "Top 15 trending coins",
+    img: "/trending.svg",
+  },
+  {
+    title: "Watchlist",
+    href: "/watchlist",
+    linkLabel: "View",
+    body: "Your favourite coins",
+    img: "/watchlist.svg",
+  },
+  {
+    title: "Bitcoin",
+    href: "/coins/bitcoin",
+    linkLabel: "Bitcoin",
+    body: "Bitcoin is the first successful internet money based on peer-to-peer technology",
+    img: "https://coin-images.coingecko.com/coins/images/1/small/bitcoin.png",
+  },
+  {
+    title: "Ethereum",
+    href: "/coins/ethereum",
+    linkLabel: "Ethereum",
+    body: "Ethereum is a global platform for decentralized applications",
+    img: "https://coin-images.coingecko.com/coins/images/279/small/ethereum.png",
+  },
+  {
+    title: "Tether",
+    href: "/coins/tether",
+    linkLabel: "Tether",
+    body: "Tether has a value meant to mirror the value of the U.S. dollar",
+    img: "https://coin-images.coingecko.com/coins/images/325/small/Tether.png",
+  },
 ];
