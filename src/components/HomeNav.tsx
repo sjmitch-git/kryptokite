@@ -13,8 +13,8 @@ const HomeNav = () => {
             aspect="square"
             className="max-w-16 pt-4 mx-auto"
           />
-          <CardBody className="pb-4 static">
-            <CardHeader title={card.title} className="text-xl" />
+          <CardBody className="pb-2 md:pb-4 static">
+            <CardHeader title={card.title} className="text-xl max-sm:text-center" />
             <p className="line-clamp-2 max-sm:hidden">{card.body}</p>
           </CardBody>
           <Link href={card.href} className="stretched-link"></Link>
