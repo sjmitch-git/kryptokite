@@ -3,8 +3,6 @@
 ![Run Jest Tests](https://github.com/sjmitch-git/kryptokite/actions/workflows/jest-tests.yml/badge.svg)
 ![Cypress Tests](https://github.com/sjmitch-git/kryptokite/actions/workflows/cypress.yml/badge.svg)
 ![Last Commit](https://img.shields.io/github/last-commit/sjmitch-git/kryptokite)
-![Dependencies](https://img.shields.io/david/sjmitch-git/kryptokite)
-![Dev Dependencies](https://img.shields.io/david/dev/sjmitch-git/kryptokite)
 
 KryptoKite is a cryptocurrency tracker that allows you to track the latest prices of your favourite
 crypto currencies.
