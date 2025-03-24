@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "types": ["jest"],
     "target": "ES2017",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -20,7 +21,8 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@utils": ["src/lib/utils"]
     }
   },
   "include": [

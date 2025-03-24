@@ -1,5 +1,7 @@
 # KryptoKite
 
+![Run Jest Tests](https://github.com/<your-username>/<your-repo>/actions/workflows/jest-tests.yml/badge.svg)
+
 KryptoKite is a cryptocurrency tracker that allows you to track the latest prices of your favourite
 crypto currencies.
 

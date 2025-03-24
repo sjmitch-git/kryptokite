@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Coin } from "@/lib/types";
-import { formatNumber } from "@/lib/utils";
+import { formatNumber } from "@utils";
 
 type CoinDetailProps = {
   coin: Coin;
