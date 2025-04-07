@@ -50,20 +50,24 @@ const AddCoin = ({ storeId, storeBalance }: Props) => {
                 suppressHydrationWarning
               />
             </Label>
-            <Label label="Watchlist:" size="lg" layout="row">
-              <Input
-                list="watchlist"
-                className="hide-arrow"
-                placeholder="Search watchlist"
-                onChange={(e) => setSearchTerm(e.target.value)}
-                suppressHydrationWarning
-              />
-            </Label>
-            <datalist id="watchlist">
-              {userCoins.map((coin: SimpleCoin) => (
-                <option key={coin.id} value={coin.name} />
-              ))}
-            </datalist>
+            {userCoins && (
+              <>
+                <Label label="Watchlist:" size="lg" layout="row">
+                  <Input
+                    list="watchlist"
+                    className="hide-arrow"
+                    placeholder="Search watchlist"
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    suppressHydrationWarning
+                  />
+                </Label>
+                <datalist id="watchlist">
+                  {userCoins.map((coin: SimpleCoin) => (
+                    <option key={coin.id} value={coin.name} />
+                  ))}
+                </datalist>
+              </>
+            )}
           </div>
           {coinId && (
             <CoinInfo

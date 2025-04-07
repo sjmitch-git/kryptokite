@@ -64,7 +64,7 @@ const CoinInfoTable = ({ coin, setIsOpen, storeBalance }: CoinInfoTableProps) =>
         </thead>
         <tbody>
           <tr className="bg-white shadow">
-            {coin.market_cap_rank > 0 && <td className="text-center">#{coin.market_cap_rank}</td>}
+            {coin.market_cap_rank > 0 && <td className="text-left">#{coin.market_cap_rank}</td>}
             <td className="text-center p-2 md:p-4 font-semibold">
               {formatNumber(coin.market_data.current_price[currency])}
             </td>
