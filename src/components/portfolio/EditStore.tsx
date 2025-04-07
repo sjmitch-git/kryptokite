@@ -50,17 +50,27 @@ const EditStore = ({ storeName }: EditStoreProps) => {
           <p className="text-xl max-w-prose mb-4 md:mb-8">{store?.description}</p>
         </div>
         <div>
-          <Button btnBackground="danger" suppressHydrationWarning={true} onClick={openDialog}>
+          <Button
+            btnBackground="danger"
+            suppressHydrationWarning={true}
+            onClick={openDialog}
+            className="focus:bg-dark"
+          >
             Remove?
           </Button>
         </div>
       </div>
 
       <div className="flex text-lg gap-8 justify-between px-2 md:px-4 lg:px-0 mb-8">
-        <p className="">
-          Balance: {store?.balance} {currency.toUpperCase()}
+        <p className="flex flex-col md:flex-row gap-2">
+          Balance:{" "}
+          <span>
+            {store?.balance} {currency.toUpperCase()}
+          </span>
         </p>
-        <p>Created @ {timestamp}</p>
+        <p className="flex flex-col md:flex-row gap-2">
+          Created @ <span>{timestamp}</span>
+        </p>
       </div>
 
       {store && <Store store={store} />}

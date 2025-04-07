@@ -7,5 +7,5 @@
 }
 
 .dialog {
-  @apply min-w-[380px];
+  @apply min-w-[300px] md:min-w-[380px];
 }
