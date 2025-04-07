@@ -10,8 +10,8 @@ export default function Header() {
           brand={MetaData.defaultSitename}
           brandSrc={`${process.env.NEXT_PUBLIC_API_URL}icon.png`}
           links={Links}
-          className="bg-[#f27d0b] p-2"
-          btnBackground="light"
+          className="bg-[#f3f4f6] p-2 dark"
+          btnBackground="info"
           btnColor="dark"
           btnSize="lg"
         >

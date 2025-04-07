@@ -10,3 +10,7 @@
 .hide-arrow::-webkit-calendar-picker-indicator {
   opacity: 0;
 }
+
+.font-petite-caps {
+  font-variant: petite-caps;
+}

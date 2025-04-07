@@ -9,3 +9,7 @@
 .dialog {
   @apply min-w-[300px] md:min-w-[380px];
 }
+
+.navbar-link {
+  @apply lg:!text-slate-900 hover:opacity-80;
+}
