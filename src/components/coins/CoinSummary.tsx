@@ -26,13 +26,13 @@ const CoinSummary = ({ coin }: Props) => {
       <table className="table w-full text-lg">
         <thead>
           <tr className="font-semibold">
-            {coin.market_cap_rank > 0 && <th>Rank</th>}
+            <th>Rank</th>
             <th className="hidden md:table-cell"></th>
             <th></th>
             <th className="text-center">Price</th>
             {coin.market_data.price_change_percentage_24h && (
               <th
-                className={`text-center ${
+                className={`text-center whitespace-nowrap ${
                   coin.market_data.price_change_percentage_24h < 0 ? "text-error" : "text-success"
                 }`}
               >
@@ -41,7 +41,7 @@ const CoinSummary = ({ coin }: Props) => {
             )}
             {coin.market_data.price_change_percentage_7d && (
               <th
-                className={`text-center ${
+                className={`text-center whitespace-nowrap ${
                   coin.market_data.price_change_percentage_7d < 0 ? "text-error" : "text-success"
                 }`}
               >
@@ -53,11 +53,13 @@ const CoinSummary = ({ coin }: Props) => {
         </thead>
         <tbody>
           <tr className="bg-white shadow">
-            {coin.market_cap_rank > 0 && <td className="text-center">#{coin.market_cap_rank}</td>}
+            {coin.market_cap_rank > 0 && (
+              <td className="text-center">#{coin.market_cap_rank || "N/A"}</td>
+            )}
             <td className="hidden md:table-cell text-center">
               <CoinThumb src={coin.image.small} alt={coin.name} size={64} className="w-16 h-auto" />
             </td>
-            <td className="text-left text-xl font-semibold">
+            <td className="text-left text-xl font-semibold whitespace-nowrap">
               <span>{coin.name}</span>{" "}
               <sup className="font-normal font-mono block mt-4">{coin.symbol.toUpperCase()}</sup>
             </td>
@@ -65,7 +67,7 @@ const CoinSummary = ({ coin }: Props) => {
               {formatNumber(coin.market_data.current_price[preferredCurrency])}
             </td>
             {coin.market_data.price_change_percentage_24h && (
-              <td className="hidden md:table-cell text-center p-2 md:p-4">
+              <td className="text-center">
                 {coin.market_data.price_change_percentage_24h.toFixed(4)}
               </td>
             )}

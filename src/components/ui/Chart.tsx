@@ -19,6 +19,11 @@ const Chart = ({ data, labels, title }: ChartProps) => {
           {
             backgroundColor: trendUpwards ? trendUpwardsStyle : trendDownwardsStyle,
             borderColor: trendUpwards ? trendUpwardsStyle : trendDownwardsStyle,
+            pointBorderWidth: 0,
+            pointRadius: 0,
+            pointHitRadius: 0,
+            pointBackgroundColor: "transparent",
+            pointBorderColor: "transparent",
             data: data,
             label: "USD",
           },
