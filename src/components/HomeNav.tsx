@@ -6,14 +6,14 @@ const HomeNav = () => {
   return (
     <div className="grid grid-cols-3 gap-2 md:gap-4 lg:gap-8 px-2 md:px-4 lg:px-0">
       {HomeLinks.map((card) => (
-        <Card shadow="md" rounded="md" className="bg-dark text-light" key={card.title}>
+        <Card shadow="md" rounded="md" className="section border-none" key={card.title}>
           <CardImage
             title={card.title}
             src={card.img}
             aspect="square"
-            className="max-w-16 pt-4 mx-auto"
+            className="mx-auto bg-dark rounded-full w-20 h-20"
           />
-          <CardBody className="pb-2 md:pb-4 static">
+          <CardBody className="static">
             <CardHeader title={card.title} className="text-xl max-sm:text-center" />
             <p className="line-clamp-2 max-sm:hidden">{card.body}</p>
           </CardBody>

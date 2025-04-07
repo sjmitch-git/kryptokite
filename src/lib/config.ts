@@ -18,6 +18,7 @@ export const Links = [
   },
   { name: "Trending", href: "/coins/trending" },
   { name: "Watchlist", href: "/watchlist" },
+  { name: "Portfolio", href: "/portfolio" },
 ];
 
 export const HomeLinks = [
@@ -39,7 +40,7 @@ export const HomeLinks = [
     title: "Watchlist",
     href: "/watchlist",
     linkLabel: "View",
-    body: "Your favourite coins",
+    body: "View your favourite coins",
     img: "/watchlist.svg",
   },
   {
@@ -63,4 +64,16 @@ export const HomeLinks = [
     body: "Tether has a value meant to mirror the value of the U.S. dollar",
     img: "https://coin-images.coingecko.com/coins/images/325/small/Tether.png",
   },
+];
+
+export const coinIdsToRemove = [
+  "test-token-please-ignore",
+  "testbug",
+  "0vix-protocol",
+  "movex-token",
+  "aesirx",
+  "sendcrypto",
+  "all-in-one-wallet",
+  "solayer-usd",
+  "0xlsd",
 ];

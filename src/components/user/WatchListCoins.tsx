@@ -97,7 +97,7 @@ const WatchListCoins = () => {
   const startIndex = (page - 1) * perPage;
   const endIndex = startIndex + perPage;
   const currentCoins = filteredCoins.slice(startIndex, endIndex);
-
+  console.log("currentCoins", currentCoins);
   if (loadingCoins) {
     return (
       <div>
@@ -121,76 +121,84 @@ const WatchListCoins = () => {
             onChange={handleFilterChange}
             className="w-full p-2 border border-gray-300 rounded"
           />
-          <table className="table w-full text-lg mb-8">
-            <thead>
-              <tr className="font-semibold hidden md:table-row border-b border-neutral">
-                <th className="text-right p-4">Rank</th>
-                <th></th>
-                <th className="text-left p-4">Coin</th>
-                <th className="text-right p-4">Price</th>
-                <th className="text-right p-4">24h Change</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentCoins.map((coin) => (
-                <tr key={coin.id} className="bg-white border-b border-neutral">
-                  <td className="text-right hidden md:table-cell p-4">#{coin.market_cap_rank}</td>
-                  <td className="hidden md:table-cell text-center p-4">
-                    <CoinThumb src={coin.image} alt={coin.name} size={50} />
-                  </td>
-                  <td className="text-left p-2 md:p-4 text-xl font-semibold">
-                    <Link
-                      href={{
-                        pathname: `/coins/${coin.id}`,
-                      }}
-                      title="See more dtails about this coin"
-                      className="text-blue-500 hover:underline"
-                    >
-                      {coin.name}
-                    </Link>{" "}
-                    <sup className="font-normal hidden md:inline">
-                      ({coin.symbol.toUpperCase()})
-                    </sup>
-                  </td>
-                  <td className="text-right p-4 font-semibold hidden md:table-cell">
-                    {formatNumber(coin.current_price)}
-                  </td>
-                  <td className={`text-right p-2 md:p-4`}>
-                    {coin.price_change_percentage_24h > 0 ? (
-                      <span className="text-green-500 flex flex-row-reverse items-center">
-                        <FaCaretUp size={"3rem"} title="24h price change %" />{" "}
-                        {coin.price_change_percentage_24h.toFixed(2)}%
-                      </span>
-                    ) : (
-                      <span className="text-red-500 flex flex-row-reverse items-center">
-                        <FaCaretDown size={"3rem"} title="24h price change %" />{" "}
-                        {coin.price_change_percentage_24h.toFixed(2)}%
-                      </span>
-                    )}
-                  </td>
-                  <td className="text-right p-2 md:p-4">
-                    <button
-                      suppressHydrationWarning={true}
-                      onClick={() => openDialog(coin.id)}
-                      className="text-warning"
-                      title="Delete coin?"
-                    >
-                      <FaTrash className="h-6 w-6" />
-                    </button>
+          <div className="overflow-x-auto">
+            <table className="table w-full text-lg mb-8">
+              <thead>
+                <tr className="font-semibold border-b border-neutral bg-slate-100">
+                  <th className="text-right">Rank</th>
+                  <th></th>
+                  <th className="text-left">Coin</th>
+                  <th className="text-right">Price</th>
+                  <th className="text-right">24h Change</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {currentCoins.map((coin) => (
+                  <tr key={coin.id} className="bg-white border-b border-neutral">
+                    <td className="text-right">#{coin.market_cap_rank || "N/A"}</td>
+                    <td className="text-center p-0 md:p-4">
+                      <CoinThumb
+                        src={coin.image}
+                        alt={coin.name}
+                        size={64}
+                        className="w-16 h-auto"
+                      />
+                    </td>
+                    <td className="text-left font-semibold">
+                      <Link
+                        href={{
+                          pathname: `/coins/${coin.id}`,
+                        }}
+                        title="See more details about this coin"
+                        className="text-primary hover:underline"
+                      >
+                        {coin.name}
+                      </Link>{" "}
+                      <sup className="font-normal hidden md:block mt-4">
+                        ({coin.symbol.toUpperCase()})
+                      </sup>
+                    </td>
+                    <td className="text-right font-semibold">{formatNumber(coin.current_price)}</td>
+                    <td className={`text-right`}>
+                      {coin.price_change_percentage_24h !== null ? (
+                        coin.price_change_percentage_24h > 0 ? (
+                          <span className="text-green-500 flex flex-row-reverse items-center">
+                            <FaCaretUp size={"3rem"} title="24h price change %" />{" "}
+                            {coin.price_change_percentage_24h.toFixed(2)}%
+                          </span>
+                        ) : (
+                          <span className="text-red-500 flex flex-row-reverse items-center">
+                            <FaCaretDown size={"3rem"} title="24h price change %" />{" "}
+                            {coin.price_change_percentage_24h.toFixed(2)}%
+                          </span>
+                        )
+                      ) : (
+                        <span className="text-gray-500">N/A</span>
+                      )}
+                    </td>
+                    <td className="text-right">
+                      <button
+                        suppressHydrationWarning={true}
+                        onClick={() => openDialog(coin.id)}
+                        className="text-warning"
+                        title="Delete coin?"
+                      >
+                        <FaTrash className="h-6 w-6" />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colSpan={7} className="text-left text-sm pl-2 md:pl-0 pt-4">
+                    Note: Currency in {preferredCurrency.toUpperCase()}
                   </td>
                 </tr>
-              ))}
-            </tbody>
-            <tfoot>
-              <tr>
-                <td colSpan={7} className="text-left text-sm pl-2 md:pl-0 pt-4">
-                  Note: Currency in {preferredCurrency.toUpperCase()}
-                </td>
-              </tr>
-            </tfoot>
-          </table>
-
+              </tfoot>
+            </table>
+          </div>
           <div>
             {filteredCoins.length !== 0 && (
               <Pagination

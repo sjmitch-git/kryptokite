@@ -1,41 +1,50 @@
 "use client";
 
+import { v4 as uuidv4 } from "uuid";
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import { SimpleCoin } from "@/lib/types";
-
-type UserContextType = {
-  userCoins: SimpleCoin[];
-  preferredCurrency: string;
-  setPreferredCurrency: (currency: string) => void;
-  addUserCoin: (coin: SimpleCoin) => void;
-  removeUserCoin: (coinId: string) => void;
-  isCoinInCollection: (coinId: string) => boolean;
-  loadingCoins: boolean;
-};
+import { SimpleCoin, Store, UserContextType, StoredCoin } from "@/lib/types";
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [userCoins, setUserCoins] = useState<SimpleCoin[]>([]);
-  const [preferredCurrency, setPreferredCurrency] = useState<string>("usd");
   const [loadingCoins, setLoadingCoins] = useState<boolean>(true);
+
+  const [stores, setStores] = useState<Store[]>([]);
+  const [loadingStores, setLoadingStores] = useState<boolean>(true);
+
+  const [preferredCurrency, setPreferredCurrency] = useState<string>("usd");
 
   useEffect(() => {
     setLoadingCoins(true);
+    setLoadingStores(true);
+
     const storedCoins = localStorage.getItem("userCoins");
     if (storedCoins) {
       setUserCoins(JSON.parse(storedCoins));
     }
+
+    const storedStores = localStorage.getItem("stores");
+    if (storedStores) {
+      setStores(JSON.parse(storedStores));
+    }
+
     const storedCurrency = localStorage.getItem("preferredCurrency");
     if (storedCurrency) {
       setPreferredCurrency(storedCurrency);
     }
+
     setLoadingCoins(false);
+    setLoadingStores(false);
   }, []);
 
   useEffect(() => {
     localStorage.setItem("userCoins", JSON.stringify(userCoins));
   }, [userCoins]);
+
+  useEffect(() => {
+    localStorage.setItem("stores", JSON.stringify(stores));
+  }, [stores]);
 
   useEffect(() => {
     localStorage.setItem("preferredCurrency", preferredCurrency);
@@ -53,16 +62,119 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     return userCoins.some((coin) => coin.id === coinId);
   };
 
+  const addStore = (name: string, description?: string) => {
+    const newStore: Store = {
+      id: uuidv4(),
+      name: name || `store${stores.length + 1}`,
+      description: description,
+      coins: [],
+      coinIds: [],
+      balance: 100,
+      createdAt: new Date().toISOString(),
+    };
+    setStores((prevStores) => [...prevStores, newStore]);
+  };
+
+  const removeStore = (storeId: string) => {
+    setStores((prevStores) => prevStores.filter((store) => store.id !== storeId));
+  };
+
+  const addCoinToStore = (
+    storeId: string,
+    coin: SimpleCoin,
+    coinPrice: number,
+    purchaseAmount: number,
+    cost: number,
+    image: string
+  ) => {
+    setStores((prevStores) =>
+      prevStores.map((store) => {
+        if (store.id === storeId) {
+          const updatedCoins: StoredCoin[] = [
+            ...store.coins,
+            {
+              id: coin.id,
+              name: coin.name,
+              symbol: coin.symbol,
+              amount: purchaseAmount,
+              priceAtPurchase: coinPrice,
+              current_price: coinPrice,
+              image: image,
+              createdAt: new Date().toISOString(),
+            },
+          ];
+
+          const updatedCoinIds = store.coinIds.includes(coin.id)
+            ? store.coinIds
+            : [...store.coinIds, coin.id];
+
+          const updatedBalance = store.balance - cost;
+
+          return {
+            ...store,
+            coins: updatedCoins,
+            coinIds: updatedCoinIds,
+            balance: updatedBalance,
+          };
+        }
+        return store;
+      })
+    );
+  };
+
+  const removeCoinFromStore = (storeId: string, coinId: string, saleAmount: number) => {
+    setStores((prevStores) =>
+      prevStores.map((store) => {
+        if (store.id === storeId) {
+          const coinToRemove = store.coins.find((coin) => coin.id === coinId);
+
+          if (!coinToRemove) {
+            return store;
+          }
+
+          const updatedCoins = store.coins.filter((coin) => coin.id !== coinId);
+
+          const updatedBalance = store.balance + saleAmount;
+
+          return {
+            ...store,
+            coins: updatedCoins,
+            balance: updatedBalance,
+          };
+        }
+        return store;
+      })
+    );
+  };
+
+  const getStoreById = (storeId: string): Store | undefined => {
+    return stores.find((store) => store.id === storeId);
+  };
+
+  const updateStoreDescription = (storeId: string, description: string) => {
+    setStores((prevStores) =>
+      prevStores.map((store) => (store.id === storeId ? { ...store, description } : store))
+    );
+  };
+
   return (
     <UserContext.Provider
       value={{
         userCoins,
-        preferredCurrency,
-        setPreferredCurrency,
         addUserCoin,
         removeUserCoin,
         isCoinInCollection,
+        stores,
+        addStore,
+        removeStore,
+        addCoinToStore,
+        removeCoinFromStore,
+        getStoreById,
+        updateStoreDescription,
+        preferredCurrency,
+        setPreferredCurrency,
         loadingCoins,
+        loadingStores,
       }}
     >
       {children}

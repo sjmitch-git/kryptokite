@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useUser } from "@/lib/contexts/UserContext";
 import { Loading, Alert } from "@/lib/fluid";
 import { SimpleCoin, TrendingCoin } from "@/lib/types";
-import { FaStar, FaCaretDown, FaCaretUp } from "@/components/ui/CustomIcons";
+import { FaCaretDown, FaCaretUp, FaPlusCircle, FaCheckCircle } from "@/components/ui/CustomIcons";
 import CoinThumb from "@/components/ui/CoinThumb";
 
 const TrendingSearch = () => {
@@ -74,7 +74,7 @@ const TrendingSearch = () => {
                     pathname: `/coins/${coin.item.id}`,
                   }}
                   title="See more dtails about this coin"
-                  className="text-blue-500 hover:underline font-semibold"
+                  className="text-primary hover:underline font-semibold"
                 >
                   {coin.item.name}
                 </Link>{" "}
@@ -109,11 +109,13 @@ const TrendingSearch = () => {
                     symbol: coin.item.symbol,
                   })
                 }
-                className={`${
-                  isCoinInCollection(coin.item.id) ? "text-yellow-500" : "text-gray-500"
-                }`}
+                className={`${isCoinInCollection(coin.item.id) ? "text-info" : "text-neutral"}`}
               >
-                <FaStar className="h-8 w-8" />
+                {isCoinInCollection(coin.item.id) ? (
+                  <FaCheckCircle size={"2rem"} title="Remove from Watchlist?" />
+                ) : (
+                  <FaPlusCircle size={"2rem"} title="Add to Watchlist?" />
+                )}
               </button>
             </div>
           </li>

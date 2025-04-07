@@ -10,6 +10,11 @@ import {
   FaCaretDown,
   FaCaretUp,
   FaTrash,
+  FaPlusCircle,
+  FaMinusCircle,
+  FaCheckCircle,
+  FaThumbsDown,
+  FaThumbsUp,
 } from "react-icons/fa";
 
 export {
@@ -24,4 +29,9 @@ export {
   FaCaretDown,
   FaCaretUp,
   FaTrash,
+  FaPlusCircle,
+  FaMinusCircle,
+  FaCheckCircle,
+  FaThumbsDown,
+  FaThumbsUp,
 };

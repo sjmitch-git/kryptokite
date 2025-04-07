@@ -1,6 +1,11 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/base";
+@import "./base/index.css";
+
+@import "tailwindcss/components";
+@import "./components/index.css";
+
+@import "tailwindcss/utilities";
+@import "./utilities/index.css";
 
 :root {
   --background-light: theme("colors.gray.100");
@@ -26,25 +31,12 @@ body {
   background: var(--background);
 }
 
-.alert a {
-  text-decoration: underline;
-}
-
 .selectcoin-wrapper .label {
   display: flex !important;
 }
 
 .selectcoin-wrapper .label > span {
   display: none !important;
-}
-
-.stretched-link:after {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
 }
 
 .navbrand {

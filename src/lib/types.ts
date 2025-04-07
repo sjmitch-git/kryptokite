@@ -105,3 +105,52 @@ export type CoinDetails = SimpleCoin & {
   price_change_percentage_24h: number;
   last_updated: string;
 };
+
+export type StoredCoin = {
+  id: string;
+  name: string;
+  symbol: string;
+  amount: number;
+  priceAtPurchase: number;
+  current_price: number;
+  image: string;
+  createdAt: string;
+};
+
+export type Store = {
+  id: string;
+  name: string;
+  coins: StoredCoin[];
+  coinIds: string[];
+  balance: number;
+  createdAt: string;
+  description?: string;
+};
+
+export type UserContextType = {
+  userCoins: SimpleCoin[];
+  addUserCoin: (coin: SimpleCoin) => void;
+  removeUserCoin: (coinId: string) => void;
+  isCoinInCollection: (coinId: string) => boolean;
+
+  stores: Store[];
+  addStore: (name: string, description?: string) => void;
+  removeStore: (storeId: string) => void;
+  addCoinToStore: (
+    storeId: string,
+    coin: SimpleCoin,
+    purchaseAmount: number,
+    coinPrice: number,
+    cost: number,
+    image: string
+  ) => void;
+  removeCoinFromStore: (storeId: string, coinId: string, totalValue: number) => void;
+  getStoreById: (storeId: string) => Store | undefined;
+  updateStoreDescription: (storeId: string, description: string) => void;
+
+  preferredCurrency: string;
+  setPreferredCurrency: (currency: string) => void;
+
+  loadingCoins: boolean;
+  loadingStores: boolean;
+};

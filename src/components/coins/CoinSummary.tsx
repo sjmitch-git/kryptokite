@@ -3,7 +3,7 @@
 import { Coin } from "@/lib/types";
 import CoinThumb from "@/components/ui/CoinThumb";
 import { useUser } from "@/lib/contexts/UserContext";
-import { FaStar } from "react-icons/fa";
+import { FaCheckCircle, FaPlusCircle } from "react-icons/fa";
 import { formatNumber } from "@/lib/utils";
 
 type Props = {
@@ -74,11 +74,14 @@ const CoinSummary = ({ coin }: Props) => {
             )}
             <td className="text-right p-2 md:p-4">
               <button
-                suppressHydrationWarning={true}
                 onClick={() => handleToggleCoin(coin)}
-                className={`${isCoinInCollection(coin.id) ? "text-yellow-500" : "text-gray-500"}`}
+                className={`${isCoinInCollection(coin.id) ? "text-info" : "text-neutral"}`}
               >
-                <FaStar className="h-6 w-6" />
+                {isCoinInCollection(coin.id) ? (
+                  <FaCheckCircle size={"2rem"} title="Remove from Watchlist?" />
+                ) : (
+                  <FaPlusCircle size={"2rem"} title="Add to Watchlist?" />
+                )}
               </button>
             </td>
           </tr>

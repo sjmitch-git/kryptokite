@@ -10,8 +10,8 @@ const CoinLinks = ({ coin }: CoinLinkslProps) => {
       <tbody>
         {coin.links.homepage[0] && (
           <tr>
-            <th className="text-left pr-4 font-semibold">Homepage:</th>
-            <td className="text-left">
+            <th className="text-left p-0 pr-4 font-semibold">Homepage:</th>
+            <td className="text-left p-2">
               <a
                 href={coin.links.homepage[0]}
                 target="_blank"
@@ -26,8 +26,8 @@ const CoinLinks = ({ coin }: CoinLinkslProps) => {
         )}
         {coin.links.whitepaper && (
           <tr>
-            <th className="text-left pr-4 font-semibold">Whitepaper:</th>
-            <td className="text-left">
+            <th className="text-left p-0 pr-4 font-semibold">Whitepaper:</th>
+            <td className="text-left p-2">
               <a
                 href={coin.links.whitepaper}
                 target="_blank"
@@ -42,8 +42,8 @@ const CoinLinks = ({ coin }: CoinLinkslProps) => {
         )}
         {coin.links.official_forum_url[0] && (
           <tr>
-            <th className="text-left pr-4 font-semibold">Official Forum:</th>
-            <td className="text-left">
+            <th className="text-left p-0 pr-4 font-semibold">Official Forum:</th>
+            <td className="text-left p-2">
               <a
                 href={coin.links.official_forum_url[0]}
                 target="_blank"
@@ -58,8 +58,8 @@ const CoinLinks = ({ coin }: CoinLinkslProps) => {
         )}
         {coin.links.subreddit_url && coin.links.subreddit_url !== "https://www.reddit.com" && (
           <tr>
-            <th className="text-left pr-4 font-semibold">Subreddit:</th>
-            <td className="text-left">
+            <th className="text-left p-0 pr-4 font-semibold">Subreddit:</th>
+            <td className="text-left p-2">
               <a
                 href={coin.links.subreddit_url}
                 target="_blank"
@@ -74,8 +74,8 @@ const CoinLinks = ({ coin }: CoinLinkslProps) => {
         )}
         {coin.links.repos_url.github.map((link, index) => (
           <tr key={index}>
-            <th className="text-left pr-4 font-semibold">GitHub:</th>
-            <td className="text-left">
+            <th className="text-left p-0 pr-4 font-semibold">GitHub:</th>
+            <td className="text-left p-2">
               <a
                 href={link}
                 target="_blank"

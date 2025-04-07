@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-const CoinDetailPage = async ({ params }: Props) => {
+const CoinPage = async ({ params }: Props) => {
   const { id } = await params;
 
   let coin: Coin | null = null;
@@ -77,4 +77,4 @@ const CoinDetailPage = async ({ params }: Props) => {
   );
 };
 
-export default CoinDetailPage;
+export default CoinPage;

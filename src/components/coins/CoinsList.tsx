@@ -5,9 +5,13 @@ import { useState, useEffect } from "react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { Loading, Pagination, Alert, Input } from "@/lib/fluid";
 import { useCoins } from "@/lib/contexts/CoinsContext";
+import { useUser } from "@/lib/contexts/UserContext";
+import { FaPlusCircle, FaCheckCircle } from "@/components/ui/CustomIcons";
+import { SimpleCoin } from "@/lib/types";
 
 const CoinsList = () => {
   const { coins, loading, error } = useCoins();
+  const { addUserCoin, removeUserCoin, isCoinInCollection } = useUser();
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -21,6 +25,14 @@ const CoinsList = () => {
       setPage(queryPage);
     }
   }, [searchParams]);
+
+  const handleToggleCoin = (coin: SimpleCoin) => {
+    if (isCoinInCollection(coin.id)) {
+      removeUserCoin(coin.id);
+    } else {
+      addUserCoin(coin);
+    }
+  };
 
   const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFilterText(event.target.value);
@@ -78,10 +90,27 @@ const CoinsList = () => {
                   href={{
                     pathname: `/coins/${coin.id}`,
                   }}
-                  className="stretched-link"
+                  title="See more dtails about this coin"
+                  className="text-primary hover:underline font-semibold"
                 >
                   {coin.name} <small>({coin.symbol.toUpperCase()})</small>
                 </Link>
+                <button
+                  onClick={() =>
+                    handleToggleCoin({
+                      id: coin.id,
+                      name: coin.name,
+                      symbol: coin.symbol,
+                    })
+                  }
+                  className={`${isCoinInCollection(coin.id) ? "text-info" : "text-neutral"}`}
+                >
+                  {isCoinInCollection(coin.id) ? (
+                    <FaCheckCircle size={"2rem"} title="Remove from Watchlist?" />
+                  ) : (
+                    <FaPlusCircle size={"2rem"} title="Add to Watchlist?" />
+                  )}
+                </button>
               </li>
             ))}
           </ul>

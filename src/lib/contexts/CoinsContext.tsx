@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { SimpleCoin } from "@/lib/types";
-import { coinIdsToRemove } from "@/lib/constants";
+import { coinIdsToRemove } from "@/lib/config";
 
 type CoinsContextType = {
   coins: SimpleCoin[];

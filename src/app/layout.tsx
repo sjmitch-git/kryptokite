@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
-import "./globals.css";
+import "@/styles/index.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { CoinsProvider } from "@/lib/contexts/CoinsContext";

@@ -17,4 +17,6 @@ export {
   CardBody,
   CardImage,
   CardFooter,
+  Label,
+  Checkbox,
 } from "@smitch/fluid";

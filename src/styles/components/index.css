@@ -1,0 +1,11 @@
+.section {
+  @apply space-y-4 py-4 px-2 md:px-4 md:border md:rounded bg-slate-200;
+}
+
+.alert a {
+  text-decoration: underline;
+}
+
+.dialog {
+  @apply min-w-[380px];
+}

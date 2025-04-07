@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   description: description,
 };
 
-export default function Coins() {
+export default function CoinsPage() {
   return (
     <article>
       <Hero title={title} description={description} />
