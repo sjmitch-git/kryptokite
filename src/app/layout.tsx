@@ -25,6 +25,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: new URL(URLs.base),
   },
+  twitter: {
+    card: "summary",
+  },
   openGraph: {
     title: MetaData.defaultSitename,
     description: MetaData.defaultDescription,
