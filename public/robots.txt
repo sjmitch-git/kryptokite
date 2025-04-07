@@ -1,4 +1,5 @@
 User-agent: *
 Disallow:
 Disallow: */watchlist
+Disallow: */portfolio
 Sitemap: https://kryptokite.vercel.app/sitemap.xml
