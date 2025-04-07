@@ -39,7 +39,7 @@ const CoinSummary = ({ coin }: Props) => {
                 24h %
               </th>
             )}
-            {coin.market_data.price_change_percentage_7d && (
+            {coin.market_data.price_change_percentage_7d !== 0 && (
               <th
                 className={`text-center whitespace-nowrap ${
                   coin.market_data.price_change_percentage_7d < 0 ? "text-error" : "text-success"
@@ -53,9 +53,7 @@ const CoinSummary = ({ coin }: Props) => {
         </thead>
         <tbody>
           <tr className="bg-white shadow">
-            {coin.market_cap_rank > 0 && (
-              <td className="text-center">#{coin.market_cap_rank || "N/A"}</td>
-            )}
+            <td className="text-center">#{coin.market_cap_rank || "N/A"}</td>
             <td className="hidden md:table-cell text-center">
               <CoinThumb src={coin.image.small} alt={coin.name} size={64} className="w-16 h-auto" />
             </td>
@@ -71,7 +69,7 @@ const CoinSummary = ({ coin }: Props) => {
                 {coin.market_data.price_change_percentage_24h.toFixed(4)}
               </td>
             )}
-            {coin.market_data.price_change_percentage_7d && (
+            {coin.market_data.price_change_percentage_7d !== 0 && (
               <td className="text-center">
                 {coin.market_data.price_change_percentage_7d.toFixed(4)}
               </td>
