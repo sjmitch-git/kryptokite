@@ -97,7 +97,7 @@ const WatchListCoins = () => {
   const startIndex = (page - 1) * perPage;
   const endIndex = startIndex + perPage;
   const currentCoins = filteredCoins.slice(startIndex, endIndex);
-  console.log("currentCoins", currentCoins);
+
   if (loadingCoins) {
     return (
       <div>

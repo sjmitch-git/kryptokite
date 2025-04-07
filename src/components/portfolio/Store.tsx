@@ -65,7 +65,6 @@ const Store = ({ store }: StoreProps) => {
 
   const sellCoin = (coin: StoredCoin) => {
     setCoin(coin);
-    console.log("Coin to sell:", coin);
     setIsOpen(true);
   };
 
