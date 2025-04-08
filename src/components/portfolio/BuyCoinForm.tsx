@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import { useUser } from "@/lib/contexts/UserContext";
 import { Coin } from "@/lib/types";
 import { STORES_CONFIG } from "@/lib/constants";
-import { Button, Label, Input, Checkbox } from "@smitch/fluid";
+import { Button, Label, Input } from "@smitch/fluid";
 import { formatNumber } from "@/lib/utils";
 
 interface BuyCoinFormProps {
@@ -18,8 +18,8 @@ interface BuyCoinFormProps {
 const BuyCoinForm = ({ storeId, storeBalance, coin, coinPrice, onClose }: BuyCoinFormProps) => {
   const { addCoinToStore } = useUser();
   const [purchaseAmount, setPurchaseAmount] = useState<number>(0);
-  const [useAllBalance, setUseAllBalance] = useState<boolean>(false);
   const purchaseAmountRef = useRef<HTMLInputElement>(null);
+  const allBalanceRef = useRef<HTMLInputElement>(null);
   const { currency } = STORES_CONFIG;
 
   const handleBuyCoin = () => {
@@ -28,22 +28,25 @@ const BuyCoinForm = ({ storeId, storeBalance, coin, coinPrice, onClose }: BuyCoi
     handleClose();
   };
 
+  const purchaseAmountChange = (value: number) => {
+    setPurchaseAmount(value);
+    if (allBalanceRef.current) allBalanceRef.current.checked = false;
+  };
+
   const handleUseAllBalanceChange = (checked: boolean) => {
-    setUseAllBalance(checked);
     if (checked) {
       setPurchaseAmount(storeBalance);
       if (purchaseAmountRef.current) purchaseAmountRef.current.value = String(storeBalance);
-    } else {
-      setPurchaseAmount(0);
-      if (purchaseAmountRef.current) purchaseAmountRef.current.value = "0";
     }
   };
 
   const handleClose = () => {
     setPurchaseAmount(0);
-    setUseAllBalance(false);
+    if (allBalanceRef.current) allBalanceRef.current.checked = false;
     if (purchaseAmountRef.current) purchaseAmountRef.current.value = "0";
-    onClose();
+    setTimeout(() => {
+      onClose();
+    }, 100);
   };
 
   const coinAmount = purchaseAmount > 0 && coinPrice > 0 ? purchaseAmount / coinPrice : 0;
@@ -64,7 +67,7 @@ const BuyCoinForm = ({ storeId, storeBalance, coin, coinPrice, onClose }: BuyCoi
             name="purchaseAmount"
             ref={purchaseAmountRef}
             value={purchaseAmount}
-            onChange={(e) => setPurchaseAmount(Number(e.target.value))}
+            onChange={(e) => purchaseAmountChange(Number(e.target.value))}
             placeholder={`Enter amount in ${currency}`}
             max={storeBalance}
             min={0}
@@ -72,13 +75,14 @@ const BuyCoinForm = ({ storeId, storeBalance, coin, coinPrice, onClose }: BuyCoi
             className="w-full border-neutral"
           />
         </Label>
-        <Checkbox
-          label="Use all available balance"
-          labelIsBold={false}
-          checked={useAllBalance}
-          name="allbalance"
-          onChange={(e) => handleUseAllBalanceChange(e.target.checked)}
-        />
+        <Label label="Use all available balance" type="checkbox" layout="row_reverse">
+          <Input
+            name="useAllBalance"
+            type="checkbox"
+            ref={allBalanceRef}
+            onChange={(e) => handleUseAllBalanceChange(e.target.checked)}
+          />
+        </Label>
       </div>
       <div className="flex flex-col gap-4 text-lg">
         <div className="flex justify-between">

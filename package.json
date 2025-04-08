@@ -11,7 +11,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@smitch/fluid": "^3.0.19",
+    "@smitch/fluid": "^3.0.22",
     "@tailwindcss/forms": "^0.5.10",
     "@vercel/analytics": "^1.5.0",
     "autoprefixer": "^10.4.20",
