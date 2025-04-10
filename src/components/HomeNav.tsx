@@ -4,7 +4,7 @@ import { HomeLinks } from "@/lib/config";
 
 const HomeNav = () => {
   return (
-    <div className="grid grid-cols-3 gap-2 md:gap-4 lg:gap-8 px-2 md:px-4 lg:px-0">
+    <div className="grid grid-cols-2 md:grid-cols-3 gap-4 lg:gap-8 px-2 md:px-4 lg:px-0">
       {HomeLinks.map((card) => (
         <Card
           shadow="md"

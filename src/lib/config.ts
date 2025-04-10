@@ -76,4 +76,8 @@ export const coinIdsToRemove = [
   "all-in-one-wallet",
   "solayer-usd",
   "0xlsd",
+  "fiat24-chf",
+  "fiat24-eur",
+  "anchored-coins-chf",
+  "alpha-zchf-vault",
 ];
