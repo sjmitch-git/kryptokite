@@ -112,9 +112,11 @@ export async function GET(request: NextRequest) {
       { message: 'News generated and stored', url: blob.url },
       { status: 200 }
     );
-  } catch (error) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+    console.error('Error generating news:', error);
     return NextResponse.json(
-      { error: 'Failed to generate news', details: error.message },
+      { error: 'Failed to generate news', details: errorMessage },
       { status: 500 }
     );
   }

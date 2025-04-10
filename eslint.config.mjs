@@ -1,6 +1,8 @@
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import { FlatCompat } from "@eslint/eslintrc";
+import globals from 'globals';
+import jestPlugin from 'eslint-plugin-jest';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -18,12 +20,16 @@ const eslintConfig = [
   },
   {
     files: ["**/*.spec.ts", "**/*.spec.tsx", "**/__tests__/**/*.ts", "**/__tests__/**/*.tsx"],
-    env: {
-      jest: true,
+    languageOptions: {
+      globals: {
+        ...globals.jest,
+      },
     },
-    plugins: ["jest"],
-    extends: ["plugin:jest/recommended"],
+    plugins: {
+      jest: jestPlugin,
+    },
     rules: {
+      ...jestPlugin.configs.recommended.rules,
       "jest/no-disabled-tests": "warn",
       "jest/no-focused-tests": "error",
       "jest/no-identical-title": "error",
