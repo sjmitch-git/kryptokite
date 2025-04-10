@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import type { Store, StoredCoin } from "@/lib/types";
@@ -42,13 +44,10 @@ const Store = ({ store }: StoreProps) => {
       }
       const data = await response.json();
       setFetchedCoins(data);
-    } catch (error: unknown) {
-  const errorMessage = (error as Error)?.message ?? 'Unknown error occurred';
+    catch (error: unknown) {
+  const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
   console.error('Error generating store:', error);
-  return NextResponse.json(
-    { error: 'Failed to generate store', details: errorMessage },
-    { status: 500 }
-  );
+  setError(errorMessage);
 } finally {
       setLoading(false);
     }
