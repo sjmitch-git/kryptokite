@@ -28,7 +28,7 @@ const CreateStore = () => {
     addStore(storeName, storeDescription);
     setStoreName("");
     setStoreDescription("");
-    if (storeDescriptionRef) storeDescriptionRef.current.value = '';
+    if (storeDescriptionRef.current) storeDescriptionRef.current.value = '';
     router.push(`/portfolio/${storeName}`);
   };
 
