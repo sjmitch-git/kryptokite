@@ -15,7 +15,7 @@ const CryptoNews = () => {
   const [sections, setSections] = useState<NewsSection[]>([]);
   const [date, setDate] = useState('');
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchNewsUrl = async () => {
@@ -35,7 +35,7 @@ const CryptoNews = () => {
         }
       }
     };
-
+    setLoading(true);
     fetchNewsUrl();
   }, []);
 
@@ -82,7 +82,15 @@ const CryptoNews = () => {
         sections.map((section, index) => (
           <div key={index} className='section'>
             <Heading level={3}>{section.headline}</Heading>
-            <p className='max-w-prose text-lg'>{section.body}</p>
+            <p
+                className='max-w-prose text-lg'
+                dangerouslySetInnerHTML={{
+                  __html: section.body.replace(
+                    /<span class='([^']+)'>([^<]+)<\/span>/g,
+                    `<a href="/coins/$1" class="coin-link"><span class='$1'>$2</span></a>`
+                  ),
+                }}
+              />
           </div>
         ))
       ) : (

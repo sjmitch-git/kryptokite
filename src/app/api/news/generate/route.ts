@@ -3,6 +3,7 @@ import { put } from '@vercel/blob';
 import OpenAI from 'openai';
 
 interface Coin {
+  id: string;
   name: string;
   current_price: number;
   price_change_percentage_24h: number;
@@ -53,32 +54,32 @@ export async function GET(request: NextRequest) {
       }
     )}. The JSON should have a "sections" array, where each section contains:
     - "headline": A short title summarizing the section.
-    - "body": A detailed explanation of the section.
+    - "body": A detailed, well-written explanation of the section, approximately 100-150 words. When mentioning coins from the provided data, wrap their names in HTML <span> tags with a class matching their ID (e.g., <span class='bitcoin'>Bitcoin</span>).
 
     Use the following data:
     ${coins
       .map(
         (coin: Coin) =>
-          `${coin.name}: $${coin.current_price}, ${coin.price_change_percentage_24h}%`
+          `${coin.id}: ${coin.name}: $${coin.current_price}, ${coin.price_change_percentage_24h}% (24h change)`
       )
       .join('\n') || 'No market data available'}
 
     Include the following sections:
-    1. Market trends
-    2. Price movements
-    3. Notable events
-    4. Predictions for the next 24 hours
+    1. Market Trends: Analyze current trends in the cryptocurrency market based on the provided data.
+    2. Price Movements: Discuss significant price changes in the listed coins over the past 24 hours.
+    3. Notable Events: Highlight specific, recent incidents in the crypto space (e.g., major hacks, exchange listings, or high-profile partnerships) that have impacted the market.
+    4. Emerging Technologies and Trends: Explore new technologies, blockchain advancements, or industry shifts (e.g., DeFi innovations, layer-2 solutions, or adoption trends) that could influence cryptocurrencies in the near future.
 
     Example JSON format:
     {
       "sections": [
         {
           "headline": "Market Trends Overview",
-          "body": "Detailed explanation of market trends..."
+          "body": "The market is buzzing as <span class='bitcoin'>Bitcoin</span> leads the charge..."
         },
         {
           "headline": "Price Movements",
-          "body": "Detailed explanation of price movements..."
+          "body": "<span class='ethereum'>Ethereum</span> saw a sharp 5% increase today..."
         }
       ]
     }

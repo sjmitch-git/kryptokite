@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/lib/contexts/UserContext";
 import { Button, Label, Input } from "@smitch/fluid";
@@ -11,11 +11,13 @@ const CreateStore = () => {
   const [storeName, setStoreName] = useState("");
   const [storeDescription, setStoreDescription] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const storeDescriptionRef = useRef(React.HTMLInputElement);
 
   useEffect(() => {
     const name = `Collection ${stores.length + 1}`;
     setStoreName(name);
     isStoreNameTaken(name);
+    setStoreDescription('');
   }, [stores]);
 
   const router = useRouter();
@@ -26,6 +28,7 @@ const CreateStore = () => {
     addStore(storeName, storeDescription);
     setStoreName("");
     setStoreDescription("");
+    if (storeDescriptionRef) storeDescriptionRef.current.value = '';
     router.push(`/portfolio/${storeName}`);
   };
 
@@ -57,10 +60,11 @@ const CreateStore = () => {
   const isFormInvalid = !storeName || Boolean(error);
 
   return (
+
     <form
       onSubmit={handleCreateStore}
-      className="space-y-4 py-4 px-2 md:px-4 md:border md:rounded bg-slate-200"
     >
+      <div className="space-y-4 py-4 px-2 md:px-4 md:border md:rounded bg-slate-200">
       <h2 className="text-xl font-bold">Create a New Collection</h2>
       <div className="grid grid-cols-2 gap-x-8 md:gap-x-16 gap-y-4">
         <div className="col-span-2 md:col-span-1">
@@ -84,6 +88,7 @@ const CreateStore = () => {
           <Label label="Description:" layout="row" size="lg">
             <Input
               type="text"
+              ref={storeDescriptionRef}
               id="storeDescription"
               title="Optional"
               hint
@@ -95,14 +100,17 @@ const CreateStore = () => {
             />
           </Label>
         </div>
-        <div className="flex justify-center md:justify-end col-span-2">
+
+      </div>
+      </div>
+      <div className="flex justify-center md:justify-end col-span-2 bg-slate-300 py-2 px-2 md:px-4">
           <Button type="submit" suppressHydrationWarning={true} disabled={isFormInvalid}>
             Create &quot;{storeName}&quot;
           </Button>
         </div>
-      </div>
       {error && <p className="text-error text-sm mt-1">{error}</p>}
     </form>
+
   );
 };
 
