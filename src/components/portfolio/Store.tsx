@@ -55,7 +55,7 @@ const Store = ({ store }: StoreProps) => {
 
   useEffect(() => {
     fetchCoins();
-  }, [fetchCoins, fetchedCoins]);
+  }, [fetchCoins]);
 
   const updatedCoins = store.coins.map((coin) => {
     const fetchedCoin = fetchedCoins?.find(
