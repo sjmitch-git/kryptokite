@@ -76,7 +76,9 @@ const CryptoNews = () => {
   return (
     <div className="crypto-news mb-8 px-2 md:px-4 lg:px-0">
       <Heading level={2}>Crypto News</Heading>
-      <p className='mb-4'><em>Published: {formatDate(date)}</em></p>
+      {date && !isNaN(new Date(date).getTime()) && (
+        <p className='mb-4'><em>Published: {formatDate(date)}</em></p>
+      )}
       <div className='space-y-8'>
       {sections.length > 0 ? (
         sections.map((section, index) => (
@@ -94,7 +96,7 @@ const CryptoNews = () => {
           </div>
         ))
       ) : (
-        <Alert message='No news available' status="warning" />
+       ''
       )}
       </div>
     </div>
