@@ -44,13 +44,13 @@ const Store = ({ store }: StoreProps) => {
       }
       const data = await response.json();
       setFetchedCoins(data);
-    catch (error: unknown) {
-  const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-  console.error('Error generating store:', error);
-  setError(errorMessage);
-} finally {
-      setLoading(false);
-    }
+      } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+    console.error('Error fetching coins:', error);
+    setError(errorMessage);
+  } finally {
+    setLoading(false);
+  }
   }, [store.coinIds]);
 
   useEffect(() => {
