@@ -22,7 +22,7 @@ describe("calculateCoinsPurchased", () => {
   });
 
   it("should throw an error if price is not a number", () => {
-    expect(() => calculateCoinsPurchased(1000, "50").toThrow(
+    expect(() => calculateCoinsPurchased(1000, "50")).toThrow(
       "Dollar amount and price must be numbers"
     );
   });

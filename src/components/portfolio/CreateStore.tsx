@@ -16,7 +16,7 @@ const CreateStore = () => {
     const name = `Collection ${stores.length + 1}`;
     setStoreName(name);
     isStoreNameTaken(name);
-  }, [stores, isStoreNameTaken]);
+  }, [stores]);
 
   const router = useRouter();
   const { nameMaxLength } = STORES_CONFIG;
