@@ -92,6 +92,10 @@ export async function GET(request: NextRequest) {
       temperature: 0.7,
     });
 
+    if (!response.choices || response.choices.length === 0 || !response.choices[0].message || !response.choices[0].message.content) {
+      throw new Error('Invalid OpenAI response: No content found');
+    }
+
     const newsText = response.choices[0].message.content.trim();
 
     const blob = await put(
