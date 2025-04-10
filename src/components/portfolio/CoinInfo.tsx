@@ -3,9 +3,10 @@
 import { useState, useEffect } from "react";
 import { Coin } from "@/lib/types";
 import { Alert, Loading } from "@smitch/fluid";
-
+import {NEXT_PUBLIC_API_URL} from '@/lib/constants';
 import CoinInfoTable from "./CoinInfoTable";
 import CoinInfoHero from "./CoinInfoHero";
+import GraphTabs from "../coins/GraphTabs"
 
 interface CoinInfoProps {
   coinId: string;
@@ -33,7 +34,7 @@ const CoinInfo = ({
         setLoading(true);
         setError(null);
 
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/coins/${coinId}`);
+        const response = await fetch(`${NEXT_PUBLIC_API_URL}api/coins/${coinId}`);
         if (!response.ok) {
           throw new Error(`Failed to fetch data for coin with id ${coinId}`);
         }
@@ -76,6 +77,7 @@ const CoinInfo = ({
       <hr />
       <CoinInfoHero coin={coin} />
       <CoinInfoTable coin={coin} setIsOpen={setIsOpen} storeBalance={storeBalance || 0} />
+      <GraphTabs coin={coin} />
     </div>
   );
 };

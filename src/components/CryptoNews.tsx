@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import {Heading, Alert, Loading} from '@/lib/fluid';
 import {formatDate} from '@/lib/utils';
+import {NEXT_PUBLIC_API_URL} from '@/lib/constants';
 
 interface NewsSection {
   headline: string;
@@ -19,7 +20,7 @@ const CryptoNews = () => {
   useEffect(() => {
     const fetchNewsUrl = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/news`);
+        const response = await fetch(`${NEXT_PUBLIC_API_URL}api/news`);
         if (!response.ok) {
           throw new Error("Failed to fetch news data");
         }
