@@ -53,7 +53,7 @@ const CoinInfo = ({
     };
 
     fetchCoinData();
-  }, [coinId]);
+  }, [coinId, setCoin, setCoinPrice]);
 
   if (loading) {
     return (

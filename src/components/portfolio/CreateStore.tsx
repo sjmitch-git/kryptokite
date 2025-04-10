@@ -16,7 +16,7 @@ const CreateStore = () => {
     const name = `Collection ${stores.length + 1}`;
     setStoreName(name);
     isStoreNameTaken(name);
-  }, [stores]);
+  }, [stores, isStoreNameTaken]);
 
   const router = useRouter();
   const { nameMaxLength } = STORES_CONFIG;
@@ -97,7 +97,7 @@ const CreateStore = () => {
         </div>
         <div className="flex justify-center md:justify-end col-span-2">
           <Button type="submit" suppressHydrationWarning={true} disabled={isFormInvalid}>
-            Create "{storeName}"
+            Create &quot;{storeName}&quot;
           </Button>
         </div>
       </div>

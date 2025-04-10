@@ -18,7 +18,7 @@ const EditStore = ({ storeName }: EditStoreProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [timestamp, setTimestamp] = useState("");
   const router = useRouter();
-  const { currency, initialBalance } = STORES_CONFIG;
+  const { currency } = STORES_CONFIG;
 
   useEffect(() => {
     if (store?.createdAt) {

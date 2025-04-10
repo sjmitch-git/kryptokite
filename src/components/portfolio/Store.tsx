@@ -42,16 +42,21 @@ const Store = ({ store }: StoreProps) => {
       }
       const data = await response.json();
       setFetchedCoins(data);
-    } catch (err: any) {
-      setError(err.message || "An error occurred while fetching coin data");
-    } finally {
+    } catch (error: unknown) {
+  const errorMessage = (error as Error)?.message ?? 'Unknown error occurred';
+  console.error('Error generating store:', error);
+  return NextResponse.json(
+    { error: 'Failed to generate store', details: errorMessage },
+    { status: 500 }
+  );
+} finally {
       setLoading(false);
     }
   }, [store.coinIds]);
 
   useEffect(() => {
     fetchCoins();
-  }, [fetchCoins]);
+  }, [fetchCoins, fetchedCoins]);
 
   const updatedCoins = store.coins.map((coin) => {
     const fetchedCoin = fetchedCoins?.find(

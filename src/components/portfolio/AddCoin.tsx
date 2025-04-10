@@ -6,7 +6,7 @@ import { useCoins } from "@/lib/contexts/CoinsContext";
 import { useUser } from "@/lib/contexts/UserContext";
 import CoinInfo from "./CoinInfo";
 import BuyCoinForm from "./BuyCoinForm";
-import { Dialog, Label, Alert, Input, Autocomplete } from "@smitch/fluid";
+import { Dialog, Label, Alert, Input } from "@smitch/fluid";
 
 interface Props {
   storeId: string | undefined;
@@ -31,7 +31,7 @@ const AddCoin = ({ storeId, storeBalance }: Props) => {
     }, 2000);
 
     return () => clearTimeout(searchCoins);
-  }, [searchTerm]);
+  }, [searchTerm, coins]);
 
   return (
     <div className="space-y-4 py-4 px-2 md:px-4 md:border md:rounded bg-slate-200">
