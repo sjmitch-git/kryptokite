@@ -2,11 +2,17 @@ import { NextResponse, NextRequest } from 'next/server';
 import { put } from '@vercel/blob';
 import OpenAI from 'openai';
 
+interface Coin {
+  name: string;
+  current_price: number;
+  price_change_percentage_24h: number;
+}
+
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-const fetchCoinGeckoData = async () => {
+const fetchCoinGeckoData = async (): Promise<Coin[]> => {
   const url = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd';
   const options: RequestInit = {
     method: 'GET',
@@ -22,7 +28,7 @@ const fetchCoinGeckoData = async () => {
       throw new Error(`Failed to fetch coins data: ${response.statusText}`);
     }
     const data = await response.json();
-    return data;
+    return data as Coin[];
   } catch (error) {
     console.error('Failed to fetch CoinGecko data:', error);
     return [];
@@ -52,7 +58,7 @@ export async function GET(request: NextRequest) {
     Use the following data:
     ${coins
       .map(
-        (coin) =>
+        (coin: Coin) =>
           `${coin.name}: $${coin.current_price}, ${coin.price_change_percentage_24h}%`
       )
       .join('\n') || 'No market data available'}
