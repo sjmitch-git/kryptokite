@@ -35,9 +35,9 @@ const CryptoNews = () => {
   }, []);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async (url: string) => {
       try {
-        const response = await fetch(newsUrl);
+        const response = await fetch(url);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -46,13 +46,14 @@ const CryptoNews = () => {
         setSections(parsedContent.sections);
         setDate(data.date);
         setLoading(false);
-      } catch (err) {
-        setError(err.message);
+      } catch (err: unknown) {
+        const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+        setError(errorMessage);
         setLoading(false);
       }
     };
 
-    if (newsUrl) fetchData();
+    if (newsUrl) fetchData(newsUrl);
   }, [newsUrl]);
 
   if (loading) {
