@@ -4,9 +4,14 @@ import { useState, useEffect } from "react";
 import {Heading, Alert, Loading} from '@/lib/fluid';
 import {formatDate} from '@/lib/utils';
 
+interface NewsSection {
+  headline: string;
+  body: string;
+}
+
 const CryptoNews = () => {
   const [newsUrl, setNewsUrl] = useState<string | null>(null);
-  const [sections, setSections] = useState([]);
+  const [sections, setSections] = useState<NewsSection[]>([]);
   const [date, setDate] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -21,7 +26,6 @@ const CryptoNews = () => {
         const data = await response.json();
 
         setNewsUrl(data.url);
-        console.log('data', data.url)
       } catch (err: unknown) {
         if (err instanceof Error) {
           setError(err.message);
