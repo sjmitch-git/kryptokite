@@ -58,7 +58,7 @@ const CryptoNews = () => {
 
   if (loading) {
     return <div className="flex justify-center p-8">
-          <Loading message='Fetching latest crypto news' size='lg' loadingColor="info" />
+          <Loading caption='Fetching latest crypto news' size='lg' loadingColor="info" />
         </div>;
   }
 
