@@ -11,7 +11,7 @@ const CreateStore = () => {
   const [storeName, setStoreName] = useState("");
   const [storeDescription, setStoreDescription] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const storeDescriptionRef = useRef(React.HTMLInputElement);
+  const storeDescriptionRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const name = `Collection ${stores.length + 1}`;
