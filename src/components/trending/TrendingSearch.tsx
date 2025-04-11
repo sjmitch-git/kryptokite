@@ -24,12 +24,20 @@ const TrendingSearch = () => {
 
   useEffect(() => {
     const fetchTrendingCoins = async () => {
+      const cachedTrendingCoins = sessionStorage.getItem("trendingCoins");
+      if (cachedTrendingCoins) {
+        setTrendingCoins(JSON.parse(cachedTrendingCoins));
+        setLoading(false);
+        return;
+      }
+
       try {
         const response = await fetch("/api/trending_search");
         if (!response.ok) {
           throw new Error("Failed to fetch trending coins");
         }
         const data = await response.json();
+        sessionStorage.setItem("trendingCoins", JSON.stringify(data.coins));
         setTrendingCoins(data.coins);
       } catch (error) {
         if (error instanceof Error) {
