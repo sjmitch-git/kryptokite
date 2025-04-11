@@ -1,6 +1,6 @@
-import { NextResponse, NextRequest } from 'next/server';
-import { put } from '@vercel/blob';
-import OpenAI from 'openai';
+import { NextResponse, NextRequest } from "next/server";
+import { put } from "@vercel/blob";
+import OpenAI from "openai";
 
 interface Coin {
   id: string;
@@ -9,17 +9,24 @@ interface Coin {
   price_change_percentage_24h: number;
 }
 
+interface Blob {
+  url: string;
+  pathname: string;
+  size: number;
+  uploadedAt: Date;
+}
+
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY || 'My API Key',
+  apiKey: process.env.OPENAI_API_KEY || "My API Key",
 });
 
 const fetchCoinGeckoData = async (): Promise<Coin[]> => {
-  const url = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd';
+  const url = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd";
   const options: RequestInit = {
-    method: 'GET',
+    method: "GET",
     headers: {
-      accept: 'application/json',
-      'x-cg-demo-api-key': process.env.COIN_GECKO_TOKEN || '',
+      accept: "application/json",
+      "x-cg-demo-api-key": process.env.COIN_GECKO_TOKEN || "",
     },
   };
 
@@ -31,38 +38,40 @@ const fetchCoinGeckoData = async (): Promise<Coin[]> => {
     const data = await response.json();
     return data as Coin[];
   } catch (error) {
-    console.error('Failed to fetch CoinGecko data:', error);
+    console.error("Failed to fetch CoinGecko data:", error);
     return [];
   }
 };
 
 export async function GET(request: NextRequest) {
-  const authHeader = request.headers.get('authorization');
+  const authHeader = request.headers.get("authorization");
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-    return new Response('Unauthorized', { status: 401 });
+    return new Response("Unauthorized", { status: 401 });
   }
 
   const coins = await fetchCoinGeckoData();
 
   const prompt = `
     Generate a structured JSON object for a crypto news update for ${new Date().toLocaleDateString(
-      'en-US',
+      "en-US",
       {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
+        year: "numeric",
+        month: "long",
+        day: "numeric",
       }
     )}. The JSON should have a "sections" array, where each section contains:
     - "headline": A short title summarizing the section.
     - "body": A detailed, well-written explanation of the section, approximately 100-150 words. When mentioning coins from the provided data, wrap their names in HTML <span> tags with a class matching their ID (e.g., <span class='bitcoin'>Bitcoin</span>).
 
     Use the following data:
-    ${coins
-      .map(
-        (coin: Coin) =>
-          `${coin.id}: ${coin.name}: $${coin.current_price}, ${coin.price_change_percentage_24h}% (24h change)`
-      )
-      .join('\n') || 'No market data available'}
+    ${
+      coins
+        .map(
+          (coin: Coin) =>
+            `${coin.id}: ${coin.name}: $${coin.current_price}, ${coin.price_change_percentage_24h}% (24h change)`
+        )
+        .join("\n") || "No market data available"
+    }
 
     Include the following sections:
     1. Market Trends: Analyze current trends in the cryptocurrency market based on the provided data.
@@ -87,37 +96,50 @@ export async function GET(request: NextRequest) {
 
   try {
     const response = await openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
-      messages: [{ role: 'user', content: prompt }],
+      model: "gpt-3.5-turbo",
+      messages: [{ role: "user", content: prompt }],
       max_tokens: 800,
       temperature: 0.7,
     });
 
-    if (!response.choices || response.choices.length === 0 || !response.choices[0].message || !response.choices[0].message.content) {
-      throw new Error('Invalid OpenAI response: No content found');
+    if (
+      !response.choices ||
+      response.choices.length === 0 ||
+      !response.choices[0].message ||
+      !response.choices[0].message.content
+    ) {
+      throw new Error("Invalid OpenAI response: No content found");
     }
 
     const newsText = response.choices[0].message.content.trim();
 
     const blob = await put(
-      'kk/news/latest.json',
+      "kk/news/latest.json",
       JSON.stringify({ content: newsText, date: new Date().toISOString() }),
       {
-        access: 'public',
-        contentType: 'application/json',
+        access: "public",
+        contentType: "application/json",
         token: process.env.VERCEL_BLOB_TOKEN,
       }
     );
 
+    // Delete old blobs
+    /* const existingBlobs = await list({ prefix: "kk/news/", token: process.env.VERCEL_BLOB_TOKEN });
+    const blobsToDelete = existingBlobs.blobs.filter((b) => b.name !== "latest.json");
+
+    for (const blob of blobsToDelete) {
+      await del(blob.pathname, { token: process.env.VERCEL_BLOB_TOKEN });
+    } */
+
     return NextResponse.json(
-      { message: 'News generated and stored', url: blob.url },
+      { message: "News generated and stored", url: blob.url },
       { status: 200 }
     );
   } catch (error: unknown) {
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-    console.error('Error generating news:', error);
+    const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
+    console.error("Error generating news:", error);
     return NextResponse.json(
-      { error: 'Failed to generate news', details: errorMessage },
+      { error: "Failed to generate news", details: errorMessage },
       { status: 500 }
     );
   }
