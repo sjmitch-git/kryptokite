@@ -9,13 +9,6 @@ interface Coin {
   price_change_percentage_24h: number;
 }
 
-interface Blob {
-  url: string;
-  pathname: string;
-  size: number;
-  uploadedAt: Date;
-}
-
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY || "My API Key",
 });
