@@ -21,6 +21,12 @@ const CryptoNews = React.memo(() => {
 
   useEffect(() => {
     const fetchNewsUrl = async () => {
+      const cachedUrl = sessionStorage.getItem("newsUrl");
+      if (cachedUrl) {
+        setNewsUrl(cachedUrl);
+        return;
+      }
+
       try {
         const response = await fetch(`${NEXT_PUBLIC_API_URL}api/news`);
         if (!response.ok) {
@@ -28,6 +34,7 @@ const CryptoNews = React.memo(() => {
         }
         const data = await response.json();
 
+        sessionStorage.setItem("newsUrl", data.url);
         setNewsUrl(data.url);
       } catch (err: unknown) {
         if (err instanceof Error) {
@@ -136,5 +143,7 @@ const CryptoNews = React.memo(() => {
     </div>
   );
 });
+
+CryptoNews.displayName = "CryptoNews";
 
 export default CryptoNews;
