@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
-import { put } from "@vercel/blob";
+import { put, head, del } from "@vercel/blob";
 import OpenAI from "openai";
 
 interface Coin {
@@ -106,23 +106,23 @@ export async function GET(request: NextRequest) {
 
     const newsText = response.choices[0].message.content.trim();
 
+    const path = "kk/news/latest.json";
+    const existingBlob = await head(path, { token: process.env.VERCEL_BLOB_TOKEN });
+
+    if (existingBlob) {
+      await del(path, { token: process.env.VERCEL_BLOB_TOKEN });
+    }
+
     const blob = await put(
-      "kk/news/latest.json",
+      path,
       JSON.stringify({ content: newsText, date: new Date().toISOString() }),
       {
         access: "public",
         contentType: "application/json",
         token: process.env.VERCEL_BLOB_TOKEN,
+        addRandomSuffix: false,
       }
     );
-
-    // Delete old blobs
-    /* const existingBlobs = await list({ prefix: "kk/news/", token: process.env.VERCEL_BLOB_TOKEN });
-    const blobsToDelete = existingBlobs.blobs.filter((b) => b.name !== "latest.json");
-
-    for (const blob of blobsToDelete) {
-      await del(blob.pathname, { token: process.env.VERCEL_BLOB_TOKEN });
-    } */
 
     return NextResponse.json(
       { message: "News generated and stored", url: blob.url },
