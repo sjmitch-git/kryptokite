@@ -19,4 +19,5 @@ export {
   CardFooter,
   Label,
   Checkbox,
+  StatBar,
 } from "@smitch/fluid";

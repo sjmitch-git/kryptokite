@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import parse, { DOMNode, domToReact, Element } from "html-react-parser";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Heading, Alert, Loading } from "@/lib/fluid";
 import { formatDate } from "@/lib/utils";
 import { NEXT_PUBLIC_API_URL } from "@/lib/constants";
@@ -12,7 +12,7 @@ interface NewsSection {
   body: string;
 }
 
-const CryptoNews = () => {
+const CryptoNews = React.memo(() => {
   const [newsUrl, setNewsUrl] = useState<string | null>(null);
   const [sections, setSections] = useState<NewsSection[]>([]);
   const [date, setDate] = useState("");
@@ -37,19 +37,37 @@ const CryptoNews = () => {
         }
       }
     };
-    setLoading(true);
     fetchNewsUrl();
   }, []);
 
   useEffect(() => {
     const fetchData = async (url: string) => {
+      const cachedData = sessionStorage.getItem("cryptoNews");
+      if (cachedData) {
+        const { sections, date } = JSON.parse(cachedData);
+        setSections(sections);
+        setDate(date);
+        setLoading(false);
+        return;
+      }
+
       try {
+        setLoading(true);
         const response = await fetch(url);
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
         const parsedContent = JSON.parse(data.content);
+
+        sessionStorage.setItem(
+          "cryptoNews",
+          JSON.stringify({
+            sections: parsedContent.sections,
+            date: data.date,
+          })
+        );
+
         setSections(parsedContent.sections);
         setDate(data.date);
         setLoading(false);
@@ -117,6 +135,6 @@ const CryptoNews = () => {
       </div>
     </div>
   );
-};
+});
 
 export default CryptoNews;
