@@ -4,14 +4,25 @@ const token = process.env.BLOB_READ_WRITE_TOKEN;
 
 const folderPath = `kk/news/`;
 
+let cachedBlob: { url: string; pathname: string; size: number; uploadedAt: Date } | null = null;
+
 export async function GET() {
+  if (cachedBlob) {
+    return NextResponse.json(cachedBlob, { status: 200 });
+  }
+
   try {
     const data = await list({
       prefix: folderPath,
       token: token,
     });
 
-    const latestBlob = data.blobs[data.blobs.length - 1]
+    const sortedBlobs = data.blobs.sort(
+      (a, b) => new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime()
+    );
+
+    const latestBlob = sortedBlobs[0];
+    cachedBlob = latestBlob;
 
     return NextResponse.json(latestBlob, { status: 200 });
   } catch (error) {

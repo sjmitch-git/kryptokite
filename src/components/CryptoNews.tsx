@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+import parse, { domToReact, Element } from 'html-react-parser';
 import { useState, useEffect } from "react";
 import {Heading, Alert, Loading} from '@/lib/fluid';
 import {formatDate} from '@/lib/utils';
@@ -84,15 +86,21 @@ const CryptoNews = () => {
         sections.map((section, index) => (
           <div key={index} className='section'>
             <Heading level={3}>{section.headline}</Heading>
-            <p
-                className='max-w-prose text-lg'
-                dangerouslySetInnerHTML={{
-                  __html: section.body.replace(
-                    /<span class='([^']+)'>([^<]+)<\/span>/g,
-                    `<a href="/coins/$1" class="coin-link"><span class='$1'>$2</span></a>`
-                  ),
-                }}
-              />
+            <p className='news-section max-w-prose text-lg'>
+                {parse(section.body, {
+                  replace: (domNode) => {
+                    if (domNode instanceof Element && domNode.name === 'span' && domNode.attribs.class) {
+                      const coinId = domNode.attribs.class;
+                      const coinName = domToReact(domNode.children);
+                      return (
+                        <Link href={`/coins/${coinId}`} className="coin-link">
+                          <strong>{coinName}</strong>
+                        </Link>
+                      );
+                    }
+                  },
+                })}
+              </p>
           </div>
         ))
       ) : (
