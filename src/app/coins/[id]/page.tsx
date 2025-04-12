@@ -23,10 +23,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const coin = await fetchCoinData(id);
 
   return {
-    title: `${coin.name} - cryptocurrency details`,
+    title: `${coin.name} - ${coin.market_data.current_price.usd} USD`,
     description: extractFirstSentence(coin.description.en),
     openGraph: {
-      title: `${coin.name} - cryptocurrency details`,
+      title: `${coin.name} - ${coin.market_data.current_price.usd} USD`,
       description: extractFirstSentence(coin.description.en),
       images: [
         {
@@ -45,9 +45,35 @@ const CoinPage = async ({ params }: Props) => {
 
   let coin: Coin | null = null;
   let error: string | null = null;
+  let jsonLd: Record<string, unknown> | null = null;
 
   try {
     coin = await fetchCoinData(id);
+    jsonLd = {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      name: coin.name,
+      description: extractFirstSentence(coin.description.en),
+      url: `${process.env.NEXT_PUBLIC_API_URL}coins/${coin.id}`,
+      image: coin.image.large,
+      brand: {
+        "@type": "Brand",
+        name: coin.name,
+        logo: coin.image.large,
+      },
+      offers: {
+        "@type": "Offer",
+        price: coin.market_data.current_price.usd,
+        priceCurrency: "USD",
+        availability: "https://schema.org/InStock",
+        url: `${process.env.NEXT_PUBLIC_API_URL}coins/${coin.id}`,
+      },
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: coin.sentiment_votes_up_percentage - coin.sentiment_votes_down_percentage,
+        reviewCount: coin.watchlist_portfolio_users,
+      },
+    };
   } catch (err: unknown) {
     if (err instanceof Error) {
       error = err.message;
@@ -66,6 +92,10 @@ const CoinPage = async ({ params }: Props) => {
 
   return (
     <article>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Hero
         title={coin.name}
         description={`${extractFirstSentence(coin.description.en)}`}
