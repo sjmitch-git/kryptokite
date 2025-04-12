@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const coin = await fetchCoinData(id);
 
-  const hashtag = coin.links.twitter_screen_name ? `#${coin.links.twitter_screen_name}` : null;
+  const hashtag = coin.links.twitter_screen_name ? `#${coin.links.twitter_screen_name} ` : null;
   const title = `${coin.name} - ${formatNumber(coin.market_data.current_price.usd)} USD`;
 
   return {
@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: extractFirstSentence(coin.description.en),
     openGraph: {
       title: title,
-      description: `${extractFirstSentence(coin.description.en)} ${hashtag}`,
+      description: `${hashtag}${extractFirstSentence(coin.description.en)}`,
       images: [
         {
           url: coin.image.large,
