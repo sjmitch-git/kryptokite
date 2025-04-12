@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "@/styles/index.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -52,6 +53,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`antialiased flex flex-col min-h-screen`}>
         <Analytics />
+        <SpeedInsights />
         <CoinsProvider>
           <UserProvider>
             <Header />
