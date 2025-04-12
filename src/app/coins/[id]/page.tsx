@@ -70,8 +70,16 @@ const CoinPage = async ({ params }: Props) => {
       },
       aggregateRating: {
         "@type": "AggregateRating",
-        ratingValue: coin.sentiment_votes_up_percentage - coin.sentiment_votes_down_percentage,
-        reviewCount: coin.watchlist_portfolio_users,
+        ratingValue: Math.min(
+          Math.max(
+            ((coin.sentiment_votes_up_percentage - coin.sentiment_votes_down_percentage) / 100) * 5,
+            0
+          ),
+          5
+        ).toFixed(1),
+        bestRating: 5,
+        worstRating: 0,
+        reviewCount: coin.watchlist_portfolio_users.toLocaleString(),
       },
     };
   } catch (err: unknown) {
