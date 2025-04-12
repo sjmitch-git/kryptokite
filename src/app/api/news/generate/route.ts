@@ -107,11 +107,11 @@ export async function GET(request: NextRequest) {
     const newsText = response.choices[0].message.content.trim();
 
     const path = "kk/news/latest.json";
-    const existingBlob = await head(path, { token: process.env.VERCEL_BLOB_TOKEN });
+    /* const existingBlob = await head(path, { token: process.env.VERCEL_BLOB_TOKEN });
 
     if (existingBlob) {
       await del(path, { token: process.env.VERCEL_BLOB_TOKEN });
-    }
+    } */
 
     const blob = await put(
       path,
@@ -120,7 +120,7 @@ export async function GET(request: NextRequest) {
         access: "public",
         contentType: "application/json",
         token: process.env.VERCEL_BLOB_TOKEN,
-        addRandomSuffix: false,
+        //addRandomSuffix: false,
       }
     );
 
