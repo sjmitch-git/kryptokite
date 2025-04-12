@@ -58,7 +58,7 @@ const CoinInfoTable = ({ coin, setIsOpen, storeBalance }: CoinInfoTableProps) =>
                   7d %
                 </th>
               )}
-            {sentiment !== 0 && <th className="text-center">Approval</th>}
+            {sentiment !== 0 && <th className="text-center">Sentiment</th>}
             <th></th>
           </tr>
         </thead>

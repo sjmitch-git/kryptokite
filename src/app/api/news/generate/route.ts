@@ -66,17 +66,11 @@ export async function GET(request: NextRequest) {
         .join("\n") || "No market data available"
     }
 
-    Include the following sections:
-    1. Market Trends: Analyze current trends in the cryptocurrency market based on the provided data.
-    2. Price Movements: Discuss significant price changes in the listed coins over the past 24 hours.
-    3. Notable Events: Highlight specific, recent incidents in the crypto space (e.g., major hacks, exchange listings, or high-profile partnerships) that have impacted the market.
-    4. Emerging Technologies and Trends: Explore new technologies, blockchain advancements, or industry shifts that could influence cryptocurrencies in the near future.
-
     Example JSON format:
     {
       "sections": [
         {
-          "headline": "Market Trends Overview",
+          "headline": "Overview",
           "body": "The market is buzzing as <span class='bitcoin'>Bitcoin</span> leads the charge..."
         },
         {

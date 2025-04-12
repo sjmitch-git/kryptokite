@@ -6,77 +6,29 @@ import React, { useState, useEffect } from "react";
 import { Heading, Alert, Loading } from "@/lib/fluid";
 import { formatDate } from "@/lib/utils";
 import { NEXT_PUBLIC_API_URL } from "@/lib/constants";
+import { useCoins } from "@/lib/contexts/CoinsContext";
 
 interface NewsSection {
   headline: string;
   body: string;
 }
 
-const CryptoNews = React.memo(() => {
-  const [newsUrl, setNewsUrl] = useState<string | null>(null);
-  const [sections, setSections] = useState<NewsSection[]>([]);
-  const [date, setDate] = useState("");
+const CryptoNews = () => {
+  const { sections, date, setNewsData } = useCoins();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const fetchNewsUrl = async () => {
-      const cachedUrl = sessionStorage.getItem("newsUrl");
-      if (cachedUrl) {
-        setNewsUrl(cachedUrl);
-        return;
-      }
-
+    const fetchData = async () => {
       try {
-        const response = await fetch(`${NEXT_PUBLIC_API_URL}api/news`);
+        setLoading(true);
+        const response = await fetch(`${NEXT_PUBLIC_API_URL}api/news/get`);
         if (!response.ok) {
           throw new Error("Failed to fetch news data");
         }
         const data = await response.json();
 
-        sessionStorage.setItem("newsUrl", data.url);
-        setNewsUrl(data.url);
-      } catch (err: unknown) {
-        if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError("An unknown error occurred");
-        }
-      }
-    };
-    fetchNewsUrl();
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async (url: string) => {
-      const cachedData = sessionStorage.getItem("cryptoNews");
-      if (cachedData) {
-        const { sections, date } = JSON.parse(cachedData);
-        setSections(sections);
-        setDate(date);
-        setLoading(false);
-        return;
-      }
-
-      try {
-        setLoading(true);
-        const response = await fetch(url);
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        const parsedContent = JSON.parse(data.content);
-
-        sessionStorage.setItem(
-          "cryptoNews",
-          JSON.stringify({
-            sections: parsedContent.sections,
-            date: data.date,
-          })
-        );
-
-        setSections(parsedContent.sections);
-        setDate(data.date);
+        setNewsData(data.sections, data.date);
         setLoading(false);
       } catch (err: unknown) {
         const errorMessage = err instanceof Error ? err.message : "Unknown error";
@@ -85,8 +37,10 @@ const CryptoNews = React.memo(() => {
       }
     };
 
-    if (newsUrl) fetchData(newsUrl);
-  }, [newsUrl]);
+    if (sections.length === 0) {
+      fetchData();
+    }
+  }, [sections, setNewsData]);
 
   if (loading) {
     return (
@@ -142,8 +96,6 @@ const CryptoNews = React.memo(() => {
       </div>
     </div>
   );
-});
-
-CryptoNews.displayName = "CryptoNews";
+};
 
 export default CryptoNews;

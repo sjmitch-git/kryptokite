@@ -4,10 +4,18 @@ import { createContext, useContext, useState, useEffect, ReactNode } from "react
 import { SimpleCoin } from "@/lib/types";
 import { coinIdsToRemove } from "@/lib/config";
 
+interface NewsSection {
+  headline: string;
+  body: string;
+}
+
 type CoinsContextType = {
   coins: SimpleCoin[];
   loading: boolean;
   error: string | null;
+  sections: NewsSection[];
+  date: string;
+  setNewsData: (sections: NewsSection[], date: string) => void;
 };
 
 const CoinsContext = createContext<CoinsContextType | undefined>(undefined);
@@ -16,6 +24,8 @@ export const CoinsProvider = ({ children }: { children: ReactNode }) => {
   const [coins, setCoins] = useState<SimpleCoin[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [sections, setSections] = useState<NewsSection[]>([]);
+  const [date, setDate] = useState("");
 
   useEffect(() => {
     const fetchCoins = async () => {
@@ -44,8 +54,15 @@ export const CoinsProvider = ({ children }: { children: ReactNode }) => {
     fetchCoins();
   }, []);
 
+  const setNewsData = (newSections: NewsSection[], newDate: string) => {
+    setSections(newSections);
+    setDate(newDate);
+  };
+
   return (
-    <CoinsContext.Provider value={{ coins, loading, error }}>{children}</CoinsContext.Provider>
+    <CoinsContext.Provider value={{ coins, loading, error, sections, date, setNewsData }}>
+      {children}
+    </CoinsContext.Provider>
   );
 };
 

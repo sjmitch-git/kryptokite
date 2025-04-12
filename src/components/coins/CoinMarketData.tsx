@@ -26,6 +26,18 @@ const CoinMarketData = ({ coin, preferredCurrency }: CoinDetailProps) => {
             {preferredCurrency.toUpperCase()}
           </td>
         </tr>
+        {coin.market_data.price_change_percentage_24h !== null && (
+          <tr>
+            <th
+              className={`text-left p-0 pr-4 font-semibold ${
+                coin.market_data.price_change_percentage_24h < 0 ? "text-red-500" : "text-green-500"
+              }`}
+            >
+              24h Change:
+            </th>
+            <td className="text-right p-2">{coin.market_data.price_change_percentage_24h} %</td>
+          </tr>
+        )}
         <tr>
           <th className="text-left p-0 pr-4 font-semibold">All time highest:</th>
           <td className="text-right p-2">
@@ -46,18 +58,7 @@ const CoinMarketData = ({ coin, preferredCurrency }: CoinDetailProps) => {
             <td className="text-right p-2">{coin.market_cap_rank}</td>
           </tr>
         )}
-        {coin.market_data.price_change_percentage_24h !== null && (
-          <tr>
-            <th
-              className={`text-left p-0 pr-4 font-semibold ${
-                coin.market_data.price_change_percentage_24h < 0 ? "text-red-500" : "text-green-500"
-              }`}
-            >
-              24h Change:
-            </th>
-            <td className="text-right p-2">{coin.market_data.price_change_percentage_24h} %</td>
-          </tr>
-        )}
+
         {coin.market_data.market_cap &&
           coin.market_data.market_cap[preferredCurrency] !== undefined && (
             <tr>
@@ -82,18 +83,6 @@ const CoinMarketData = ({ coin, preferredCurrency }: CoinDetailProps) => {
             <td className="text-right p-2">
               {coin.market_data.market_cap_change_percentage_24h} %
             </td>
-          </tr>
-        )}
-        {coin.sentiment_votes_up_percentage !== null && (
-          <tr>
-            <th className="text-left p-0 pr-4 font-semibold">Sentiment Up:</th>
-            <td className="text-right p-2">{coin.sentiment_votes_up_percentage.toFixed(0)} %</td>
-          </tr>
-        )}
-        {coin.sentiment_votes_down_percentage !== null && (
-          <tr>
-            <th className="text-left p-0 pr-4 font-semibold">Sentiment Down:</th>
-            <td className="text-right p-2">{coin.sentiment_votes_down_percentage.toFixed(0)} %</td>
           </tr>
         )}
       </tbody>

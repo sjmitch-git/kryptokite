@@ -77,6 +77,8 @@ const EditStore = ({ storeName }: EditStoreProps) => {
 
       <AddCoin storeId={store?.id} storeBalance={store?.balance} />
 
+      <hr className="my-8" />
+
       <Dialog
         open={isOpen}
         modal={true}
