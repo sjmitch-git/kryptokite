@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
-import { put, head, del } from "@vercel/blob";
+import { put } from "@vercel/blob";
 import OpenAI from "openai";
 
 interface Coin {
