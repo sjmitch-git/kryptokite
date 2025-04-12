@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { Coin } from "@/lib/types";
-import { extractFirstSentence } from "@/lib/utils";
+import { extractFirstSentence, formatNumber } from "@/lib/utils";
 import CoinDetail from "@/components/coins/CoinDetail";
 import { Alert } from "@/lib/fluid";
 import Hero from "@/components/Hero";
@@ -22,12 +22,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const coin = await fetchCoinData(id);
 
+  const hashtag = coin.links.twitter_screen_name ? `#${coin.links.twitter_screen_name}` : null;
+  const title = `${coin.name} - ${formatNumber(coin.market_data.current_price.usd)} USD`;
+
   return {
-    title: `${coin.name} - ${coin.market_data.current_price.usd} USD`,
+    title: title,
     description: extractFirstSentence(coin.description.en),
     openGraph: {
-      title: `${coin.name} - ${coin.market_data.current_price.usd} USD`,
-      description: extractFirstSentence(coin.description.en),
+      title: title,
+      description: `${extractFirstSentence(coin.description.en)} ${hashtag}`,
       images: [
         {
           url: coin.image.large,
@@ -63,7 +66,7 @@ const CoinPage = async ({ params }: Props) => {
       },
       offers: {
         "@type": "Offer",
-        price: coin.market_data.current_price.usd,
+        price: formatNumber(coin.market_data.current_price.usd),
         priceCurrency: "USD",
         availability: "https://schema.org/InStock",
         url: `${process.env.NEXT_PUBLIC_API_URL}coins/${coin.id}`,
