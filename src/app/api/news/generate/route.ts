@@ -120,7 +120,7 @@ export async function GET(request: NextRequest) {
         access: "public",
         contentType: "application/json",
         token: process.env.VERCEL_BLOB_TOKEN,
-        //addRandomSuffix: false,
+        addRandomSuffix: false,
       }
     );
 
