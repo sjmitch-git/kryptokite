@@ -8,11 +8,6 @@ import { formatDate } from "@/lib/utils";
 import { NEXT_PUBLIC_API_URL } from "@/lib/constants";
 import { useCoins } from "@/lib/contexts/CoinsContext";
 
-interface NewsSection {
-  headline: string;
-  body: string;
-}
-
 const CryptoNews = () => {
   const { sections, date, setNewsData } = useCoins();
   const [error, setError] = useState<string | null>(null);
