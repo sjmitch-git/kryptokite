@@ -38,10 +38,10 @@ const fetchCoinGeckoData = async (): Promise<Coin[]> => {
 };
 
 export async function GET(request: NextRequest) {
-  /* const authHeader = request.headers.get("authorization");
+  const authHeader = request.headers.get("authorization");
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
     return new Response("Unauthorized", { status: 401 });
-  } */
+  }
 
   const coins = await fetchCoinGeckoData();
 
@@ -122,16 +122,6 @@ export async function GET(request: NextRequest) {
     } catch (threadError) {
       console.error("Non-fatal thread error:", threadError);
     }
-
-    /* try {
-      const firstSection = sections[0];
-      const { headline, body } = firstSection;
-      const cleanBody = body.replace(/<[^>]+>/g, "");
-      const tweetContent = `${headline}: ${cleanBody}`;
-      await postTweet(tweetContent);
-    } catch (tweetError) {
-      console.error("Non-fatal tweet error:", tweetError);
-    } */
 
     const path = "kk/news/latest.json";
     const existingBlob = await head(path, { token: process.env.VERCEL_BLOB_TOKEN });
