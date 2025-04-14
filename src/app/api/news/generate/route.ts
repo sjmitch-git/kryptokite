@@ -104,7 +104,8 @@ export async function GET(request: NextRequest) {
     let sections;
     try {
       sections = JSON.parse(newsText).sections;
-    } catch (parseError) {
+    } catch (parseError: unknown) {
+      console.log("Error", parseError);
       throw new Error("Failed to parse OpenAI response as JSON");
     }
 
