@@ -1,6 +1,7 @@
 import { NextResponse, NextRequest } from "next/server";
 import { put, head, del } from "@vercel/blob";
 import OpenAI from "openai";
+import { postThread } from "@/lib/services/twitter.service";
 
 interface Coin {
   id: string;
@@ -37,10 +38,10 @@ const fetchCoinGeckoData = async (): Promise<Coin[]> => {
 };
 
 export async function GET(request: NextRequest) {
-  const authHeader = request.headers.get("authorization");
+  /* const authHeader = request.headers.get("authorization");
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
     return new Response("Unauthorized", { status: 401 });
-  }
+  } */
 
   const coins = await fetchCoinGeckoData();
 
@@ -99,6 +100,38 @@ export async function GET(request: NextRequest) {
     }
 
     const newsText = response.choices[0].message.content.trim();
+
+    let sections;
+    try {
+      sections = JSON.parse(newsText).sections;
+    } catch (parseError) {
+      throw new Error("Failed to parse OpenAI response as JSON");
+    }
+
+    if (!sections || !Array.isArray(sections) || sections.length === 0) {
+      throw new Error("No sections found in OpenAI response");
+    }
+
+    try {
+      const threadContent = sections.map((section: { headline: string; body: string }) => {
+        const { headline, body } = section;
+        const cleanBody = body.replace(/<[^>]+>/g, "");
+        return `${headline}: ${cleanBody}`;
+      });
+      await postThread(threadContent);
+    } catch (threadError) {
+      console.error("Non-fatal thread error:", threadError);
+    }
+
+    /* try {
+      const firstSection = sections[0];
+      const { headline, body } = firstSection;
+      const cleanBody = body.replace(/<[^>]+>/g, "");
+      const tweetContent = `${headline}: ${cleanBody}`;
+      await postTweet(tweetContent);
+    } catch (tweetError) {
+      console.error("Non-fatal tweet error:", tweetError);
+    } */
 
     const path = "kk/news/latest.json";
     const existingBlob = await head(path, { token: process.env.VERCEL_BLOB_TOKEN });
