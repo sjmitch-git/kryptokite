@@ -29,6 +29,14 @@ export const CoinsProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const fetchCoins = async () => {
+      const storedCoins = localStorage.getItem("storedCoins");
+
+      if (storedCoins?.length) {
+        setCoins(JSON.parse(storedCoins));
+        setLoading(false);
+        return;
+      }
+
       try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/coins`);
         if (!response.ok) {
@@ -40,6 +48,7 @@ export const CoinsProvider = ({ children }: { children: ReactNode }) => {
         });
 
         setCoins(filteredData);
+        localStorage.setItem("storedCoins", JSON.stringify(filteredData));
       } catch (err: unknown) {
         if (err instanceof Error) {
           setError(err.message);

@@ -51,13 +51,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased flex flex-col min-h-screen`}>
+      <body className={`antialiased`}>
         <Analytics />
         <SpeedInsights />
         <CoinsProvider>
           <UserProvider>
             <Header />
-            <main className="flex-grow container mx-auto max-w-4xl pt-12 pb-12 lg:py-20 px-0 relative top-12">
+            <main className="flex-grow container mx-auto max-w-4xl pt-12 pb-12 lg:py-20 px-0">
               {children}
             </main>
             <Footer />

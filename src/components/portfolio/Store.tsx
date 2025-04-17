@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
@@ -44,13 +44,13 @@ const Store = ({ store }: StoreProps) => {
       }
       const data = await response.json();
       setFetchedCoins(data);
-      } catch (error: unknown) {
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-    console.error('Error fetching coins:', error);
-    setError(errorMessage);
-  } finally {
-    setLoading(false);
-  }
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
+      console.error("Error fetching coins:", error);
+      setError(errorMessage);
+    } finally {
+      setLoading(false);
+    }
   }, [store.coinIds]);
 
   useEffect(() => {
@@ -122,7 +122,7 @@ const Store = ({ store }: StoreProps) => {
                     <span className="block font-mono uppercase">{coin.symbol}</span>
                   </td>
                   <td className="p-4 text-right">
-                    {(coin.priceAtPurchase * coin.amount).toFixed(4)}{" "}
+                    {(coin.priceAtPurchase * coin.amount).toFixed(2)}{" "}
                     <span className="block uppercase">{currency}</span>
                   </td>
                   <td className="p-4 text-right">
@@ -169,11 +169,7 @@ const Store = ({ store }: StoreProps) => {
                 <td className="p-4 text-right text-lg" colSpan={3}>
                   Collection Total
                 </td>
-                <td className="p-4 text-right">
-                  {updatedCoins
-                    .reduce((total, coin) => total + coin.priceAtPurchase * coin.amount, 0)
-                    .toFixed(4)}
-                </td>
+                <td className="p-4 text-right">{store.balance.toFixed(2)}</td>
                 <td className="p-4 text-right">
                   {updatedCoins
                     .reduce((total, coin) => total + coin.current_price * coin.amount, 0)

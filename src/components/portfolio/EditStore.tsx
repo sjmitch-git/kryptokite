@@ -65,7 +65,7 @@ const EditStore = ({ storeName }: EditStoreProps) => {
         <p className="flex flex-col md:flex-row gap-2">
           Balance:{" "}
           <span>
-            {store?.balance} {currency.toUpperCase()}
+            {store?.balance?.toFixed(2)} {currency.toUpperCase()}
           </span>
         </p>
         <p className="flex flex-col md:flex-row gap-2">
