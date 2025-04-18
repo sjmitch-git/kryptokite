@@ -3,7 +3,7 @@ import Hero from "@/components/Hero";
 import TrendingSearch from "@/components/trending/TrendingSearch";
 
 const title = "Trending Coins";
-const description = "Top coins searched for by users.";
+const description = "Top 15 trending coins (sorted by the most popular user searches)";
 
 export const metadata: Metadata = {
   title: title,

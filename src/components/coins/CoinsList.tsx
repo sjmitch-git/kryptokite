@@ -18,7 +18,7 @@ const CoinsList = () => {
   const [page, setPage] = useState(1);
   const [perPage] = useState(10);
   const [filterText, setFilterText] = useState("");
-
+  console.log("coins", coins);
   useEffect(() => {
     const queryPage = parseInt(searchParams.get("page") || "1", 10);
     if (!isNaN(queryPage) && queryPage > 0) {
