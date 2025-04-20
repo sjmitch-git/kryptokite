@@ -154,3 +154,5 @@ export type UserContextType = {
   loadingCoins: boolean;
   loadingStores: boolean;
 };
+
+export { currencySymbols } from "./types/currencySymbols";

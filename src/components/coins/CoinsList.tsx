@@ -5,34 +5,23 @@ import { useState, useEffect } from "react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { Loading, Pagination, Alert, Input } from "@/lib/fluid";
 import { useCoins } from "@/lib/contexts/CoinsContext";
-import { useUser } from "@/lib/contexts/UserContext";
-import { FaPlusCircle, FaCheckCircle } from "@/components/ui/CustomIcons";
-import { SimpleCoin } from "@/lib/types";
+import WatchlistToggle from "@/components/ui/WatchlistToggle";
 
 const CoinsList = () => {
   const { coins, loading, error } = useCoins();
-  const { addUserCoin, removeUserCoin, isCoinInCollection } = useUser();
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [page, setPage] = useState(1);
   const [perPage] = useState(10);
   const [filterText, setFilterText] = useState("");
-  console.log("coins", coins);
+
   useEffect(() => {
     const queryPage = parseInt(searchParams.get("page") || "1", 10);
     if (!isNaN(queryPage) && queryPage > 0) {
       setPage(queryPage);
     }
   }, [searchParams]);
-
-  const handleToggleCoin = (coin: SimpleCoin) => {
-    if (isCoinInCollection(coin.id)) {
-      removeUserCoin(coin.id);
-    } else {
-      addUserCoin(coin);
-    }
-  };
 
   const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFilterText(event.target.value);
@@ -95,22 +84,7 @@ const CoinsList = () => {
                 >
                   {coin.name} <small>({coin.symbol.toUpperCase()})</small>
                 </Link>
-                <button
-                  onClick={() =>
-                    handleToggleCoin({
-                      id: coin.id,
-                      name: coin.name,
-                      symbol: coin.symbol,
-                    })
-                  }
-                  className={`${isCoinInCollection(coin.id) ? "text-info" : "text-neutral"}`}
-                >
-                  {isCoinInCollection(coin.id) ? (
-                    <FaCheckCircle size={"2rem"} title="Remove from Watchlist?" />
-                  ) : (
-                    <FaPlusCircle size={"2rem"} title="Add to Watchlist?" />
-                  )}
-                </button>
+                <WatchlistToggle id={coin.id} name={coin.name} symbol={coin.symbol} />
               </li>
             ))}
           </ul>

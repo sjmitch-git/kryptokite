@@ -1,24 +1,14 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useUser } from "@/lib/contexts/UserContext";
 import { Loading, Alert } from "@/lib/fluid";
-import { SimpleCoin, TrendingCoin } from "@/lib/types";
+import { TrendingCoin } from "@/lib/types";
 import TrendingItem from "./TrendingItem";
 
 const TrendingSearch = () => {
   const [trendingCoins, setTrendingCoins] = useState<TrendingCoin[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const { addUserCoin, removeUserCoin, isCoinInCollection } = useUser();
-
-  const handleToggleCoin = (coin: SimpleCoin) => {
-    if (isCoinInCollection(coin.id)) {
-      removeUserCoin(coin.id);
-    } else {
-      addUserCoin(coin);
-    }
-  };
 
   useEffect(() => {
     const fetchTrendingCoins = async () => {
@@ -67,12 +57,7 @@ const TrendingSearch = () => {
     <div className="px-2 md:px-4 lg:px-0">
       <ul className="space-y-2">
         {trendingCoins.map((coin) => (
-          <TrendingItem
-            key={coin.item.id}
-            coin={coin}
-            handleToggleCoin={handleToggleCoin}
-            isCoinInCollection={isCoinInCollection}
-          />
+          <TrendingItem key={coin.item.id} coin={coin} />
         ))}
       </ul>
     </div>

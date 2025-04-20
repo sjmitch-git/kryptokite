@@ -9,7 +9,7 @@ const CoinSentiment = ({ up, down }: CoinSentimentProps) => {
   if (!up && !down) return "";
 
   return (
-    <div className="mb-12 -mt-4">
+    <div className="mb-8 mt-4">
       <StatBar
         colors={["#38bdf8", "#ff0000"]}
         data={[up, down]}

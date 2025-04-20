@@ -2,7 +2,7 @@ import { MetaData } from "@/lib/config";
 
 export default function Footer() {
   return (
-    <footer className="p-4 mt-8 bg-[#f3f4f6]" dir="ltr">
+    <footer className="p-4 mt-8 bg-[#f3f4f6]">
       <div className="container mx-auto text-center space-y-4">
         <img
           src={`${process.env.NEXT_PUBLIC_API_URL}logo.png`}

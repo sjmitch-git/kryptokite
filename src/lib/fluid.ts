@@ -20,4 +20,5 @@ export {
   Label,
   Checkbox,
   StatBar,
+  Toast,
 } from "@smitch/fluid";

@@ -94,7 +94,7 @@ const Store = ({ store }: StoreProps) => {
                 <th className="p-0 md:p-4 text-left"></th>
                 <th className="p-4"></th>
                 <th className="p-4 text-right">Holding</th>
-                <th className="p-4 text-right whitespace-nowrap">Bought @</th>
+                <th className="p-4 text-right">Cost</th>
                 <th className="p-4 text-right">Sell @</th>
                 <th className="p-4 text-right">Change</th>
                 <th className="p-4"></th>
@@ -169,7 +169,11 @@ const Store = ({ store }: StoreProps) => {
                 <td className="p-4 text-right text-lg" colSpan={3}>
                   Collection Total
                 </td>
-                <td className="p-4 text-right">{store.balance.toFixed(2)}</td>
+                <td className="p-4 text-right">
+                  {updatedCoins
+                    .reduce((total, coin) => total + coin.priceAtPurchase * coin.amount, 0)
+                    .toFixed(4)}
+                </td>
                 <td className="p-4 text-right">
                   {updatedCoins
                     .reduce((total, coin) => total + coin.current_price * coin.amount, 0)

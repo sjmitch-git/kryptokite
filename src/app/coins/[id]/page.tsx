@@ -18,29 +18,34 @@ const fetchCoinData = async (id: string): Promise<Coin> => {
   return coin;
 };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata | null> {
   const { id } = await params;
-  const coin = await fetchCoinData(id);
 
-  const hashtag = coin.links.twitter_screen_name ? `#${coin.links.twitter_screen_name} ` : null;
-  const title = `${coin.name} - ${formatNumber(coin.market_data.current_price.usd)} USD`;
+  try {
+    const coin = await fetchCoinData(id);
 
-  return {
-    title: title,
-    description: extractFirstSentence(coin.description.en),
-    openGraph: {
+    const hashtag = coin.links.twitter_screen_name ? `#${coin.links.twitter_screen_name} ` : null;
+    const title = `${coin.name} - ${formatNumber(coin.market_data.current_price.usd)} USD`;
+
+    return {
       title: title,
-      description: `${hashtag}${extractFirstSentence(coin.description.en)}`,
-      images: [
-        {
-          url: coin.image.large,
-          alt: `${coin.name} logo`,
-          width: 250,
-          height: 250,
-        },
-      ],
-    },
-  };
+      description: extractFirstSentence(coin.description.en),
+      openGraph: {
+        title: title,
+        description: `${hashtag}${extractFirstSentence(coin.description.en)}`,
+        images: [
+          {
+            url: coin.image.large,
+            alt: `${coin.name} logo`,
+            width: 250,
+            height: 250,
+          },
+        ],
+      },
+    };
+  } catch (err: unknown) {
+    return null;
+  }
 }
 
 const CoinPage = async ({ params }: Props) => {
