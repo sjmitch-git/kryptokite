@@ -18,7 +18,7 @@ const WatchListCoins = () => {
   const [coinData, setCoinData] = useState<Coin[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCoin, setSelectedCoin] = useState("");
-  const [loading, setLoading] = useState<Boolean>(true);
+  const [loading, setLoading] = useState<boolean>(true);
   const [currency, setCurrency] = useState("");
 
   useEffect(() => {
