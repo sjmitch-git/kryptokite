@@ -1,10 +1,20 @@
 import { TwitterApi } from "twitter-api-v2";
 
+if (
+  !process.env.TWITTER_API_KEY ||
+  !process.env.TWITTER_API_SECRET ||
+  !process.env.TWITTER_ACCESS_TOKEN ||
+  !process.env.TWITTER_ACCESS_TOKEN_SECRET
+) {
+  console.error("Twitter API credentials are missing. Please check your environment variables.");
+  throw new Error("Twitter API credentials are not set.");
+}
+
 export const twitterClient = new TwitterApi({
-  appKey: process.env.TWITTER_API_KEY || "",
-  appSecret: process.env.TWITTER_API_SECRET || "",
-  accessToken: process.env.TWITTER_ACCESS_TOKEN || "",
-  accessSecret: process.env.TWITTER_ACCESS_TOKEN_SECRET || "",
+  appKey: process.env.TWITTER_API_KEY,
+  appSecret: process.env.TWITTER_API_SECRET,
+  accessToken: process.env.TWITTER_ACCESS_TOKEN,
+  accessSecret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
 });
 
 export const postTweet = async (text: string) => {
