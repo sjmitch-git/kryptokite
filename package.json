@@ -8,7 +8,8 @@
     "start": "next start",
     "test": "jest",
     "test:watch": "jest --watch",
-    "lint": "next lint"
+    "lint": "next lint",
+    "analyze": "set ANALYZE=true && npm run build"
   },
   "dependencies": {
     "@smitch/fluid": "^3.0.25",
@@ -27,6 +28,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
+    "@next/bundle-analyzer": "^15.3.1",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
