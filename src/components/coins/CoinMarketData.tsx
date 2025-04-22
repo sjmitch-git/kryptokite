@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Coin } from "@/lib/types";
+import { Coin, currencySymbols } from "@/lib/types";
 import { formatNumber } from "@utils";
 
 type CoinDetailProps = {
@@ -16,6 +16,8 @@ const CoinMarketData = ({ coin, preferredCurrency }: CoinDetailProps) => {
     if (coin.last_updated !== null) setStamp(new Date(coin.last_updated).toLocaleString());
   }, [coin.last_updated]);
 
+  const symbol = currencySymbols[preferredCurrency] || "$";
+
   return (
     <table className="w-full md:w-auto text-right md:text-lg">
       <tbody>
@@ -23,46 +25,58 @@ const CoinMarketData = ({ coin, preferredCurrency }: CoinDetailProps) => {
           <tr>
             <th className="text-left p-0 pr-4 font-semibold">Rank:</th>
             <td className="text-right py-2 px-0">#{coin.market_cap_rank}</td>
-            <td className="p-2"></td>
           </tr>
         )}
 
         <tr>
           <th className="text-left p-0 pr-4 font-semibold">Current Price:</th>
           <td className="text-right py-2 px-0">
-            {formatNumber(coin.market_data.current_price[preferredCurrency])}
+            {symbol} {formatNumber(coin.market_data.current_price[preferredCurrency])}
           </td>
-          <td className="p-2 text-left">{preferredCurrency.toUpperCase()}</td>
         </tr>
+
+        {coin.market_data.price_change_24h_in_currency[preferredCurrency] !== null && (
+          <tr>
+            <th
+              className={`text-left p-0 pr-4 font-semibold ${
+                coin.market_data.price_change_24h_in_currency[preferredCurrency] < 0
+                  ? "text-danger"
+                  : "text-success"
+              }`}
+            >
+              24h Change:
+            </th>
+            <td className="text-right py-2 px-0">
+              {symbol} {coin.market_data.price_change_24h_in_currency[preferredCurrency]}
+            </td>
+          </tr>
+        )}
 
         {coin.market_data.price_change_percentage_24h !== null && (
           <tr>
             <th
               className={`text-left p-0 pr-4 font-semibold ${
-                coin.market_data.price_change_percentage_24h < 0 ? "text-red-500" : "text-green-500"
+                coin.market_data.price_change_percentage_24h < 0 ? "text-danger" : "text-success"
               }`}
             >
-              24h Change:
+              24h % Change:
             </th>
             <td className="text-right py-2 px-0">{coin.market_data.price_change_percentage_24h}</td>
-            <td className="p-2 text-left">%</td>
           </tr>
         )}
 
         <tr>
           <th className="text-left p-0 pr-4 font-semibold">All time highest:</th>
           <td className="text-right py-2 px-0">
-            {formatNumber(coin.market_data.ath[preferredCurrency])}
+            {symbol} {formatNumber(coin.market_data.ath[preferredCurrency])}
           </td>
-          <td className="p-2 text-left">{preferredCurrency.toUpperCase()}</td>
         </tr>
 
         <tr>
           <th className="text-left p-0 pr-4 font-semibold">All time lowest:</th>
           <td className="text-right py-2 px-0">
-            {formatNumber(coin.market_data.atl[preferredCurrency])}
+            {symbol} {formatNumber(coin.market_data.atl[preferredCurrency])}
           </td>
-          <td className="p-2 text-left">{preferredCurrency.toUpperCase()}</td>
         </tr>
 
         {coin.market_data.market_cap &&
@@ -70,9 +84,8 @@ const CoinMarketData = ({ coin, preferredCurrency }: CoinDetailProps) => {
             <tr>
               <th className="text-left p-0 pr-4 font-semibold">Market Cap:</th>
               <td className="text-right py-2 px-0">
-                {coin.market_data.market_cap[preferredCurrency]?.toLocaleString() || "N/A"}
+                {symbol} {coin.market_data.market_cap[preferredCurrency]?.toLocaleString() || "N/A"}
               </td>
-              <td className="p-2 text-left">{preferredCurrency.toUpperCase()}</td>
             </tr>
           )}
 
@@ -85,12 +98,11 @@ const CoinMarketData = ({ coin, preferredCurrency }: CoinDetailProps) => {
                   : "text-green-500"
               }`}
             >
-              Market Cap 24h Change:
+              Market Cap 24h %:
             </th>
             <td className="text-right py-2 px-0">
               {coin.market_data.market_cap_change_percentage_24h}
             </td>
-            <td className="p-2 text-left">%</td>
           </tr>
         )}
       </tbody>

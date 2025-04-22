@@ -1,53 +1,58 @@
 import Link from "next/link";
-import { SimpleCoin, TrendingCoin } from "@/lib/types";
-import { FaCaretDown, FaCaretUp, FaPlusCircle, FaCheckCircle } from "@/components/ui/CustomIcons";
+import { TrendingCoin } from "@/lib/types";
+import { FaCaretDown, FaCaretUp } from "@/components/ui/CustomIcons";
 import CoinThumb from "@/components/ui/CoinThumb";
-import { Button } from "@/lib/fluid";
 import WatchlistToggle from "@/components/ui/WatchlistToggle";
+import { formatNumber } from "@/lib/utils";
 
 interface TrendingItemProps {
   coin: TrendingCoin;
 }
 
 const TrendingItem = ({ coin }: TrendingItemProps) => {
+  const symbol = "$";
   return (
-    <li className="grid grid-cols-2 justify-between items-center max-sm:space-y-1 md:space-x-2 shadow p-2 md:p-4 text-lg md:text-xl border border-neutral-200 bg-white">
-      <div className="flex flex-row items-center md:space-x-4">
+    <li className="flex justify-between items-center text-lg md:text-xl space-x-2 md:space-x-8 shadow p-2 md:p-4 border border-neutral-200 bg-white">
+      <div className="flex justify-between items-center space-x-2 md:space-x-4">
         <div className="w-12 text-right max-sm:hidden">#{coin.item.market_cap_rank || "N/A"}</div>
-        <CoinThumb src={coin.item.thumb} alt={coin.item.name} size={64} />
-        <div className="flex flex-col gap-4 max-sm:ml-4">
-          <Link
-            href={{
-              pathname: `/coins/${coin.item.id}`,
-            }}
-            title="See more dtails about this coin"
-            className="text-primary hover:underline font-semibold"
-          >
-            {coin.item.name}
-          </Link>{" "}
-          <sup className="font-mono">{coin.item.symbol.toUpperCase()}</sup>
+        <CoinThumb src={coin.item.thumb} alt={coin.item.name} size={64} className="max-sm:!-ml-1" />
+        <div>
+          <p className="font-semibold">
+            <Link
+              href={{
+                pathname: `/coins/${coin.item.id}`,
+              }}
+              title="See more details about this coin"
+              className="text-primary hover:underline"
+            >
+              {coin.item.name}
+            </Link>
+          </p>
+          <p className="text-base text-gray-500">{coin.item.symbol.toUpperCase()}</p>
         </div>
       </div>
-      <div className="flex items-center justify-between md:space-x-4">
-        {coin.item.data.price_change_percentage_24h.usd > 0 ? (
-          <span className="text-green-500 flex flex-row items-center">
-            <FaCaretUp size={"3rem"} title="24h price change %" />{" "}
-            {coin.item.data.price_change_percentage_24h.usd.toFixed(2)}%
-          </span>
-        ) : (
-          <span className="text-red-500 flex flex-row items-center">
-            <FaCaretDown size={"3rem"} title="24h price change %" />{" "}
-            {coin.item.data.price_change_percentage_24h.usd.toFixed(2)}%
-          </span>
-        )}
-        <img
-          className="bg-white max-sm:hidden"
-          src={coin.item.data.sparkline}
-          alt={`${coin.item.name} sparkline`}
-          title="Price change over the last 7d"
-          width={135}
-          height={50}
-        />
+      <div className="flex items-center justify-between space-x-4 md:space-x-8 font-semibold">
+        <div className="flex flex-col md:flex-row md:gap-4 items-end md:items-center">
+          <p className="font-semibold text-base md:text-lg whitespace-nowrap">
+            {symbol} {formatNumber(coin.item.data.price)}
+          </p>
+          <p
+            className={`flex space-x-2 text-base ${
+              coin.item.data.price_change_percentage_24h.usd >= 0 ? "text-success" : "text-danger"
+            }`}
+          >
+            {coin.item.data.price_change_percentage_24h.usd >= 0 ? (
+              <FaCaretUp
+                size={"1.5rem"}
+                title="24h price change %"
+                className={`${coin.item.data.price_change_percentage_24h.usd === 0 && "rotate-90"}`}
+              />
+            ) : (
+              <FaCaretDown size={"1.5rem"} title="24h price change %" />
+            )}
+            {coin.item.data.price_change_percentage_24h.usd?.toFixed(2)}%
+          </p>
+        </div>
         <WatchlistToggle id={coin.item.id} name={coin.item.name} symbol={coin.item.symbol} />
       </div>
     </li>

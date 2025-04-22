@@ -13,12 +13,12 @@ type WatchListItemProps = {
 };
 
 const WatchListItem = ({ coin, openDialog, preferredCurrency = "usd" }: WatchListItemProps) => {
-  const symbol = currencySymbols[preferredCurrency] || "";
+  const symbol = currencySymbols[preferredCurrency] || "$";
 
   return (
     <li className="flex justify-between items-center text-lg md:text-xl space-x-2 md:space-x-8 shadow p-2 md:p-4 border border-neutral-200 bg-white">
       <div className="flex justify-between items-center space-x-2 md:space-x-4">
-        <div className="text-left min-w-8 max-sm:hidden">#{coin.market_cap_rank || "N/A"}</div>
+        <div className="text-left min-w-12 max-sm:hidden">#{coin.market_cap_rank || "N/A"}</div>
         <CoinThumb src={coin.image} alt={coin.name} size={64} className="max-sm:!-ml-1" />
         <div>
           <p className="font-semibold">
@@ -36,8 +36,8 @@ const WatchListItem = ({ coin, openDialog, preferredCurrency = "usd" }: WatchLis
         </div>
       </div>
       <div className="flex items-center justify-between space-x-4 md:space-x-8 font-semibold">
-        <div className="flex flex-col items-end">
-          <p className="font-semibold">
+        <div className="flex flex-col md:flex-row md:gap-4 items-end md:items-center">
+          <p className="font-semibold text-base md:text-lg whitespace-nowrap">
             {symbol} {formatNumber(coin.current_price)}
           </p>
           <p

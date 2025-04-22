@@ -13,7 +13,7 @@ export type TrendingCoin = {
     market_cap_rank: number;
     thumb: string;
     data: {
-      sparkline: string;
+      price: number;
       price_change_percentage_24h: {
         [key: string]: number;
       };

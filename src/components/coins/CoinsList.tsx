@@ -56,7 +56,7 @@ const CoinsList = () => {
     <div className="space-y-4">
       {loading ? (
         <div className="flex justify-center">
-          <Loading loadingColor="info" />
+          <Loading loadingColor="info" size="lg" />
         </div>
       ) : error ? (
         <Alert status="error" message={error} />
@@ -64,7 +64,7 @@ const CoinsList = () => {
         <div className="space-y-4 px-2 md:px-4 lg:px-0">
           <Input
             type="search"
-            placeholder="Filter coins"
+            placeholder="Filter coins by name"
             value={filterText}
             onChange={handleFilterChange}
             className="w-full p-2 border border-gray-300 rounded"
@@ -75,15 +75,20 @@ const CoinsList = () => {
                 key={coin.id}
                 className="p-4 bg-white border-b shadow relative border-gray-300 flex justify-between items-center text-xl"
               >
-                <Link
-                  href={{
-                    pathname: `/coins/${coin.id}`,
-                  }}
-                  title="See more dtails about this coin"
-                  className="text-primary hover:underline font-semibold"
-                >
-                  {coin.name} <small>({coin.symbol.toUpperCase()})</small>
-                </Link>
+                <div>
+                  <p className="font-semibold">
+                    <Link
+                      href={{
+                        pathname: `/coins/${coin.id}`,
+                      }}
+                      title="See more details about this coin"
+                      className="text-primary hover:underline"
+                    >
+                      {coin.name}
+                    </Link>
+                  </p>
+                  <p className="text-base text-gray-500">{coin.symbol.toUpperCase()}</p>
+                </div>
                 <WatchlistToggle id={coin.id} name={coin.name} symbol={coin.symbol} />
               </li>
             ))}

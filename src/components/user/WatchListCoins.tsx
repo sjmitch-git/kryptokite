@@ -101,10 +101,8 @@ const WatchListCoins = () => {
     router.push(`${pathname}?${query}`);
   };
 
-  const filteredCoins = coinData.filter(
-    (coin) =>
-      coin.name.toLowerCase().includes(filterText.toLowerCase()) ||
-      coin.symbol.toLowerCase().includes(filterText.toLowerCase())
+  const filteredCoins = coinData.filter((coin) =>
+    coin.name.toLowerCase().includes(filterText.toLowerCase())
   );
 
   const startIndex = (page - 1) * perPage;
@@ -114,7 +112,7 @@ const WatchListCoins = () => {
   if (loading) {
     return (
       <div className="flex justify-center p-8">
-        <Loading loadingColor="info" size="xl" />
+        <Loading loadingColor="info" size="lg" />
       </div>
     );
   }

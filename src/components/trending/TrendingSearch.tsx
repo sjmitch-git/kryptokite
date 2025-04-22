@@ -26,6 +26,7 @@ const TrendingSearch = () => {
         }
         const data = await response.json();
         sessionStorage.setItem("trendingCoins", JSON.stringify(data.coins));
+        console.log("trending", data);
         setTrendingCoins(data.coins);
       } catch (error) {
         if (error instanceof Error) {
