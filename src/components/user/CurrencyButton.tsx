@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Button, Dialog } from "@/lib/fluid";
-import { FaDollarSign } from "@/components/ui/CustomIcons";
 import CurrencySelector from "./CurrencySelector";
 import { currencySymbols } from "@/lib/types";
 import { useUser } from "@/lib/contexts/UserContext";

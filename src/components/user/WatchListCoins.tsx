@@ -1,14 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import { useState, useEffect } from "react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { Pagination, Alert, Input, Loading, Dialog, Button } from "@/lib/fluid";
 import { useUser } from "@/lib/contexts/UserContext";
-import { FaTrash, FaCaretDown, FaCaretUp } from "@/components/ui/CustomIcons";
 import { CoinDetails as Coin } from "@/lib/types";
-import CoinThumb from "@/components/ui/CoinThumb";
-import { formatNumber } from "@/lib/utils";
 import WatchListItem from "./WatchListItem";
 
 const WatchListCoins = () => {

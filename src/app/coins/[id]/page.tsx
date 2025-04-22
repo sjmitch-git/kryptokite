@@ -44,6 +44,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata | nu
       },
     };
   } catch (err: unknown) {
+    console.log("Error fetching coin data for metadata:", err);
     return null;
   }
 }
