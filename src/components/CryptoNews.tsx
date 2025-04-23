@@ -64,8 +64,10 @@ const CryptoNews = () => {
       <div className="space-y-8">
         {sections.length > 0
           ? sections.map((section, index) => (
-              <div key={index} className="section">
-                <Heading level={3}>{section.headline}</Heading>
+              <div key={index} className="news section">
+                <Heading level={3} className="news-headline">
+                  {section.headline}
+                </Heading>
                 <p className="news-section max-w-prose text-lg">
                   {parse(section.body, {
                     replace: (domNode) => {

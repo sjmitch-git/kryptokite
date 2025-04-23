@@ -2,7 +2,8 @@
   @apply space-y-4 py-4 px-2 md:px-4 md:border md:rounded bg-slate-200;
 }
 
-.alert a, .news-section a {
+.alert a,
+.news a {
   @apply underline hover:no-underline;
 }
 
@@ -13,4 +14,3 @@
 /* .navbar-link {
   @apply lg:!text-slate-900 hover:opacity-80;
 } */
-
