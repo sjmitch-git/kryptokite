@@ -39,7 +39,12 @@ const CategoryCoinsList = ({ id }: Props) => {
         }
 
         const data: Coin[] = await response.json();
-        setCoins(data);
+        if (Array.isArray(data)) {
+          setCoins(data);
+        } else {
+          console.error("Unexpected API response:", data);
+          setCoins([]);
+        }
       } catch (err) {
         console.error("Error fetching coins:", err);
         setError("Failed to load coins. Please try again later.");
@@ -95,9 +100,9 @@ const CategoryCoinsList = ({ id }: Props) => {
     router.push(`${pathname}?${query}`);
   };
 
-  const filteredCoins = coins.filter((coin) =>
-    coin.name.toLowerCase().includes(filterText.toLowerCase())
-  );
+  const filteredCoins = Array.isArray(coins)
+    ? coins.filter((coin) => coin.name.toLowerCase().includes(filterText.toLowerCase()))
+    : [];
 
   const startIndex = (page - 1) * perPage;
   const endIndex = startIndex + perPage;
