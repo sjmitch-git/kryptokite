@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import { SimpleCoin, Category, CategoryMarket } from "@/lib/types";
+import { SimpleCoin, CategoryMarket } from "@/lib/types";
 import { coinIdsToRemove } from "@/lib/config";
 
 interface NewsSection {
