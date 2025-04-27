@@ -118,8 +118,7 @@ const Store = ({ store }: StoreProps) => {
                     </Link>
                   </td>
                   <td className="p-4 text-right">
-                    {coin.amount.toFixed(8)}{" "}
-                    <span className="block font-mono uppercase">{coin.symbol}</span>
+                    {coin.amount.toFixed(8)} <span className="block uppercase">{coin.symbol}</span>
                   </td>
                   <td className="p-4 text-right">
                     {(coin.priceAtPurchase * coin.amount).toFixed(2)}{" "}

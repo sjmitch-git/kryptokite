@@ -60,7 +60,7 @@ const WatchlistToggle = ({ id, name, symbol }: WatchlistToggleProps) => {
         body={message}
         onClose={() => setOpen(false)}
         toastBackground={toastBackground}
-        autohide={true}
+        autohide
         autohideDuration={3000}
         horizontal="center"
         vertical="bottom"

@@ -16,6 +16,7 @@ export const Links = [
     name: "Coins",
     href: "/coins",
   },
+  { name: "Categories", href: "/categories" },
   { name: "Trending", href: "/coins/trending" },
   { name: "Watchlist", href: "/watchlist" },
   { name: "Portfolio", href: "/portfolio" },
@@ -33,15 +34,43 @@ export const HomeLinks = [
     title: "Trending",
     href: "/coins/trending",
     linkLabel: "Go",
-    body: "Top 15 trending coins",
+    body: "Top trending coins and categories",
     img: "/trending.svg",
   },
-  {
+  /* {
     title: "Watchlist",
     href: "/watchlist",
     linkLabel: "View",
     body: "View your favourite coins",
     img: "/watchlist.svg",
+  }, */
+  {
+    title: "Coinbase 50 Index",
+    href: "/categories/Coinbase 50 Index",
+    linkLabel: "Coinbase 50 Index",
+    body: "The Coinbase 50 Index is a market-capitalization-weighted index, tracking the performance of the top 50 digital assets listed on the Coinbase Exchange.",
+    img: "https://www.coinbase.com/assets/sw-cache/a_CcvONSrV.png",
+  },
+  {
+    title: "Stablecoins",
+    href: "/categories/Stablecoins",
+    linkLabel: "Stablecoins",
+    body: "A stablecoin is a type of cryptocurrency that is designed to maintain a stable value by being pegged to an external reference, such as a fiat currency.",
+    img: "https://coin-images.coingecko.com/coins/images/6319/small/usdc.png",
+  },
+  {
+    title: "Defi",
+    href: "/categories/Decentralized Finance (DeFi)",
+    linkLabel: "DeFi",
+    body: "Decentralized Finance, is a financial system that operates without central authorities or intermediaries, using blockchain technology and smart contracts to provide a range of financial services such as lending, borrowing, and trading.",
+    img: "https://coin-images.coingecko.com/coins/images/13442/small/steth_logo.png",
+  },
+  {
+    title: "Meme Coins",
+    href: "/categories/Meme",
+    linkLabel: "Meme Coins",
+    body: "Meme coins derive their relevance from memes, thriving on hype and picking up momentum as the community grows. coins.",
+    img: "https://coin-images.coingecko.com/coins/images/5/small/dogecoin.png",
   },
   {
     title: "Bitcoin",

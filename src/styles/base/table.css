@@ -1,0 +1,4 @@
+td,
+th {
+  @apply p-2 md:p-4;
+}

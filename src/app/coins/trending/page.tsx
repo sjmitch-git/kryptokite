@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import Hero from "@/components/Hero";
 import TrendingSearch from "@/components/trending/TrendingSearch";
 
-const title = "Trending Coins";
-const description = "Top 15 trending coins (sorted by the most popular user searches)";
+const title = "Trending";
+const description = "Top trending coins and categories (sorted by the most popular user searches)";
 
 export const metadata: Metadata = {
   title: title,

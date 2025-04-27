@@ -1,16 +1,17 @@
 import Link from "next/link";
-import { TrendingCoin } from "@/lib/types";
+import { TrendingCoin as Coin } from "@/lib/types";
 import { FaCaretDown, FaCaretUp } from "@/components/ui/CustomIcons";
 import CoinThumb from "@/components/ui/CoinThumb";
 import WatchlistToggle from "@/components/ui/WatchlistToggle";
 import { formatNumber } from "@/lib/utils";
 
 interface TrendingItemProps {
-  coin: TrendingCoin;
+  coin: Coin;
 }
 
-const TrendingItem = ({ coin }: TrendingItemProps) => {
+const TrendingCoin = ({ coin }: TrendingItemProps) => {
   const symbol = "$";
+
   return (
     <li className="flex justify-between items-center text-lg md:text-xl space-x-2 md:space-x-8 shadow p-2 md:p-4 border border-neutral-200 bg-white">
       <div className="flex justify-between items-center space-x-2 md:space-x-4">
@@ -59,4 +60,4 @@ const TrendingItem = ({ coin }: TrendingItemProps) => {
   );
 };
 
-export default TrendingItem;
+export default TrendingCoin;

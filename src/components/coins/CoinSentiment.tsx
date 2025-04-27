@@ -11,7 +11,7 @@ const CoinSentiment = ({ up, down }: CoinSentimentProps) => {
   return (
     <div className="mb-8 mt-4">
       <StatBar
-        colors={["#38bdf8", "#ff0000"]}
+        colors={["#22c55e", "#ec4899"]}
         data={[up, down]}
         labels={["Up", "Down"]}
         showLabels

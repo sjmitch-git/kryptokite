@@ -88,7 +88,7 @@ const CoinPage = async ({ params }: Props) => {
         ).toFixed(1),
         bestRating: 5,
         worstRating: 0,
-        reviewCount: coin.watchlist_portfolio_users.toLocaleString(),
+        reviewCount: coin.watchlist_portfolio_users,
       },
     };
   } catch (err: unknown) {

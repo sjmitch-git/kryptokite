@@ -59,9 +59,11 @@ const CoinMarketData = ({ coin, preferredCurrency }: CoinDetailProps) => {
                 coin.market_data.price_change_percentage_24h < 0 ? "text-danger" : "text-success"
               }`}
             >
-              24h % Change:
+              24h Change %:
             </th>
-            <td className="text-right py-2 px-0">{coin.market_data.price_change_percentage_24h}</td>
+            <td className="text-right py-2 px-0">
+              % {coin.market_data.price_change_percentage_24h}
+            </td>
           </tr>
         )}
 
@@ -94,14 +96,14 @@ const CoinMarketData = ({ coin, preferredCurrency }: CoinDetailProps) => {
             <th
               className={`text-left p-0 pr-4 font-semibold ${
                 coin.market_data.market_cap_change_percentage_24h < 0
-                  ? "text-red-500"
-                  : "text-green-500"
+                  ? "text-danger"
+                  : "text-success"
               }`}
             >
-              Market Cap 24h %:
+              Market Cap 24h:
             </th>
             <td className="text-right py-2 px-0">
-              {coin.market_data.market_cap_change_percentage_24h}
+              % {coin.market_data.market_cap_change_percentage_24h}
             </td>
           </tr>
         )}

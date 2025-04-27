@@ -1,0 +1,3 @@
+.toast {
+  @apply min-w-px shadow-lg;
+}

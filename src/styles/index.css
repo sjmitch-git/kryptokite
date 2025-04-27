@@ -1,29 +1,17 @@
+@import "./variables.css";
+
 @import "tailwindcss/base";
-@import "./base/index.css";
+@import "./base/_index.css";
 
 @import "tailwindcss/components";
-@import "./components/index.css";
+@import "./components/_index.css";
 
 @import "tailwindcss/utilities";
 @import "./utilities/index.css";
 
-:root {
-  --background-light: theme("colors.gray.100");
-  --background-dark: theme("colors.gray.900");
-  --foreground-light: theme("colors.gray.100");
-  --foreground-dark: theme("colors.gray.900");
-}
-
-:root {
-  --background: var(--background-light);
-  --foreground: var(--foreground-dark);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: var(--background-dark);
-    --foreground: var(--foreground-light);
-  }
+html,
+body {
+  height: 100%;
 }
 
 body {

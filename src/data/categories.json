@@ -1,0 +1,26 @@
+[
+  {
+    "category_id": "currencies",
+    "name": "Currencies"
+  },
+  {
+    "category_id": "platform-tokens",
+    "name": "Platform Tokens"
+  },
+  {
+    "category_id": "stablecoins",
+    "name": "Stablecoins"
+  },
+  {
+    "category_id": "utility-tokens",
+    "name": "Utility Tokens"
+  },
+  {
+    "category_id": "governance-tokens",
+    "name": "Governance Tokens"
+  },
+  {
+    "category_id": "privacy-coins",
+    "name": "Privacy Coins"
+  }
+]

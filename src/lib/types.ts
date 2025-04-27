@@ -5,6 +5,36 @@ export type SimpleCoin = {
   [key: string]: string | number;
 };
 
+export type CategoryMarket = {
+  id: string;
+  name: string;
+  content: string;
+  top_3_coins: string[];
+  top_3_coins_id: string[];
+};
+
+export type Category = {
+  category_id: string;
+  name: string;
+};
+
+export type CategoryCoin = {
+  id: string;
+  symbol: string;
+  name: string;
+  image: string;
+  current_price: number;
+  market_cap: number;
+  market_cap_rank: number;
+  price_change_24h: number;
+  price_change_percentage_24h: number;
+  market_cap_change_24h: number;
+  market_cap_change_percentage_24h: number;
+  ath: number;
+  atl: number;
+  last_updated: string;
+};
+
 export type TrendingCoin = {
   item: {
     id: string;
@@ -21,6 +51,21 @@ export type TrendingCoin = {
   };
 };
 
+export type TrendingCategory = {
+  coins_count: string;
+  slug: string;
+  name: string;
+  market_cap_1h_change: number;
+  data: {
+    market_cap: number;
+    market_cap_change_percentage_24h: {
+      [key: string]: number;
+    };
+    sparkline: string;
+    total_volume: number;
+  };
+};
+
 export type Coin = SimpleCoin & {
   sentiment_votes_down_percentage: number;
   sentiment_votes_up_percentage: number;
@@ -30,6 +75,7 @@ export type Coin = SimpleCoin & {
   description: {
     en: string;
   };
+  categories: string[];
   market_data: {
     market_cap_change_percentage_24h: number;
     current_price: {

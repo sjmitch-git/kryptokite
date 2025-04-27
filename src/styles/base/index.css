@@ -1,8 +1,0 @@
-td,
-th {
-  @apply p-2 md:p-4;
-}
-
-.h1 {
-  @apply font-petite-caps;
-}

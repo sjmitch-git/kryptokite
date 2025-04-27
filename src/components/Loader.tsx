@@ -2,7 +2,7 @@ import { Loading } from "@/lib/fluid";
 
 export default function Loader() {
   return (
-    <div className="min-h-screen flex items-start justify-center pt-32">
+    <div className="flex items-start justify-center p-8">
       <Loading size="xl" loadingColor="info" />
     </div>
   );

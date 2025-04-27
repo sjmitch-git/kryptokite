@@ -11,54 +11,56 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: {
-          DEFAULT: colors.indigo[600],
-          light: colors.indigo[300],
-          dark: colors.indigo[900],
-        },
-        secondary: {
-          DEFAULT: colors.violet[600],
-          light: colors.violet[300],
-          dark: colors.violet[900],
-        },
-        accent: {
-          DEFAULT: colors.amber[600],
-          light: colors.amber[300],
-          dark: colors.amber[700],
-        },
-        neutral: {
-          DEFAULT: colors.stone[300],
-        },
         light: {
-          DEFAULT: colors.stone[100],
+          DEFAULT: "var(--light)",
         },
         dark: {
-          DEFAULT: colors.stone[900],
+          DEFAULT: "var(--dark)",
+        },
+        primary: {
+          DEFAULT: "var(--primary)",
+          light: "var(--primary-light)",
+          dark: "var(--primary-dark)",
+        },
+        secondary: {
+          DEFAULT: "var(--secondary)",
+          light: "var(--secondary-light)",
+          dark: "var(--secondary-dark)",
+        },
+        accent: {
+          DEFAULT: "var(--accent)",
+          light: "var(--accent-light)",
+          dark: "var(--accent-dark)",
+        },
+        neutral: {
+          DEFAULT: "var(--neutral)",
+          light: "var(--neutral-light)",
+          dark: "var(--neutral-dark)",
         },
         info: {
-          DEFAULT: colors.sky[400],
-          light: colors.sky[200],
-          dark: colors.sky[600],
+          DEFAULT: "var(--info)",
+          light: "var(--info-light)",
+          dark: "var(--info-dark)",
         },
         success: {
-          DEFAULT: colors.green[600],
-          light: colors.green[400],
-          dark: colors.green[800],
+          DEFAULT: "var(--success)",
+          light: "var(--success-light)",
+          dark: "var(--success-dark)",
         },
         warning: {
-          DEFAULT: colors.amber[500],
-          light: colors.amber[300],
-          dark: colors.amber[700],
+          DEFAULT: "var(--warning)",
+          light: "var(--warning-light)",
+          dark: "var(--warning-dark)",
         },
         error: {
-          DEFAULT: colors.red[600],
-          light: colors.red[400],
-          dark: colors.red[800],
+          DEFAULT: "var(--error)",
+          light: "var(--error-light)",
+          dark: "var(--error-dark)",
         },
         danger: {
-          DEFAULT: colors.red[600],
-          light: colors.red[400],
-          dark: colors.red[800],
+          DEFAULT: "var(--danger)",
+          light: "var(--danger-light)",
+          dark: "var(--danger-dark)",
         },
       },
     },

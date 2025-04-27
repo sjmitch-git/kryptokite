@@ -57,7 +57,7 @@ export default function RootLayout({
         <CoinsProvider>
           <UserProvider>
             <Header />
-            <main className="flex-grow container mx-auto max-w-4xl pt-12 pb-12 px-0 min-h-screen">
+            <main className="flex-grow container mx-auto max-w-4xl pt-12 pb-12 px-0">
               {children}
             </main>
             <Footer />

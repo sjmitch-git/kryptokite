@@ -130,29 +130,30 @@ const WatchListCoins = () => {
               className="w-full p-2 border border-gray-300 rounded"
             />
           )}
-          <div>
-            <ul className="mb-8 space-y-2 md:space-y-4">
-              {currentCoins.map((coin) => (
-                <WatchListItem
-                  key={coin.id}
-                  coin={coin}
-                  openDialog={openDialog}
-                  preferredCurrency={preferredCurrency}
-                />
-              ))}
-            </ul>
-          </div>
 
-          <div>
-            {filteredCoins.length > perPage && (
-              <Pagination
-                page={page.toString()}
-                results={filteredCoins.length}
-                range={perPage}
-                onChange={handlePageChange}
+          <ul className="mb-8 space-y-2 md:space-y-4">
+            {currentCoins.map((coin) => (
+              <WatchListItem
+                key={coin.id}
+                coin={coin}
+                openDialog={openDialog}
+                preferredCurrency={preferredCurrency}
               />
-            )}
-          </div>
+            ))}
+          </ul>
+
+          {filteredCoins.length > perPage && (
+            <div className="pagination-wrapper">
+              {filteredCoins.length !== 0 && (
+                <Pagination
+                  page={page.toString()}
+                  results={filteredCoins.length}
+                  range={perPage}
+                  onChange={handlePageChange}
+                />
+              )}
+            </div>
+          )}
         </div>
       )}
       <Dialog

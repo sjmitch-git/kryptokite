@@ -1,0 +1,3 @@
+.pagination-wrapper {
+  @apply sticky bottom-0 bg-light pt-4;
+}

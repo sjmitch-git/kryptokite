@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Coin } from "@/lib/types";
 
 type CoinLinkslProps = {
@@ -8,6 +9,21 @@ const CoinLinks = ({ coin }: CoinLinkslProps) => {
   return (
     <table className="w-auto text-right md:text-lg mb-8">
       <tbody>
+        <tr>
+          <th className="text-left p-0 pr-4 font-semibold">Categories:</th>
+          <td className="text-left p-2">
+            {coin.categories.map((category, index) => (
+              <Link
+                key={index}
+                href={`/categories/${category}`}
+                title={`View all coins in the ${category} category`}
+                className="inline-block bg-gray-200 text-gray-800 text-sm font-medium px-2 py-1 rounded mr-2"
+              >
+                {category}
+              </Link>
+            ))}
+          </td>
+        </tr>
         {coin.links.homepage[0] && (
           <tr>
             <th className="text-left p-0 pr-4 font-semibold">Homepage:</th>

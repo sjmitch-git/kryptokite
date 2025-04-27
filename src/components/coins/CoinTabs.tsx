@@ -36,13 +36,12 @@ const CoinTabs = ({ coin }: CoinDetailProps) => {
         </div>
 
         {coin.links.twitter_screen_name && (
-          <div id="tab3" title={`@${coin.links.twitter_screen_name}`} className="bg-white p-0">
-            <TwitterEmbed
-              height={400}
-              scrollbars
-              handle={coin.links.twitter_screen_name}
-              className="max-w-[100%]"
-            />
+          <div
+            id="tab3"
+            title={`@${coin.links.twitter_screen_name}`}
+            className="bg-white p-0 h-[560px] md:h-[650px] overflow-y-scroll"
+          >
+            <TwitterEmbed handle={coin.links.twitter_screen_name} className="max-w-full" />
           </div>
         )}
       </Tabs>

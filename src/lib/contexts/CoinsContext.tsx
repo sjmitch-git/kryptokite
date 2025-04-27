@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import { SimpleCoin } from "@/lib/types";
+import { SimpleCoin, Category, CategoryMarket } from "@/lib/types";
 import { coinIdsToRemove } from "@/lib/config";
 
 interface NewsSection {
@@ -11,6 +11,7 @@ interface NewsSection {
 
 type CoinsContextType = {
   coins: SimpleCoin[];
+  categories: CategoryMarket[];
   loading: boolean;
   error: string | null;
   sections: NewsSection[];
@@ -22,33 +23,50 @@ const CoinsContext = createContext<CoinsContextType | undefined>(undefined);
 
 export const CoinsProvider = ({ children }: { children: ReactNode }) => {
   const [coins, setCoins] = useState<SimpleCoin[]>([]);
+  const [categories, setCategories] = useState<CategoryMarket[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [sections, setSections] = useState<NewsSection[]>([]);
   const [date, setDate] = useState("");
 
   useEffect(() => {
-    const fetchCoins = async () => {
-      const storedCoins = localStorage.getItem("storedCoins");
-
-      if (storedCoins?.length) {
-        setCoins(JSON.parse(storedCoins));
-        setLoading(false);
-        return;
-      }
+    const fetchData = async () => {
+      setLoading(true);
+      setError(null);
 
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/coins`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch coins list");
+        // Fetch categories
+        const storedCategories = localStorage.getItem("storedCategories");
+        if (storedCategories?.length) {
+          setCategories(JSON.parse(storedCategories));
+        } else {
+          const categoriesResponse = await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}api/coins/categories/market`
+          );
+          if (!categoriesResponse.ok) {
+            throw new Error("Failed to fetch categories");
+          }
+          const categoriesData = await categoriesResponse.json();
+          setCategories(categoriesData);
+          localStorage.setItem("storedCategories", JSON.stringify(categoriesData));
         }
-        const data = await response.json();
-        const filteredData = data.filter((coin: SimpleCoin) => {
-          return !coinIdsToRemove.includes(coin.id);
-        });
 
-        setCoins(filteredData);
-        localStorage.setItem("storedCoins", JSON.stringify(filteredData));
+        // Fetch coins
+        const storedCoins = localStorage.getItem("storedCoins");
+        if (storedCoins?.length) {
+          setCoins(JSON.parse(storedCoins));
+        } else {
+          const coinsResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/coins`);
+          if (!coinsResponse.ok) {
+            throw new Error("Failed to fetch coins");
+          }
+          const coinsData = await coinsResponse.json();
+          const filteredCoins = coinsData.filter((coin: SimpleCoin) => {
+            return !coinIdsToRemove.includes(coin.id);
+          });
+          setCoins(filteredCoins);
+          localStorage.setItem("storedCoins", JSON.stringify(filteredCoins));
+        }
       } catch (err: unknown) {
         if (err instanceof Error) {
           setError(err.message);
@@ -60,7 +78,7 @@ export const CoinsProvider = ({ children }: { children: ReactNode }) => {
       }
     };
 
-    fetchCoins();
+    fetchData();
   }, []);
 
   const setNewsData = (newSections: NewsSection[], newDate: string) => {
@@ -69,7 +87,9 @@ export const CoinsProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <CoinsContext.Provider value={{ coins, loading, error, sections, date, setNewsData }}>
+    <CoinsContext.Provider
+      value={{ coins, categories, loading, error, sections, date, setNewsData }}
+    >
       {children}
     </CoinsContext.Provider>
   );
