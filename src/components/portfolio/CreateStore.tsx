@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/lib/contexts/UserContext";
 import { Button, Label, Input } from "@smitch/fluid";
