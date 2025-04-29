@@ -11,14 +11,8 @@ const CreateStore = () => {
   const [storeName, setStoreName] = useState("");
   const [storeDescription, setStoreDescription] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const storeNameRef = useRef<HTMLInputElement>(null);
   const storeDescriptionRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    const name = `Collection ${stores.length + 1}`;
-    setStoreName(name);
-    isStoreNameTaken(name);
-    setStoreDescription('');
-  }, [stores]);
 
   const router = useRouter();
   const { nameMaxLength } = STORES_CONFIG;
@@ -28,7 +22,8 @@ const CreateStore = () => {
     addStore(storeName, storeDescription);
     setStoreName("");
     setStoreDescription("");
-    if (storeDescriptionRef.current) storeDescriptionRef.current.value = '';
+    if (storeNameRef.current) storeNameRef.current.value = "";
+    if (storeDescriptionRef.current) storeDescriptionRef.current.value = "";
     router.push(`/portfolio/${storeName}`);
   };
 
@@ -60,57 +55,53 @@ const CreateStore = () => {
   const isFormInvalid = !storeName || Boolean(error);
 
   return (
-
-    <form
-      onSubmit={handleCreateStore}
-    >
+    <form onSubmit={handleCreateStore}>
       <div className="space-y-4 py-4 px-2 md:px-4 md:border md:rounded bg-slate-200">
-      <h2 className="text-xl font-bold">Create a New Collection</h2>
-      <div className="grid grid-cols-2 gap-x-8 md:gap-x-16 gap-y-4">
-        <div className="col-span-2 md:col-span-1">
-          <Label label="Name:" layout="row" size="lg" required>
-            <Input
-              type="text"
-              id="storeName"
-              title={`Max Length ${nameMaxLength}`}
-              className={error ? "border-error text-error" : ""}
-              hint
-              value={storeName}
-              onChange={handleStoreNameChange}
-              placeholder="Enter a new name"
-              maxLength={nameMaxLength}
-              required
-              suppressHydrationWarning
-            />
-          </Label>
+        <h2 className="text-xl font-bold">Create a New Collection</h2>
+        <div className="grid grid-cols-2 gap-x-8 md:gap-x-16 gap-y-4">
+          <div className="col-span-2 md:col-span-1">
+            <Label label="Name:" layout="row" size="lg" required>
+              <Input
+                type="text"
+                ref={storeNameRef}
+                id="storeName"
+                title={`Max Length ${nameMaxLength}`}
+                className={error ? "border-error text-error" : ""}
+                hint
+                value={storeName}
+                onChange={handleStoreNameChange}
+                placeholder="Enter a new name"
+                maxLength={nameMaxLength}
+                required
+                suppressHydrationWarning
+              />
+            </Label>
+          </div>
+          <div className="col-span-2 md:col-span-1">
+            <Label label="Description:" layout="row" size="lg">
+              <Input
+                type="text"
+                ref={storeDescriptionRef}
+                id="storeDescription"
+                title="Optional"
+                hint
+                value={storeDescription}
+                onChange={handleStoreDescriptionChange}
+                placeholder="Enter a description"
+                maxLength={100}
+                suppressHydrationWarning
+              />
+            </Label>
+          </div>
         </div>
-        <div className="col-span-2 md:col-span-1">
-          <Label label="Description:" layout="row" size="lg">
-            <Input
-              type="text"
-              ref={storeDescriptionRef}
-              id="storeDescription"
-              title="Optional"
-              hint
-              value={storeDescription}
-              onChange={handleStoreDescriptionChange}
-              placeholder="Enter a description"
-              maxLength={100}
-              suppressHydrationWarning
-            />
-          </Label>
-        </div>
-
-      </div>
       </div>
       <div className="flex justify-center md:justify-end col-span-2 bg-slate-300 py-2 px-2 md:px-4">
-          <Button type="submit" suppressHydrationWarning={true} disabled={isFormInvalid}>
-            Create &quot;{storeName}&quot;
-          </Button>
-        </div>
+        <Button type="submit" suppressHydrationWarning={true} disabled={isFormInvalid}>
+          Create Collection
+        </Button>
+      </div>
       {error && <p className="text-error text-sm mt-1">{error}</p>}
     </form>
-
   );
 };
 

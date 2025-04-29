@@ -11,10 +11,10 @@ const StorePage = async ({ params }: Props) => {
   const decodedId = decodeURIComponent(id);
 
   return (
-    <article>
-      <Hero title={decodedId} />
+    <>
+      <Hero title={decodedId} className="!mb-0" />
       <EditStore storeName={decodedId} />
-    </article>
+    </>
   );
 };
 
