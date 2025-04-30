@@ -18,7 +18,7 @@ export type Category = {
   name: string;
 };
 
-export type CategoryCoin = {
+export type MarketDataCoin = {
   id: string;
   symbol: string;
   name: string;
@@ -33,6 +33,13 @@ export type CategoryCoin = {
   ath: number;
   atl: number;
   last_updated: string;
+};
+
+export type CategoryCoin = MarketDataCoin;
+
+export type MarketData = {
+  coins: MarketDataCoin[];
+  date: string;
 };
 
 export type TrendingCoin = {

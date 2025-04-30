@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import { SimpleCoin, CategoryMarket } from "@/lib/types";
+import { SimpleCoin, CategoryMarket, MarketData, MarketDataCoin } from "@/lib/types";
 import { coinIdsToRemove } from "@/lib/config";
 
 interface NewsSection {
@@ -12,6 +12,10 @@ interface NewsSection {
 type CoinsContextType = {
   coins: SimpleCoin[];
   categories: CategoryMarket[];
+  marketData: {
+    coins: MarketDataCoin[];
+    date: string;
+  };
   loading: boolean;
   error: string | null;
   sections: NewsSection[];
@@ -24,6 +28,7 @@ const CoinsContext = createContext<CoinsContextType | undefined>(undefined);
 export const CoinsProvider = ({ children }: { children: ReactNode }) => {
   const [coins, setCoins] = useState<SimpleCoin[]>([]);
   const [categories, setCategories] = useState<CategoryMarket[]>([]);
+  const [marketData, setMarketData] = useState<MarketData>();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [sections, setSections] = useState<NewsSection[]>([]);
@@ -35,6 +40,29 @@ export const CoinsProvider = ({ children }: { children: ReactNode }) => {
       setError(null);
 
       try {
+        // fetch market data
+        const storedMarketData = sessionStorage.getItem("storedMarketData");
+
+        if (storedMarketData?.length) {
+          setMarketData(JSON.parse(storedMarketData));
+        } else {
+          const marketDataResponse = await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}api/news/market`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          if (!marketDataResponse.ok) {
+            throw new Error("Failed to fetch market data");
+          }
+          const marketData = await marketDataResponse.json();
+          setMarketData(marketData);
+          sessionStorage.setItem("storedMarketData", JSON.stringify(marketData));
+        }
+
         // Fetch categories
         const storedCategories = localStorage.getItem("storedCategories");
         if (storedCategories?.length) {
@@ -88,7 +116,16 @@ export const CoinsProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <CoinsContext.Provider
-      value={{ coins, categories, loading, error, sections, date, setNewsData }}
+      value={{
+        coins,
+        categories,
+        marketData: marketData || { coins: [], date: "" },
+        loading,
+        error,
+        sections,
+        date,
+        setNewsData,
+      }}
     >
       {children}
     </CoinsContext.Provider>

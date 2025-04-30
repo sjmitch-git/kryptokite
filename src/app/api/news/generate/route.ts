@@ -3,6 +3,8 @@ import { put, head, del } from "@vercel/blob";
 import OpenAI from "openai";
 import { postThread } from "@/lib/services/twitter.service";
 
+const isDebugMode = process.env.NODE_ENV === "development";
+
 interface Coin {
   id: string;
   name: string;
@@ -15,7 +17,7 @@ const openai = new OpenAI({
 });
 
 const fetchCoinGeckoData = async (): Promise<Coin[]> => {
-  const url = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd";
+  const url = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&=250";
   const options: RequestInit = {
     method: "GET",
     headers: {
@@ -38,49 +40,50 @@ const fetchCoinGeckoData = async (): Promise<Coin[]> => {
 };
 
 export async function GET(request: NextRequest) {
-  const authHeader = request.headers.get("authorization");
-  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-    return new Response("Unauthorized", { status: 401 });
+  if (!isDebugMode) {
+    const authHeader = request.headers.get("authorization");
+    if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+      return new Response("Unauthorized", { status: 401 });
+    }
   }
 
   const coins = await fetchCoinGeckoData();
 
   const prompt = `
-    Generate a structured JSON object for a crypto news update for ${new Date().toLocaleDateString(
-      "en-US",
+  Generate a structured JSON object for a crypto news update for ${new Date().toLocaleDateString(
+    "en-US",
+    { year: "numeric", month: "long", day: "numeric" }
+  )}. The JSON should have a "sections" array, where each section contains:
+  - "headline": A short, engaging title summarizing the section.
+  - "body": A detailed, well-written explanation of the section, 120-150 words, in a professional yet engaging tone aimed at crypto investors and enthusiasts. Reference at least 2-3 coins from the provided data per section, prioritizing those with significant 24h price changes (>5% or <-5%). Wrap coin names in HTML <span> tags with a class matching their ID (e.g., <span class='bitcoin'>Bitcoin</span>).
+
+  Include 3-5 sections covering diverse topics like market trends, major coin movements, and emerging crypto news.
+
+  Use the following data:
+  ${
+    coins
+      .map(
+        (coin: Coin) =>
+          `${coin.id}: ${coin.name}: $${coin.current_price}, ${coin.price_change_percentage_24h}% (24h change)`
+      )
+      .join("\n") ||
+    "If no market data is available, generate sections based on general crypto market trends or recent news, without referencing specific coins."
+  }
+
+  Example JSON format:
+  {
+    "sections": [
       {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
+        "headline": "Market Surge Continues",
+        "body": "The crypto market is thriving as <span class='bitcoin'>Bitcoin</span> climbs to $94,600, up 2% in 24 hours. Meanwhile, <span class='ethereum'>Ethereum</span> surged 6%, driven by DeFi adoption. Investors are optimistic..."
+      },
+      {
+        "headline": "Altcoin Volatility",
+        "body": "<span class='solana'>Solana</span> dropped 7% amid network concerns, while <span class='cardano'>Cardano</span> gained 5% after a protocol upgrade. <span class='bitcoin'>Bitcoin</span> remains a safe haven..."
       }
-    )}. The JSON should have a "sections" array, where each section contains:
-    - "headline": A short title summarizing the section.
-    - "body": A detailed, well-written explanation of the section, approximately 100-150 words. When mentioning coins from the provided data, wrap their names in HTML <span> tags with a class matching their ID (e.g., <span class='bitcoin'>Bitcoin</span>).
-
-    Use the following data:
-    ${
-      coins
-        .map(
-          (coin: Coin) =>
-            `${coin.id}: ${coin.name}: $${coin.current_price}, ${coin.price_change_percentage_24h}% (24h change)`
-        )
-        .join("\n") || "No market data available"
-    }
-
-    Example JSON format:
-    {
-      "sections": [
-        {
-          "headline": "Overview",
-          "body": "The market is buzzing as <span class='bitcoin'>Bitcoin</span> leads the charge..."
-        },
-        {
-          "headline": "Price Movements",
-          "body": "<span class='ethereum'>Ethereum</span> saw a sharp 5% increase today..."
-        }
-      ]
-    }
-  `;
+    ]
+  }
+`;
 
   try {
     const response = await openai.chat.completions.create({
@@ -125,15 +128,15 @@ export async function GET(request: NextRequest) {
       console.error("Non-fatal thread error:", threadError);
     }
 
-    const path = "kk/news/latest.json";
-    const existingBlob = await head(path, { token: process.env.VERCEL_BLOB_TOKEN });
+    const newsPath = "kk/news/latest.json";
+    const existingNewsBlob = await head(newsPath, { token: process.env.VERCEL_BLOB_TOKEN });
 
-    if (existingBlob) {
-      await del(path, { token: process.env.VERCEL_BLOB_TOKEN });
+    if (existingNewsBlob) {
+      await del(newsPath, { token: process.env.VERCEL_BLOB_TOKEN });
     }
 
-    const blob = await put(
-      path,
+    const newsBlob = await put(
+      newsPath,
       JSON.stringify({ content: newsText, date: new Date().toISOString() }),
       {
         access: "public",
@@ -143,15 +146,37 @@ export async function GET(request: NextRequest) {
       }
     );
 
+    const marketPath = "kk/market/latest.json";
+    const existingMarketBlob = await head(marketPath, { token: process.env.VERCEL_BLOB_TOKEN });
+
+    if (existingMarketBlob) {
+      await del(marketPath, { token: process.env.VERCEL_BLOB_TOKEN });
+    }
+
+    const marketBlob = await put(
+      marketPath,
+      JSON.stringify({ coins, date: new Date().toISOString() }),
+      {
+        access: "public",
+        contentType: "application/json",
+        token: process.env.VERCEL_BLOB_TOKEN,
+        addRandomSuffix: false,
+      }
+    );
+
     return NextResponse.json(
-      { message: "News generated and stored", url: blob.url },
+      {
+        message: "News and market data generated and stored",
+        newsUrl: newsBlob.url,
+        marketUrl: marketBlob.url,
+      },
       { status: 200 }
     );
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
-    console.error("Error generating news:", error);
+    console.error("Error generating news or market data:", error);
     return NextResponse.json(
-      { error: "Failed to generate news", details: errorMessage },
+      { error: "Failed to generate news or market data", details: errorMessage },
       { status: 500 }
     );
   }

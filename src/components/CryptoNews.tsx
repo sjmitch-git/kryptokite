@@ -11,7 +11,7 @@ import { useCoins } from "@/lib/contexts/CoinsContext";
 const CryptoNews = () => {
   const { sections, date, setNewsData } = useCoins();
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,17 +37,9 @@ const CryptoNews = () => {
     }
   }, [sections, setNewsData]);
 
-  if (loading) {
-    return (
-      <div className="flex justify-center p-8">
-        <Loading caption="Fetching latest crypto news" size="lg" loadingColor="info" />
-      </div>
-    );
-  }
-
   if (error) {
     return (
-      <div className="flex justify-center p-8">
+      <div className="p-4">
         <Alert message={error} title="Error" status="error" />
       </div>
     );
@@ -56,6 +48,11 @@ const CryptoNews = () => {
   return (
     <div className="crypto-news mb-8 px-2 md:px-4 lg:px-0">
       <Heading level={2}>Crypto News</Heading>
+      {loading && (
+        <div className="flex justify-center p-8">
+          <Loading caption="Fetching latest crypto news" size="lg" loadingColor="info" />
+        </div>
+      )}
       {date && !isNaN(new Date(date).getTime()) && (
         <p className="mb-4">
           <em>Published: {formatDate(date)}</em>

@@ -1,8 +1,10 @@
 import { MetaData } from "@/lib/config";
+import { Suspense } from "react";
+import Ticker from "@/components/ui/Ticker";
 
 export default function Footer() {
   return (
-    <footer className="p-4 mt-8 bg-[#f27d0b] sticky top-full">
+    <footer className="p-4 pb-16 mt-8 bg-[#f27d0b] sticky top-full">
       <div className="container mx-auto text-center space-y-4">
         <img
           src={`${process.env.NEXT_PUBLIC_API_URL}logo.png`}
@@ -48,6 +50,9 @@ export default function Footer() {
           </a>
         </div>
       </div>
+      <Suspense>
+        <Ticker />
+      </Suspense>
     </footer>
   );
 }

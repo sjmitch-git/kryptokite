@@ -1,0 +1,32 @@
+.ticker {
+  @apply overflow-hidden bg-dark dark:bg-light text-white dark:text-dark fixed bottom-0 left-0 p-2 w-full;
+}
+
+.ticker-wrapper {
+  @apply w-fit;
+  animation: ticker-scroll 30s linear infinite;
+  animation-play-state: running;
+}
+
+.ticker:hover .ticker-wrapper,
+.ticker-wrapper:hover,
+ticker:focus-within .ticker-wrapper {
+  animation-play-state: paused;
+}
+
+.ticker-items {
+  @apply flex items-center justify-start whitespace-nowrap gap-8;
+}
+
+.ticker-item {
+  @apply text-sm font-semibold cursor-pointer;
+}
+
+@keyframes ticker-scroll {
+  0% {
+    transform: translateX(100vw);
+  }
+  100% {
+    transform: translateX(calc(-100% - 100vw));
+  }
+}
