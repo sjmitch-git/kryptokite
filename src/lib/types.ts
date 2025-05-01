@@ -85,6 +85,9 @@ export type Coin = SimpleCoin & {
   categories: string[];
   market_data: {
     market_cap_change_percentage_24h: number;
+    price_change_24h_in_currency: {
+      [key: string]: number;
+    };
     price_change_percentage_7d_in_currency: {
       [key: string]: number;
     };
