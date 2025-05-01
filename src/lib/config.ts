@@ -42,7 +42,7 @@ export const HomeLinks = [
     href: "/categories/Smart Contract Platform",
     linkLabel: "Smart Contract Platform",
     body: "Smart contract platforms are usually blockchains that host smart contracts or decentralized applications.",
-    img: "/smart-contract.png",
+    img: "/smart-contract.svg",
   },
   {
     title: "Stablecoins",
