@@ -11,7 +11,7 @@ import { useCoins } from "@/lib/contexts/CoinsContext";
 const CryptoNews = () => {
   const { sections, date, setNewsData } = useCoins();
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
