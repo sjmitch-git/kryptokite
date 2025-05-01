@@ -91,12 +91,7 @@ const CategoriesList = () => {
                     </Link>
                     <div className="flex gap-4 items-center">
                       {category.top_3_coins_id.map((id, index) => (
-                        <Link
-                          key={id}
-                          href={`/coins/${id}`}
-                          title="See more details about this coin"
-                          className="text-primary hover:underline font-semibold text-lg md:text-xl"
-                        >
+                        <Link key={id} href={`/coins/${id}`} title={`See more details about ${id}`}>
                           <CoinThumb src={category.top_3_coins[index]} alt={id} size={32} />
                         </Link>
                       ))}

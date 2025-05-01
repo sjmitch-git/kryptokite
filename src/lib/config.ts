@@ -37,19 +37,12 @@ export const HomeLinks = [
     body: "Top trending coins and categories",
     img: "/trending.svg",
   },
-  /* {
-    title: "Watchlist",
-    href: "/watchlist",
-    linkLabel: "View",
-    body: "View your favourite coins",
-    img: "/watchlist.svg",
-  }, */
   {
-    title: "Coinbase 50 Index",
-    href: "/categories/Coinbase 50 Index",
-    linkLabel: "Coinbase 50 Index",
-    body: "The Coinbase 50 Index is a market-capitalization-weighted index, tracking the performance of the top 50 digital assets listed on the Coinbase Exchange.",
-    img: "https://www.coinbase.com/assets/sw-cache/a_CcvONSrV.png",
+    title: "Smart Contract Platform",
+    href: "/categories/Smart Contract Platform",
+    linkLabel: "Smart Contract Platform",
+    body: "Smart contract platforms are usually blockchains that host smart contracts or decentralized applications.",
+    img: "/smart-contract.png",
   },
   {
     title: "Stablecoins",

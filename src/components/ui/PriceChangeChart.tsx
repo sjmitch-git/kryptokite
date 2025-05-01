@@ -2,6 +2,7 @@ import { LineChart } from "@/lib/fluid";
 
 type PriceChangeChartProps = {
   priceChangeData: {
+    price_1h: number;
     price_24h: number;
     price_7d: number;
     price_14d: number;
@@ -15,7 +16,7 @@ type PriceChangeChartProps = {
 const PriceChangeChart = ({ priceChangeData }: PriceChangeChartProps) => {
   const trendUpwardsStyle = "rgba(75, 220, 192, 1)";
   const trendDownwardsStyle = "rgba(193, 63, 63, 1)";
-  const labels = ["1y", "200d", "60d", "30d", "14d", "7d", "24h"];
+  const labels = ["1y", "200d", "60d", "30d", "14d", "7d", "24h", "1h"];
   const data = labels.map(
     (label) => priceChangeData[`price_${label}` as keyof typeof priceChangeData]
   );

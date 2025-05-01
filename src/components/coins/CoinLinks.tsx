@@ -1,27 +1,35 @@
 import Link from "next/link";
 import { Coin } from "@/lib/types";
+import { useCoins } from "@/lib/contexts/CoinsContext";
 
 type CoinLinkslProps = {
   coin: Coin;
 };
 
 const CoinLinks = ({ coin }: CoinLinkslProps) => {
+  const { categories } = useCoins();
   return (
     <table className="w-auto text-right md:text-lg mb-8">
       <tbody>
         <tr>
           <th className="text-left p-0 pr-4 font-semibold">Categories:</th>
           <td className="text-left p-2">
-            {coin.categories.map((category, index) => (
-              <Link
-                key={index}
-                href={`/categories/${category}`}
-                title={`View all coins in the ${category} category`}
-                className="inline-block bg-gray-200 text-gray-800 text-sm font-medium px-2 py-1 rounded mr-2"
-              >
-                {category}
-              </Link>
-            ))}
+            {coin.categories
+              .filter((category) =>
+                categories.some((userCategory) => userCategory.name === category)
+              )
+              .map((category, index) => {
+                return (
+                  <Link
+                    key={index}
+                    href={`/categories/${category}`}
+                    title={`View all coins in the ${category} category`}
+                    className="inline-block bg-gray-200 text-gray-800 text-sm font-medium px-2 py-1 rounded mr-2"
+                  >
+                    {category}
+                  </Link>
+                );
+              })}
           </td>
         </tr>
         {coin.links.homepage[0] && (

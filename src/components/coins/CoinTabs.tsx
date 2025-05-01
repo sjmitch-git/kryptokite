@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { Tabs, TwitterEmbed, Heading } from "@/lib/fluid";
 import { Coin } from "@/lib/types";
 import { useUser } from "@/lib/contexts/UserContext";
@@ -41,7 +42,9 @@ const CoinTabs = ({ coin }: CoinDetailProps) => {
             title={`@${coin.links.twitter_screen_name}`}
             className="bg-white p-0 h-[560px] md:h-[650px] overflow-y-scroll"
           >
-            <TwitterEmbed handle={coin.links.twitter_screen_name} className="max-w-full" />
+            <Suspense>
+              <TwitterEmbed handle={coin.links.twitter_screen_name} className="max-w-full" />
+            </Suspense>
           </div>
         )}
       </Tabs>
