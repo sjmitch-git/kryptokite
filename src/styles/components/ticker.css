@@ -10,7 +10,7 @@
 
 .ticker:hover .ticker-wrapper,
 .ticker-wrapper:hover,
-ticker:focus-within .ticker-wrapper {
+.ticker:focus-within .ticker-wrapper {
   animation-play-state: paused;
 }
 
@@ -28,5 +28,26 @@ ticker:focus-within .ticker-wrapper {
   }
   100% {
     transform: translateX(calc(-100% - 100vw));
+  }
+}
+
+@media (max-width: 640px) {
+  /* Small screens (e.g., mobile) */
+  .ticker-wrapper {
+    animation-duration: 20s; /* Faster animation for smaller screens */
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  /* Medium screens (e.g., tablets) */
+  .ticker-wrapper {
+    animation-duration: 30s; /* Default animation duration */
+  }
+}
+
+@media (min-width: 1025px) {
+  /* Large screens (e.g., desktops) */
+  .ticker-wrapper {
+    animation-duration: 40s; /* Slower animation for larger screens */
   }
 }

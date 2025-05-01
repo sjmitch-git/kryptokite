@@ -16,7 +16,7 @@ const HomeNav = () => {
             title={card.title}
             src={card.img}
             aspect="square"
-            className="mx-auto bg-dark rounded-full w-20 h-20"
+            className="mx-auto bg-dark rounded-full w-20 h-20 overflow-clip"
           />
           <CardBody className="static">
             <CardHeader title={card.title} className="text-xl max-sm:text-center" />
