@@ -14,22 +14,24 @@ const CoinLinks = ({ coin }: CoinLinkslProps) => {
         <tr>
           <th className="text-left p-0 pr-4 font-semibold">Categories:</th>
           <td className="text-left p-2">
-            {coin.categories
-              .filter((category) =>
-                categories.some((userCategory) => userCategory.name === category)
-              )
-              .map((category, index) => {
-                return (
-                  <Link
-                    key={index}
-                    href={`/categories/${category}`}
-                    title={`View all coins in the ${category} category`}
-                    className="inline-block bg-gray-200 text-gray-800 text-sm font-medium px-2 py-1 rounded mr-2"
-                  >
-                    {category}
-                  </Link>
-                );
-              })}
+            <div className="flex flex-wrap gap-2">
+              {coin.categories
+                .filter((category) =>
+                  categories.some((userCategory) => userCategory.name === category)
+                )
+                .map((category, index) => {
+                  return (
+                    <Link
+                      key={index}
+                      href={`/categories/${category}`}
+                      title={`View all coins in the ${category} category`}
+                      className="inline-block bg-gray-200 text-gray-800 text-sm font-medium px-2 py-1 rounded"
+                    >
+                      {category}
+                    </Link>
+                  );
+                })}
+            </div>
           </td>
         </tr>
         {coin.links.homepage[0] && (
