@@ -21,4 +21,6 @@ export {
   Checkbox,
   StatBar,
   Toast,
+  Accordion,
+  AccordionItem,
 } from "@smitch/fluid";

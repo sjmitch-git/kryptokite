@@ -67,7 +67,7 @@ export async function GET(request: NextRequest) {
           `${coin.id}: ${coin.name}: $${coin.current_price}, ${coin.price_change_percentage_24h}% (24h change)`
       )
       .join("\n") ||
-    "If no market data is available, generate sections based on general crypto market trends or recent news, without referencing specific coins."
+    "If no market data is available, generate sections based on general crypto market trends or recent news."
   }
 
   Example JSON format:

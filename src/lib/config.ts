@@ -1,3 +1,5 @@
+import { blueGray } from "tailwindcss/colors";
+
 export const COINGECKO_API_URL = "https://api.coingecko.com/api/v3";
 export const COIN_GECKO_TOKEN = process.env.COIN_GECKO_TOKEN;
 
@@ -50,6 +52,7 @@ export const HomeLinks = [
     linkLabel: "Stablecoins",
     body: "A stablecoin is a type of cryptocurrency that is designed to maintain a stable value by being pegged to an external reference, such as a fiat currency.",
     img: "https://coin-images.coingecko.com/coins/images/6319/small/usdc.png",
+    bg: "bg-[#2276cb]",
   },
   {
     title: "Defi",
@@ -57,6 +60,7 @@ export const HomeLinks = [
     linkLabel: "DeFi",
     body: "Decentralized Finance, is a financial system that operates without central authorities or intermediaries, using blockchain technology and smart contracts to provide a range of financial services such as lending, borrowing, and trading.",
     img: "https://coin-images.coingecko.com/coins/images/13442/small/steth_logo.png",
+    bg: "bg-white",
   },
   {
     title: "Meme Coins",
@@ -64,6 +68,7 @@ export const HomeLinks = [
     linkLabel: "Meme Coins",
     body: "Meme coins derive their relevance from memes, thriving on hype and picking up momentum as the community grows. coins.",
     img: "https://coin-images.coingecko.com/coins/images/5/small/dogecoin.png",
+    bg: "bg-[#bba030]",
   },
   {
     title: "Bitcoin",
@@ -71,6 +76,7 @@ export const HomeLinks = [
     linkLabel: "Bitcoin",
     body: "Bitcoin is the first successful internet money based on peer-to-peer technology",
     img: "https://coin-images.coingecko.com/coins/images/1/small/bitcoin.png",
+    bg: "bg-[#f7931a]",
   },
   {
     title: "Ethereum",

@@ -1,0 +1,8 @@
+.accordion {
+  > div {
+    @apply flex flex-col gap-2;
+  }
+  h3 {
+    @apply bg-slate-200;
+  }
+}

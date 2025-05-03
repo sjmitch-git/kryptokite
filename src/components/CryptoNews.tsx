@@ -3,7 +3,7 @@
 import Link from "next/link";
 import parse, { DOMNode, domToReact, Element } from "html-react-parser";
 import React, { useState, useEffect } from "react";
-import { Heading, Alert, Loading } from "@/lib/fluid";
+import { Heading, Alert, Loading, Accordion, AccordionItem } from "@/lib/fluid";
 import { formatDate } from "@/lib/utils";
 import { NEXT_PUBLIC_API_URL } from "@/lib/constants";
 import { useCoins } from "@/lib/contexts/CoinsContext";
@@ -12,6 +12,7 @@ const CryptoNews = () => {
   const { sections, date, setNewsData } = useCoins();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState("0");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,7 +23,6 @@ const CryptoNews = () => {
           throw new Error("Failed to fetch news data");
         }
         const data = await response.json();
-
         setNewsData(data.sections, data.date);
         setLoading(false);
       } catch (err: unknown) {
@@ -58,35 +58,43 @@ const CryptoNews = () => {
           <em>Published: {formatDate(date)}</em>
         </p>
       )}
-      <div className="space-y-8">
-        {sections.length > 0
-          ? sections.map((section, index) => (
-              <div key={index} className="news section">
-                <Heading level={3} className="news-headline">
-                  {section.headline}
-                </Heading>
-                <p className="news-section max-w-prose text-lg">
-                  {parse(section.body, {
-                    replace: (domNode) => {
-                      if (
-                        domNode instanceof Element &&
-                        domNode.name === "span" &&
-                        domNode.attribs.class
-                      ) {
-                        const coinId = domNode.attribs.class;
-                        const coinName = domToReact(domNode.children as DOMNode[]);
-                        return (
-                          <Link href={`/coins/${coinId}`} className="coin-link">
-                            <strong>{coinName}</strong>
-                          </Link>
-                        );
-                      }
-                    },
-                  })}
-                </p>
-              </div>
-            ))
-          : ""}
+      <div className="flex flex-col gap-4">
+        {sections.length > 0 && (
+          <Accordion layout="spaced" icon="arrow" size="md" opened={open}>
+            {sections.map((section, index) => (
+              <AccordionItem
+                id={index.toString()}
+                key={index}
+                title={section.headline}
+                open={open}
+                setOpen={setOpen}
+                layoutClasses=""
+              >
+                <div className="news border border-slate-200 ">
+                  <p className="news-section py-4 px-2 md:px-4 max-w-prose text-lg">
+                    {parse(section.body, {
+                      replace: (domNode) => {
+                        if (
+                          domNode instanceof Element &&
+                          domNode.name === "span" &&
+                          domNode.attribs.class
+                        ) {
+                          const coinId = domNode.attribs.class;
+                          const coinName = domToReact(domNode.children as DOMNode[]);
+                          return (
+                            <Link href={`/coins/${coinId}`} className="coin-link">
+                              <strong>{coinName}</strong>
+                            </Link>
+                          );
+                        }
+                      },
+                    })}
+                  </p>
+                </div>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        )}
       </div>
     </div>
   );

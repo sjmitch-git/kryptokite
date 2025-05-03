@@ -8,7 +8,7 @@ export default function HomePage() {
     <article>
       <Hero title={MetaData.defaultTitle} description={MetaData.defaultDescription} />
       <CryptoNews />
-      <hr className='my-8' />
+      <hr className="hr" />
       <HomeNav />
     </article>
   );

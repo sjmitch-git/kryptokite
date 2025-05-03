@@ -126,7 +126,11 @@ const CategoryCoinsList = ({ id }: Props) => {
 
   return (
     <>
-      {description && <p className="text-xl max-w-prose mb-4 md:mb-8 lg:mb-12">{description}</p>}
+      {description && (
+        <p className="text-xl max-w-prose mb-4 md:mb-8 lg:mb-12 px-2 md:px-4 lg:px-0">
+          {description}
+        </p>
+      )}
       <div className="mb-8 px-2 lg:px-0 space-y-4">
         {coins.length > perPage && (
           <Input

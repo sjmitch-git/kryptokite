@@ -1,2 +1,17 @@
 @import "./table.css";
 @import "./typography.css";
+
+html,
+body {
+  height: 100%;
+  min-height: fit-content;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+}
+
+.hr {
+  @apply my-16 h-1 bg-info;
+}
