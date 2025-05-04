@@ -140,10 +140,11 @@ const CategoriesList = () => {
                     <div className="flex flex-col items-start">
                       <p className="text-base text-gray-500">Market Cap</p>
                       <p className="text-lg font-semibold">
-                        {category.market_cap.toLocaleString("en-US", {
-                          style: "currency",
-                          currency: "USD",
-                        })}
+                        {category.market_cap &&
+                          category.market_cap.toLocaleString("en-US", {
+                            style: "currency",
+                            currency: "USD",
+                          })}
                       </p>
                     </div>
                     <div className="flex flex-col items-start">
@@ -168,10 +169,11 @@ const CategoriesList = () => {
                     <div className="flex flex-col items-start">
                       <p className="text-sm text-gray-500">24h Volume</p>
                       <p className="text-lg font-semibold">
-                        {category.volume_24h.toLocaleString("en-US", {
-                          style: "currency",
-                          currency: "USD",
-                        })}
+                        {category.volume_24h &&
+                          category.volume_24h.toLocaleString("en-US", {
+                            style: "currency",
+                            currency: "USD",
+                          })}
                       </p>
                     </div>
                   </div>
