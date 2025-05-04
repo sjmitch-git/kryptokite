@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import type { SimpleCoin as Coin } from "@/lib/types";
 import SortbyData from "@/data/coins_sortby.json";
-import { Loading, Pagination, Alert, Input } from "@/lib/fluid";
+import { Loading, Pagination, Alert } from "@/lib/fluid";
 import { useCoins } from "@/lib/contexts/CoinsContext";
 import WatchlistToggle from "@/components/ui/WatchlistToggle";
 import FilterGroup from "@/components/ui/FilterGroup";

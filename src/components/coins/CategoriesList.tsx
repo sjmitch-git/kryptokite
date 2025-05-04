@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import type { CategoryMarket } from "@/lib/types";
 import SortbyData from "@/data/categories_sortby.json";
-import { Loading, Pagination, Alert, Input, Select } from "@/lib/fluid";
+import { Loading, Pagination, Alert } from "@/lib/fluid";
 import FilterGroup from "@/components/ui/FilterGroup";
 import { useCoins } from "@/lib/contexts/CoinsContext";
 import CoinThumb from "@/components/ui/CoinThumb";

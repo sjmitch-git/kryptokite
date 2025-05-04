@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import SortbyData from "@/data/watchlist_sortby.json";
-import { Pagination, Alert, Input, Loading, Dialog, Button } from "@/lib/fluid";
+import { Pagination, Alert, Loading, Dialog, Button } from "@/lib/fluid";
 import { useUser } from "@/lib/contexts/UserContext";
 import { CoinDetails as Coin } from "@/lib/types";
 import WatchListItem from "./WatchListItem";
