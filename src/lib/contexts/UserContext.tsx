@@ -13,7 +13,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [stores, setStores] = useState<Store[]>([]);
   const [loadingStores, setLoadingStores] = useState<boolean>(true);
 
-  const [preferredCurrency, setPreferredCurrency] = useState<string>("usd");
+  const [preferredCurrency, setPreferredCurrency] = useState<string>("");
 
   useEffect(() => {
     setLoadingCoins(true);
@@ -32,7 +32,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     const storedCurrency = localStorage.getItem("preferredCurrency");
     if (storedCurrency) {
       setPreferredCurrency(storedCurrency);
-    }
+    } else setPreferredCurrency("usd");
 
     setLoadingCoins(false);
     setLoadingStores(false);

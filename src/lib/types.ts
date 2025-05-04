@@ -11,6 +11,9 @@ export type CategoryMarket = {
   content: string;
   top_3_coins: string[];
   top_3_coins_id: string[];
+  market_cap: number;
+  market_cap_change_24h: number;
+  volume_24h: number;
 };
 
 export type Category = {

@@ -1,0 +1,34 @@
+[
+  {
+    "label": "Market Rank (Highest)",
+    "value": "rank-desc"
+  },
+  {
+    "label": "Market Rank (Lowest)",
+    "value": "rank-asc"
+  },
+  {
+    "label": "Name (A-Z)",
+    "value": "name-asc"
+  },
+  {
+    "label": "Name (Z-A)",
+    "value": "name-desc"
+  },
+  {
+    "label": "Price (High to Low)",
+    "value": "price-desc"
+  },
+  {
+    "label": "Price (Low to High)",
+    "value": "price-asc"
+  },
+  {
+    "label": "% Change (High to Low)",
+    "value": "change-desc"
+  },
+  {
+    "label": "% Change (Low to High)",
+    "value": "change-asc"
+  }
+]

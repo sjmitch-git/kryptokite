@@ -1,0 +1,26 @@
+[
+  {
+    "label": "Market Rank (Highest)",
+    "value": "rank-desc"
+  },
+  {
+    "label": "Market Rank (Lowest)",
+    "value": "rank-asc"
+  },
+  {
+    "label": "Name (A-Z)",
+    "value": "name-asc"
+  },
+  {
+    "label": "Name (Z-A)",
+    "value": "name-desc"
+  },
+  {
+    "label": "24h Change (Highest)",
+    "value": "change-desc"
+  },
+  {
+    "label": "24h Change (Lowest)",
+    "value": "change-asc"
+  }
+]

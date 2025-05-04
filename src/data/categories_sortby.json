@@ -1,0 +1,26 @@
+[
+  {
+    "label": "Market Cap (High to Low)",
+    "value": "rank-desc"
+  },
+  {
+    "label": "Market Cap (Low to High)",
+    "value": "rank-asc"
+  },
+  {
+    "label": "Name (A-Z)",
+    "value": "name-asc"
+  },
+  {
+    "label": "Name (Z-A)",
+    "value": "name-desc"
+  },
+  {
+    "label": "24h Change (High to Low)",
+    "value": "change-desc"
+  },
+  {
+    "label": "24h Change (Low to High)",
+    "value": "change-asc"
+  }
+]

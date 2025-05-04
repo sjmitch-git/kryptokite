@@ -3,9 +3,12 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
+import type { SimpleCoin as Coin } from "@/lib/types";
+import SortbyData from "@/data/coins_sortby.json";
 import { Loading, Pagination, Alert, Input } from "@/lib/fluid";
 import { useCoins } from "@/lib/contexts/CoinsContext";
 import WatchlistToggle from "@/components/ui/WatchlistToggle";
+import FilterGroup from "@/components/ui/FilterGroup";
 
 const CoinsList = () => {
   const { coins, loading, error } = useCoins();
@@ -15,16 +18,19 @@ const CoinsList = () => {
   const [page, setPage] = useState(1);
   const [perPage] = useState(10);
   const [filterText, setFilterText] = useState("");
+  const [sortBy, setSortBy] = useState("name-desc");
 
   useEffect(() => {
     const queryPage = parseInt(searchParams.get("page") || "1", 10);
     const queryFilter = searchParams.get("filter") || "";
+    const querySortBy = searchParams.get("sortBy") || "rank-desc";
 
     if (!isNaN(queryPage) && queryPage > 0) {
       setPage(queryPage);
     }
 
     setFilterText(queryFilter);
+    setSortBy(querySortBy);
   }, [searchParams]);
 
   const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,6 +45,16 @@ const CoinsList = () => {
     router.push(`${pathname}?${query}`);
   };
 
+  const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const newSortBy = event.target.value;
+    setSortBy(newSortBy);
+    const query = new URLSearchParams({
+      ...Object.fromEntries(searchParams.entries()),
+      sortBy: newSortBy,
+    }).toString();
+    router.push(`${pathname}?${query}`);
+  };
+
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
     const query = new URLSearchParams({
@@ -48,15 +64,28 @@ const CoinsList = () => {
     router.push(`${pathname}?${query}`);
   };
 
+  const sortCoins = (coins: Coin[]) => {
+    switch (sortBy) {
+      case "name-asc":
+        return [...coins].sort((a, b) => a.name.localeCompare(b.name));
+      case "name-desc":
+        return [...coins].sort((a, b) => b.name.localeCompare(a.name));
+      default:
+        return coins;
+    }
+  };
+
   const filteredCoins = coins.filter(
     (coin) =>
       coin.name.toLowerCase().includes(filterText.toLowerCase()) ||
       coin.symbol.toLowerCase().includes(filterText.toLowerCase())
   );
 
+  const sortedCoins = sortCoins(filteredCoins);
+
   const startIndex = (page - 1) * perPage;
   const endIndex = startIndex + perPage;
-  const currentCoins = filteredCoins.slice(startIndex, endIndex);
+  const currentCoins = sortedCoins.slice(startIndex, endIndex);
 
   return (
     <div className="space-y-4">
@@ -68,12 +97,13 @@ const CoinsList = () => {
         <Alert status="error" message={error} />
       ) : (
         <div className="space-y-4 px-2 md:px-4 lg:px-0">
-          <Input
-            type="search"
-            placeholder="Filter coins by name"
-            value={filterText}
-            onChange={handleFilterChange}
-            className="w-full p-2 border border-gray-300 rounded"
+          <FilterGroup
+            filterPlaceholder="Filter coins by name"
+            filterText={filterText}
+            handleFilterChange={handleFilterChange}
+            sortBy={sortBy}
+            sortbyData={SortbyData}
+            handleSortChange={handleSortChange}
           />
           <ul className="space-y-2">
             {currentCoins.map((coin) => (

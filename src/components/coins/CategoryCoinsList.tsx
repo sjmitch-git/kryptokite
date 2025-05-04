@@ -2,11 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
+import SortbyData from "@/data/category_sortby.json";
 import type { CategoryCoin as Coin, CategoryMarket } from "@/lib/types";
 import { useUser } from "@/lib/contexts/UserContext";
 import { useCoins } from "@/lib/contexts/CoinsContext";
 import CategoryCoinItem from "@/components/coins/CategoryCoinItem";
-import { Loading, Alert, Pagination, Input } from "@/lib/fluid";
+import { Loading, Alert, Pagination } from "@/lib/fluid";
+import FilterGroup from "@/components/ui/FilterGroup";
 
 type Props = {
   id: string;
@@ -26,6 +28,7 @@ const CategoryCoinsList = ({ id }: Props) => {
   const [page, setPage] = useState(1);
   const [perPage] = useState(10);
   const [description, setDescription] = useState("");
+  const [sortBy, setSortBy] = useState("rank-desc");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -71,12 +74,14 @@ const CategoryCoinsList = ({ id }: Props) => {
   useEffect(() => {
     const queryPage = parseInt(searchParams.get("page") || "1", 10);
     const queryFilter = searchParams.get("filter") || "";
+    const querySortBy = searchParams.get("sortBy") || "rank-desc";
 
     if (!isNaN(queryPage) && queryPage > 0) {
       setPage(queryPage);
     }
 
     setFilterText(queryFilter);
+    setSortBy(querySortBy);
   }, [searchParams]);
 
   const handlePageChange = (newPage: number) => {
@@ -100,13 +105,52 @@ const CategoryCoinsList = ({ id }: Props) => {
     router.push(`${pathname}?${query}`);
   };
 
+  const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const newSortBy = event.target.value;
+    setSortBy(newSortBy);
+    const query = new URLSearchParams({
+      ...Object.fromEntries(searchParams.entries()),
+      sortBy: newSortBy,
+    }).toString();
+    router.push(`${pathname}?${query}`);
+  };
+
+  const sortCoins = (coins: Coin[]) => {
+    switch (sortBy) {
+      case "rank-asc":
+        return [...coins].sort((a, b) => a.market_cap - b.market_cap);
+      case "rank-desc":
+        return [...coins].sort((a, b) => b.market_cap - a.market_cap);
+      case "name-asc":
+        return [...coins].sort((a, b) => a.name.localeCompare(b.name));
+      case "name-desc":
+        return [...coins].sort((a, b) => b.name.localeCompare(a.name));
+      case "price-asc":
+        return [...coins].sort((a, b) => a.current_price - b.current_price);
+      case "price-desc":
+        return [...coins].sort((a, b) => b.current_price - a.current_price);
+      case "change-asc":
+        return [...coins].sort(
+          (a, b) => a.price_change_percentage_24h - b.price_change_percentage_24h
+        );
+      case "change-desc":
+        return [...coins].sort(
+          (a, b) => b.price_change_percentage_24h - a.price_change_percentage_24h
+        );
+      default:
+        return coins;
+    }
+  };
+
   const filteredCoins = Array.isArray(coins)
     ? coins.filter((coin) => coin.name.toLowerCase().includes(filterText.toLowerCase()))
     : [];
 
+  const sortedCoins = sortCoins(filteredCoins);
+
   const startIndex = (page - 1) * perPage;
   const endIndex = startIndex + perPage;
-  const currentCoins = filteredCoins.slice(startIndex, endIndex);
+  const currentCoins = sortedCoins.slice(startIndex, endIndex);
 
   if (loading) {
     return (
@@ -133,12 +177,13 @@ const CategoryCoinsList = ({ id }: Props) => {
       )}
       <div className="mb-8 px-2 lg:px-0 space-y-4">
         {coins.length > perPage && (
-          <Input
-            type="search"
-            placeholder="Filter coins by name"
-            value={filterText}
-            onChange={handleFilterChange}
-            className="w-full p-2 border border-gray-300 rounded"
+          <FilterGroup
+            filterPlaceholder="Filter coins by name"
+            filterText={filterText}
+            handleFilterChange={handleFilterChange}
+            sortBy={sortBy}
+            sortbyData={SortbyData}
+            handleSortChange={handleSortChange}
           />
         )}
 
