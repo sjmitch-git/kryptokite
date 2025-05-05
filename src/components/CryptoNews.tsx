@@ -72,7 +72,7 @@ const CryptoNews = () => {
       )}
       <div className="flex flex-col gap-4">
         {sections.length > 0 && (
-          <Accordion layout="spaced" icon="arrow" size="md" opened={open}>
+          <Accordion layout="spaced" size="md" opened={open}>
             {newsSections.map((section, index) => (
               <AccordionItem
                 id={index.toString()}
@@ -81,6 +81,7 @@ const CryptoNews = () => {
                 open={open}
                 setOpen={setOpen}
                 layoutClasses=""
+                icon="arrow"
               >
                 <div className="news border border-slate-200 ">
                   <p className="news-section py-4 px-2 md:px-4 max-w-prose text-lg">
