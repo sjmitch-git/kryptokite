@@ -60,7 +60,7 @@ const CategoriesList = () => {
     setSortBy(newSortBy);
     const query = new URLSearchParams({
       ...Object.fromEntries(searchParams.entries()),
-      sortBy: newSortBy,
+      sortby: newSortBy,
     }).toString();
     router.push(`${pathname}?${query}`);
   };
