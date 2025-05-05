@@ -8,8 +8,15 @@ import { formatDate } from "@/lib/utils";
 import { NEXT_PUBLIC_API_URL } from "@/lib/constants";
 import { useCoins } from "@/lib/contexts/CoinsContext";
 
+interface NewsSection {
+  headline: string;
+  body: string;
+}
+
 const CryptoNews = () => {
   const { sections, date, setNewsData } = useCoins();
+  const [newsSections, setNewsSections] = useState<NewsSection[]>([]);
+  const [newsDate, setNewsDate] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState("0");
@@ -23,6 +30,8 @@ const CryptoNews = () => {
           throw new Error("Failed to fetch news data");
         }
         const data = await response.json();
+        setNewsSections(data.sections);
+        setNewsDate(data.date);
         setNewsData(data.sections, data.date);
         setLoading(false);
       } catch (err: unknown) {
@@ -34,8 +43,11 @@ const CryptoNews = () => {
 
     if (sections.length === 0) {
       fetchData();
+    } else {
+      setNewsSections(sections);
+      setNewsDate(date);
     }
-  }, [sections, setNewsData]);
+  }, [sections, date, setNewsData]);
 
   if (error) {
     return (
@@ -53,7 +65,7 @@ const CryptoNews = () => {
           <Loading caption="Fetching latest crypto news" size="lg" loadingColor="info" />
         </div>
       )}
-      {date && !isNaN(new Date(date).getTime()) && (
+      {newsDate && !isNaN(new Date(newsDate).getTime()) && (
         <p className="mb-4">
           <em>Published: {formatDate(date)}</em>
         </p>
@@ -61,7 +73,7 @@ const CryptoNews = () => {
       <div className="flex flex-col gap-4">
         {sections.length > 0 && (
           <Accordion layout="spaced" icon="arrow" size="md" opened={open}>
-            {sections.map((section, index) => (
+            {newsSections.map((section, index) => (
               <AccordionItem
                 id={index.toString()}
                 key={index}
