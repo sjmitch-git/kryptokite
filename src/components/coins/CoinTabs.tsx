@@ -19,7 +19,7 @@ const CoinTabs = ({ coin }: CoinDetailProps) => {
       <Tabs
         className="p-0 mb-8"
         defaultActiveId="tab1"
-        tabSize="lg"
+        tabSize="md"
         tabsPosition="full"
         contentBorder={false}
         minimalTabs={true}

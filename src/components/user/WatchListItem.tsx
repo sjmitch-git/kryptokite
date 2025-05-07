@@ -19,8 +19,8 @@ const WatchListItem = ({ coin, openDialog, preferredCurrency = "usd" }: WatchLis
     <li className="flex justify-between items-center text-lg md:text-xl space-x-2 md:space-x-8 shadow p-2 md:p-4 border border-neutral-200 bg-white">
       <div className="flex justify-between items-center space-x-2 md:space-x-4">
         <div className="text-left min-w-12 max-sm:hidden">#{coin.market_cap_rank || "N/A"}</div>
-        <CoinThumb src={coin.image} alt={coin.name} size={64} className="max-sm:!-ml-1" />
-        <div>
+        <CoinThumb src={coin.image} alt={coin.name} size={64} className="max-sm:hidden" />
+        <div className="max-sm:!-ml-1">
           <p className="font-semibold">
             <Link
               href={{

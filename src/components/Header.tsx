@@ -11,7 +11,7 @@ export default function Header() {
         links={Links}
         navStyles="bg-[var(--light)] p-2 shadow-lg z-20"
         btnBackground="info"
-        btnColor="dark"
+        btnColor="light"
         btnSize="lg"
         placement="top"
       >

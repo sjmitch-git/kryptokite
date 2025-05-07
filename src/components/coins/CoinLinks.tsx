@@ -9,11 +9,11 @@ type CoinLinkslProps = {
 const CoinLinks = ({ coin }: CoinLinkslProps) => {
   const { categories } = useCoins();
   return (
-    <table className="w-auto text-right md:text-lg mb-8">
+    <table className="w-full md:text-lg mb-8">
       <tbody>
         <tr>
-          <th className="text-left p-0 pr-4 font-semibold">Categories:</th>
-          <td className="text-left p-2">
+          <th className="text-left pl-0 py-2 pr-4 font-semibold align-top">Categories:</th>
+          <td className="text-left align-top p-2">
             <div className="flex flex-wrap gap-2">
               {coin.categories
                 .filter((category) =>
@@ -42,7 +42,7 @@ const CoinLinks = ({ coin }: CoinLinkslProps) => {
                 href={coin.links.homepage[0]}
                 target="_blank"
                 rel="noreferrer"
-                className="text-blue-500 hover:underline"
+                className="text-blue-500 hover:underline truncate inline-block max-sm:max-w-[230px]"
                 title="Visit the official website. Opens in new tab."
               >
                 {coin.links.homepage[0]}
@@ -58,8 +58,9 @@ const CoinLinks = ({ coin }: CoinLinkslProps) => {
                 href={coin.links.whitepaper}
                 target="_blank"
                 rel="noreferrer"
-                className="text-blue-500 hover:underline"
+                className="text-blue-500 hover:underline truncate inline-block max-sm:max-w-[230px]"
                 download
+                title={coin.links.whitepaper}
               >
                 Download PDF
               </a>
@@ -74,7 +75,7 @@ const CoinLinks = ({ coin }: CoinLinkslProps) => {
                 href={coin.links.official_forum_url[0]}
                 target="_blank"
                 rel="noreferrer"
-                className="text-blue-500 hover:underline"
+                className="text-blue-500 hover:underline truncate inline-block max-sm:max-w-[230px]"
                 title="Opens in new tab"
               >
                 {coin.links.official_forum_url[0]}
@@ -90,7 +91,7 @@ const CoinLinks = ({ coin }: CoinLinkslProps) => {
                 href={coin.links.subreddit_url}
                 target="_blank"
                 rel="noreferrer"
-                className="text-blue-500 hover:underline"
+                className="text-blue-500 hover:underline truncate inline-block max-sm:max-w-[230px]"
                 title="Opens in new tab"
               >
                 {coin.links.subreddit_url}
@@ -106,7 +107,7 @@ const CoinLinks = ({ coin }: CoinLinkslProps) => {
                 href={link}
                 target="_blank"
                 rel="noreferrer"
-                className="text-blue-500 hover:underline"
+                className="text-blue-500 hover:underline truncate inline-block max-sm:max-w-[230px]"
                 title="Opens in new tab"
               >
                 {link}

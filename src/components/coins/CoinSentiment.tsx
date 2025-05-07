@@ -6,7 +6,7 @@ interface CoinSentimentProps {
 }
 
 const CoinSentiment = ({ up, down }: CoinSentimentProps) => {
-  if (!up && !down) return "";
+  if ((!up && !down) || up === 100 || up === 50) return "";
 
   return (
     <div className="mb-8 mt-4">

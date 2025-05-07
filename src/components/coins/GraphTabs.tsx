@@ -3,7 +3,6 @@
 import { Tabs } from "@/lib/fluid";
 import { Coin } from "@/lib/types";
 import Chart from "@/components/ui/Chart";
-import PriceChangeChart from "@/components/ui/PriceChangeChart";
 
 type CoinDetailProps = {
   coin: Coin;
@@ -12,15 +11,33 @@ type CoinDetailProps = {
 const GraphTabs = ({ coin }: CoinDetailProps) => {
   const last24hPrices = coin.market_data.sparkline_7d.price.slice(-24);
   const last7dPrices = coin.market_data.sparkline_7d.price;
+  const currentPrice = coin.market_data.current_price.usd;
 
   const labels_24h = last24hPrices.map(() => ``);
   const labels_7d = last7dPrices.map(() => ``);
+  const historicalLabels = ["1y", "200d", "60d", "30d", "14d", "7d", "24h"];
+
+  const calculateHistoricalPrices = (currentPrice: number, percentageChanges: number[]) => {
+    return percentageChanges.map((change) => currentPrice / (1 + change / 100));
+  };
+
+  const percentageChanges = [
+    coin.market_data.price_change_percentage_1y,
+    coin.market_data.price_change_percentage_200d,
+    coin.market_data.price_change_percentage_60d,
+    coin.market_data.price_change_percentage_30d,
+    coin.market_data.price_change_percentage_14d,
+    coin.market_data.price_change_percentage_7d,
+    coin.market_data.price_change_percentage_24h,
+  ];
+
+  const historicalPrices = calculateHistoricalPrices(currentPrice, percentageChanges);
 
   return (
     <Tabs
       className="p-0"
       defaultActiveId="graph1"
-      tabSize="lg"
+      tabSize="md"
       tabsPosition="full"
       contentBorder={false}
       minimalTabs={true}
@@ -46,18 +63,15 @@ const GraphTabs = ({ coin }: CoinDetailProps) => {
       </div>
 
       <div id="graph3" title="1y Price" className="bg-white p-1 md:p-4">
-        <PriceChangeChart
-          priceChangeData={{
-            price_1h: coin.market_data.price_change_percentage_1h_in_currency.usd,
-            price_24h: coin.market_data.price_change_percentage_24h,
-            price_7d: coin.market_data.price_change_percentage_7d,
-            price_14d: coin.market_data.price_change_percentage_14d,
-            price_30d: coin.market_data.price_change_percentage_30d,
-            price_60d: coin.market_data.price_change_percentage_60d,
-            price_200d: coin.market_data.price_change_percentage_200d,
-            price_1y: coin.market_data.price_change_percentage_1y,
-          }}
-        />
+        {historicalPrices.length ? (
+          <Chart
+            data={historicalPrices}
+            labels={historicalLabels}
+            title="1-Year Price Trend (USD)"
+          />
+        ) : (
+          <p>No information at this time.</p>
+        )}
       </div>
     </Tabs>
   );

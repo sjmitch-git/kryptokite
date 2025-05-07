@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useUser } from "@/lib/contexts/UserContext";
 import { SimpleCoin } from "@/lib/types";
-import { FaPlusCircle, FaCheckCircle } from "@/components/ui/CustomIcons";
+import { FaStar } from "@/components/ui/CustomIcons";
 import { Button, Toast } from "@/lib/fluid";
 
 type WatchlistToggleProps = {
@@ -10,13 +10,13 @@ type WatchlistToggleProps = {
   symbol: string;
 };
 
-type BackgroundOption = "success" | "danger";
+type BackgroundOption = "warning" | "danger";
 
 const WatchlistToggle = ({ id, name, symbol }: WatchlistToggleProps) => {
   const { addUserCoin, removeUserCoin, isCoinInCollection } = useUser();
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
-  const [toastBackground, setToastBackground] = useState<BackgroundOption>("success");
+  const [toastBackground, setToastBackground] = useState<BackgroundOption>("warning");
 
   const handleToggleCoin = (coin: SimpleCoin) => {
     if (isCoinInCollection(coin.id)) {
@@ -28,7 +28,7 @@ const WatchlistToggle = ({ id, name, symbol }: WatchlistToggleProps) => {
       addUserCoin(coin);
       setOpen(true);
       setMessage(`${coin.name} added to watchlist`);
-      setToastBackground("success");
+      setToastBackground("warning");
     }
   };
 
@@ -46,13 +46,15 @@ const WatchlistToggle = ({ id, name, symbol }: WatchlistToggleProps) => {
           })
         }
         className={`p-0 ${
-          isCoinInCollection(id) ? "text-info focus:text-info" : "text-neutral focus:text-neutral"
+          isCoinInCollection(id)
+            ? "text-warning focus:text-warning"
+            : "text-neutral focus:text-neutral"
         }`}
       >
         {isCoinInCollection(id) ? (
-          <FaCheckCircle size={"2rem"} title="Remove from Watchlist?" />
+          <FaStar size={"2rem"} title="Remove from Watchlist?" />
         ) : (
-          <FaPlusCircle size={"2rem"} title="Add to Watchlist?" />
+          <FaStar size={"2rem"} title="Add to Watchlist?" />
         )}
       </Button>
       <Toast

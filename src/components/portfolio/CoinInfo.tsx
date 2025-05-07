@@ -3,10 +3,11 @@
 import { useState, useEffect } from "react";
 import { Coin } from "@/lib/types";
 import { Alert, Loading } from "@smitch/fluid";
-import {NEXT_PUBLIC_API_URL} from '@/lib/constants';
+import { NEXT_PUBLIC_API_URL } from "@/lib/constants";
 import CoinInfoTable from "./CoinInfoTable";
 import CoinInfoHero from "./CoinInfoHero";
-import GraphTabs from "../coins/GraphTabs"
+import GraphTabs from "../coins/GraphTabs";
+import CoinSentiment from "@/components/coins/CoinSentiment";
 
 interface CoinInfoProps {
   coinId: string;
@@ -73,10 +74,14 @@ const CoinInfo = ({
   }
 
   return (
-    <div className="space-y-4 mb-8">
-      <hr />
+    <div className="space-y-8 mb-8">
+      <hr className="h-1 bg-slate-300" />
       <CoinInfoHero coin={coin} />
       <CoinInfoTable coin={coin} setIsOpen={setIsOpen} storeBalance={storeBalance || 0} />
+      <CoinSentiment
+        up={coin.sentiment_votes_up_percentage}
+        down={coin.sentiment_votes_down_percentage}
+      />
       <GraphTabs coin={coin} />
     </div>
   );

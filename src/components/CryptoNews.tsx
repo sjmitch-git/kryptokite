@@ -84,7 +84,7 @@ const CryptoNews = () => {
                 icon="arrow"
               >
                 <div className="news border border-slate-200 ">
-                  <p className="news-section py-4 px-2 md:px-4 max-w-prose text-lg">
+                  <p className="news-section md:py-4 px-2 md:px-4 max-w-prose text-lg">
                     {parse(section.body, {
                       replace: (domNode) => {
                         if (

@@ -136,7 +136,7 @@ const Store = ({ store }: StoreProps) => {
                       >
                         {coin.name}
                       </Link>
-                      <p className="font-normal text-sm text-slate-500">
+                      <p className="font-normal text-sm text-slate-500 whitespace-nowrap">
                         {new Intl.DateTimeFormat("en-GB", {
                           day: "2-digit",
                           month: "short",
