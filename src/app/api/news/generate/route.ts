@@ -81,13 +81,13 @@ export async function GET(request: NextRequest) {
   Example JSON format:
   {
     "sections": [
-      {
-        "headline": "Market Surge Continues",
-        "body": "The crypto market is thriving as <span class='bitcoin'>Bitcoin</span> climbs to $94,600, up 2% in 24 hours. Meanwhile, <span class='ethereum'>Ethereum</span> surged 6%, driven by DeFi adoption. Investors are optimistic..."
+     {
+        "headline": "Crypto Rally Ignites!",
+        "body": "<span class='bitcoin'>Bitcoin</span> surges 3.4% to $103,043, <span class='ethereum'>Ethereum</span> jumps 24.64% to $2,415.32. Meme coins <span class='shiba-inu'>Shiba Inu</span> +10.87%, <span class='dogecoin'>Dogecoin</span> +13.03%. DeFi tokens <span class='aave'>Aave</span> (+15.14%) & <span class='uniswap'>Uniswap</span> (+24.53%) soar, while <span class='solana'>Solana</span (+8.95%) hits $166.68 & <span class='ripple'>XRP</span> rebounds 7.13% to $2.36."
       },
       {
-        "headline": "Altcoin Volatility",
-        "body": "<span class='solana'>Solana</span> dropped 7% amid network concerns, while <span class='cardano'>Cardano</span> gained 5% after a protocol upgrade. <span class='bitcoin'>Bitcoin</span> remains a safe haven..."
+        "headline": "Solana Keeps Climbing",
+        "body": "<span class='solana'>Solana</span> gained 8.95% today, hitting $166.68! Despite being 35.9% below its ATH of $259.96 (Nov 2021), its speed and scalability—powering 50,000+ TPS—make it a top contender in blockchain tech. Investors are optimistic about its future, especially with the upcoming Solana Breakpoint conference in Lisbon."
       }
     ]
   }
