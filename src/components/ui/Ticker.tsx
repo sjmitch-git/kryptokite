@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useCoins } from "@/lib/contexts/CoinsContext";
 import { MarketDataCoin } from "@/lib/types";
 
-const filter_amount = 3;
+const filter_amount = 5;
 
 const Ticker = () => {
   const { marketData, loading, error } = useCoins();
@@ -14,11 +14,13 @@ const Ticker = () => {
 
   useEffect(() => {
     if (marketData) {
-      const filteredData = marketData.coins.filter(
-        (coin: { price_change_percentage_24h: number }) =>
-          coin.price_change_percentage_24h > filter_amount ||
-          coin.price_change_percentage_24h < Number(`-${filter_amount}`)
-      );
+      const filteredData = marketData.coins
+        .filter(
+          (coin: { price_change_percentage_24h: number }) =>
+            coin.price_change_percentage_24h > filter_amount ||
+            coin.price_change_percentage_24h < Number(`-${filter_amount}`)
+        )
+        .slice(0, 50);
       setTickerData(filteredData);
       const localTimestamp = new Date(marketData.date).toLocaleString();
       setTimestamp(localTimestamp);
