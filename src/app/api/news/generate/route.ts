@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
-import { put, head, del } from "@vercel/blob";
+import { put } from "@vercel/blob";
 import OpenAI from "openai";
 import { postThread } from "@/lib/services/twitter.service";
 
@@ -122,6 +122,18 @@ export async function GET(request: NextRequest) {
 
     if (!sections || !Array.isArray(sections) || sections.length === 0) {
       throw new Error("No sections found in OpenAI response");
+    }
+
+    try {
+      const threadContent = sections.map((section: { headline: string; body: string }) => {
+        const { headline, body } = section;
+        const cleanHeadline = headline.replace(/<[^>]+>/g, "");
+        const cleanBody = body.replace(/<[^>]+>/g, "");
+        return `${cleanHeadline}: ${cleanBody}`;
+      });
+      await postThread(threadContent);
+    } catch (threadError) {
+      console.error("Non-fatal thread error:", threadError);
     }
 
     const [newsBlob, marketBlob] = await Promise.all([
