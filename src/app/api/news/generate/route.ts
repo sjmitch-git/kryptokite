@@ -10,6 +10,7 @@ interface Coin {
   name: string;
   current_price: number;
   price_change_percentage_24h: number;
+  ath: number;
 }
 
 const openai = new OpenAI({
@@ -49,6 +50,13 @@ export async function GET(request: NextRequest) {
 
   const coins = await fetchCoinGeckoData();
 
+  if (
+    !Array.isArray(coins) ||
+    coins.some((coin) => !coin.id || !coin.name || !coin.current_price || !coin.ath)
+  ) {
+    return NextResponse.json({ error: "Invalid coin data" }, { status: 400 });
+  }
+
   const prompt = `
   Generate a structured JSON object for a crypto news update for ${new Date().toLocaleDateString(
     "en-US",
@@ -64,7 +72,7 @@ export async function GET(request: NextRequest) {
     coins
       .map(
         (coin: Coin) =>
-          `${coin.id}: ${coin.name}: $${coin.current_price}, ${coin.price_change_percentage_24h}% (24h change)`
+          `${coin.id}: ${coin.name}: $${coin.current_price}, ${coin.price_change_percentage_24h}% (24h change), ${coin.ath}% (all time highest price)`
       )
       .join("\n") ||
     "If no market data is available, generate sections based on general crypto market trends or recent news."
@@ -90,7 +98,7 @@ export async function GET(request: NextRequest) {
       model: "gpt-3.5-turbo",
       messages: [{ role: "user", content: prompt }],
       max_tokens: 800,
-      temperature: 0.7,
+      temperature: 0.9,
     });
 
     if (
@@ -116,53 +124,24 @@ export async function GET(request: NextRequest) {
       throw new Error("No sections found in OpenAI response");
     }
 
-    try {
-      const threadContent = sections.map((section: { headline: string; body: string }) => {
-        const { headline, body } = section;
-        const cleanHeadline = headline.replace(/<[^>]+>/g, "");
-        const cleanBody = body.replace(/<[^>]+>/g, "");
-        return `${cleanHeadline}: ${cleanBody}`;
-      });
-      await postThread(threadContent);
-    } catch (threadError) {
-      console.error("Non-fatal thread error:", threadError);
-    }
-
-    const newsPath = "kk/news/latest.json";
-    const existingNewsBlob = await head(newsPath, { token: process.env.VERCEL_BLOB_TOKEN });
-
-    if (existingNewsBlob) {
-      await del(newsPath, { token: process.env.VERCEL_BLOB_TOKEN });
-    }
-
-    const newsBlob = await put(
-      newsPath,
-      JSON.stringify({ content: newsText, date: new Date().toISOString() }),
-      {
+    const [newsBlob, marketBlob] = await Promise.all([
+      put(
+        "kk/news/latest.json",
+        JSON.stringify({ content: newsText, date: new Date().toISOString() }),
+        {
+          access: "public",
+          contentType: "application/json",
+          token: process.env.VERCEL_BLOB_TOKEN,
+          addRandomSuffix: false,
+        }
+      ),
+      put("kk/market/latest.json", JSON.stringify({ coins, date: new Date().toISOString() }), {
         access: "public",
         contentType: "application/json",
         token: process.env.VERCEL_BLOB_TOKEN,
         addRandomSuffix: false,
-      }
-    );
-
-    const marketPath = "kk/market/latest.json";
-    const existingMarketBlob = await head(marketPath, { token: process.env.VERCEL_BLOB_TOKEN });
-
-    if (existingMarketBlob) {
-      await del(marketPath, { token: process.env.VERCEL_BLOB_TOKEN });
-    }
-
-    const marketBlob = await put(
-      marketPath,
-      JSON.stringify({ coins, date: new Date().toISOString() }),
-      {
-        access: "public",
-        contentType: "application/json",
-        token: process.env.VERCEL_BLOB_TOKEN,
-        addRandomSuffix: false,
-      }
-    );
+      }),
+    ]);
 
     return NextResponse.json(
       {
