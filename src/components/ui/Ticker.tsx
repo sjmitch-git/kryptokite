@@ -33,6 +33,7 @@ const Ticker = () => {
     <div className="ticker">
       <div className="ticker-wrapper">
         <ul className="ticker-items">
+          <li className="ticker-item">Today's biggest movers:</li>
           {tickerData.length > 0 &&
             tickerData.map((coin) => (
               <li key={coin.id} className="ticker-item">
@@ -48,7 +49,7 @@ const Ticker = () => {
                 </Link>
               </li>
             ))}
-          <li>Updated at: {timestamp}</li>
+          <li className="ticker-item">Updated at: {timestamp}</li>
         </ul>
       </div>
     </div>

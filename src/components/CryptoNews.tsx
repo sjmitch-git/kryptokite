@@ -3,7 +3,7 @@
 import Link from "next/link";
 import parse, { DOMNode, domToReact, Element } from "html-react-parser";
 import React, { useState, useEffect } from "react";
-import { Heading, Alert, Loading, Accordion, AccordionItem } from "@/lib/fluid";
+import { Heading, Alert, Accordion, AccordionItem } from "@/lib/fluid";
 import { formatDate } from "@/lib/utils";
 import { NEXT_PUBLIC_API_URL } from "@/lib/constants";
 import { useCoins } from "@/lib/contexts/CoinsContext";
@@ -18,7 +18,7 @@ const CryptoNews = () => {
   const [newsSections, setNewsSections] = useState<NewsSection[]>([]);
   const [newsDate, setNewsDate] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState("0");
 
   useEffect(() => {
@@ -61,8 +61,12 @@ const CryptoNews = () => {
     <div className="crypto-news mb-8 px-2 md:px-4 lg:px-0">
       <Heading level={2}>Crypto News</Heading>
       {loading && (
-        <div className="flex justify-center p-8">
-          <Loading caption="Fetching latest crypto news" size="lg" loadingColor="info" />
+        <div className="px-4">
+          <ul className="list-disc list-outside text-gray-600 space-y-4 text-lg ml-4">
+            <li>Stay updated with the top crypto coins and their market performance.</li>
+            <li>Discover the biggest gainers and losers of the day.</li>
+            <li>Get insights into the latest trends and developments in the crypto world.</li>
+          </ul>
         </div>
       )}
       {newsDate && !isNaN(new Date(newsDate).getTime()) && (

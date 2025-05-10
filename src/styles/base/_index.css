@@ -13,5 +13,5 @@ body {
 }
 
 .hr {
-  @apply my-16 h-1 bg-info;
+  @apply my-16 h-1 bg-slate-300 dark:bg-slate-600;
 }
