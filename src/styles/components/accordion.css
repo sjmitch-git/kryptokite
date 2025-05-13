@@ -3,6 +3,6 @@
     @apply flex flex-col gap-2;
   }
   h3 {
-    @apply bg-slate-200;
+    @apply md:bg-slate-200;
   }
 }

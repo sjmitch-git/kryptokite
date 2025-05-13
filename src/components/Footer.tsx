@@ -5,9 +5,9 @@ import Ticker from "@/components/ui/Ticker";
 
 export default function Footer() {
   return (
-    <footer className="p-4 pb-16 mt-8 bg-[#f27d0b] sticky top-full">
+    <footer className="p-4 pb-16 mt-8 bg-[#e2e8f0] sticky top-full">
       <div className="container mx-auto text-center space-y-4">
-        <Link href="./" className="block -mt-8" title="Go to homepage">
+        <Link href="./" className="block" title="Go to homepage">
           <img
             src={`${process.env.NEXT_PUBLIC_API_URL}logo.png`}
             alt="Logo"
