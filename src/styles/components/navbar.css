@@ -1,0 +1,11 @@
+.navbrand {
+  @apply bg-black border-4 border-black rounded-md max-sm:hidden;
+
+  & + div {
+    @apply max-sm:w-full justify-between max-sm:flex-row;
+  }
+
+  img {
+    @apply invert;
+  }
+}

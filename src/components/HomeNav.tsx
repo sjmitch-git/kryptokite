@@ -22,9 +22,9 @@ const HomeNav = () => {
           />
           <CardBody className="static">
             <CardHeader title={card.title} className="text-xl max-sm:text-center" />
-            <p className="md:line-clamp-2">{card.body}</p>
+            <p className="max-sm:hidden md:line-clamp-2">{card.body}</p>
           </CardBody>
-          <Link href={card.href} className="stretched-link"></Link>
+          <Link href={card.href} className="stretched-link" prefetch={false}></Link>
         </Card>
       ))}
     </div>

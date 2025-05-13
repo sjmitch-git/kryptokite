@@ -1,8 +1,13 @@
 .accordion {
   > div {
     @apply flex flex-col gap-2;
+
+    > div {
+      @apply border border-slate-300;
+    }
   }
-  h3 {
-    @apply md:bg-slate-200;
-  }
+}
+
+.accordion-header {
+  @apply !gap-4;
 }

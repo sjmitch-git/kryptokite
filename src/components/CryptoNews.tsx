@@ -46,6 +46,7 @@ const CryptoNews = () => {
     } else {
       setNewsSections(sections);
       setNewsDate(date);
+      setLoading(false);
     }
   }, [sections, date, setNewsData]);
 
@@ -87,7 +88,7 @@ const CryptoNews = () => {
                 layoutClasses=""
                 icon="arrow"
               >
-                <div className="news border border-slate-200 ">
+                <div className="news">
                   <p className="news-section md:py-4 px-2 md:px-4 max-w-prose text-lg">
                     {parse(section.body, {
                       replace: (domNode) => {

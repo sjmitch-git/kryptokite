@@ -8,8 +8,8 @@ const SearchCoins = dynamic(() => import("./coins/SearchCoins"), { ssr: false })
 export default function Nav() {
   return (
     <div className="flex items-center gap-2 md:gap-4">
-      <CurrencyButton />
       <SearchCoins />
+      <CurrencyButton />
     </div>
   );
 }
