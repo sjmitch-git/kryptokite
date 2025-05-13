@@ -4,4 +4,4 @@ Disallow: */watchlist
 Disallow: */portfolio
 
 # Specify the location of the sitemap
-Sitemap: https://kryptokite.vercel.app/sitemap.xml
+Sitemap: https://piqel.app/sitemap.xml
