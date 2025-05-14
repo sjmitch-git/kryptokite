@@ -1,10 +1,10 @@
-describe("Test Page", () => {
-  it("should display a 404 error if the page is not found", () => {
-    // Visit a non-existent page
+describe("tEST Page", () => {
+  it("should display the maintenance page when the site is under maintenance", () => {
+    // Visit a non-existent page (redirects to maintenance.html)
     cy.visit("/non-existent-page", { failOnStatusCode: false });
 
-    // Check if the 404 error message is displayed
-    cy.contains("404").should("be.visible");
-    cy.contains("Not Found").should("be.visible");
+    // Check if the maintenance page is displayed
+    cy.contains("We'll Be Back Soon!").should("be.visible");
+    cy.contains("Our website is currently undergoing scheduled maintenance.").should("be.visible");
   });
 });
