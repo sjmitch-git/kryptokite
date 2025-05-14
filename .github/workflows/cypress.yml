@@ -18,10 +18,7 @@ jobs:
 
       - name: Check for maintenance mode
         run: |
-          if [ -f ./public/maintenance.flag ]; then
-            echo "Site is under maintenance. Skipping Cypress tests."
-            exit 0
-          fi
+          test -f ./public/maintenance.flag && exit 0
 
       - name: Install dependencies
         run: npm install
