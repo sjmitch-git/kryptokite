@@ -16,6 +16,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Check for maintenance mode
+        run: |
+          if [ -f ./public/maintenance.flag ]; then
+            echo "Site is under maintenance. Skipping Cypress tests."
+            exit 0
+          fi
+
       - name: Install dependencies
         run: npm install
 
