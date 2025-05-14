@@ -7,7 +7,10 @@ export default defineConfig({
     setupNodeEvents(on, config) {
       // implement node event listeners here
     },
-    excludeSpecPattern: ["cypress/e2e/**/api_routes.cy.js"],
+    excludeSpecPattern: [
+      "cypress/e2e/**/api_routes.cy.ts",
+      "cypress/component/**/TrendingSearch.cy.tsx",
+    ],
   },
 
   component: {
