@@ -1,9 +1,9 @@
-describe("Home Page", () => {
+describe("Maintenance Page", () => {
   it("should display the main header", () => {
     // Visit the home page
-    cy.visit("/");
+    cy.visit("/maintenance");
 
     // Check if the main header is visible
-    cy.get("h1").should("be.visible");
+    cy.contains("We'll Be Back Soon!").should("be.visible");
   });
 });
