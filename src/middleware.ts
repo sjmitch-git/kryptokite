@@ -1,16 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { get } from "@vercel/edge-config";
 
-export const config = {
+/* export const config = {
   matcher: [
-    /*
-     * Match all pages and API routes except:
-     * - The maintenance page (`/maintenance`)
-     * - Next.js internal paths (`/_next/*`)
-     * - Static assets like `favicon.ico` and `sw.js`
-     */
     "/((?!maintenance|_next|favicon.ico).*)",
   ],
+}; */
+
+export const config = {
+  matcher: "/portfolio:path",
 };
 
 export async function middleware(req: NextRequest) {
