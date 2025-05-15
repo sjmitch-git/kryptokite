@@ -7,7 +7,7 @@ export const config = {
      * Match all pages and API routes except:
      * - The maintenance page (`/maintenance`)
      */
-    "/((?!maintenance).*)",
+    "/((?!maintenance|_next|favicon.ico|sw.js).*)",
   ],
 };
 
