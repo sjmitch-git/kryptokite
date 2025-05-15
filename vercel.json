@@ -4,12 +4,5 @@
       "path": "/api/news/generate",
       "schedule": "0 15 * * *"
     }
-  ],
-  "redirects": [
-    {
-      "source": "/:path*",
-      "destination": "/maintenance.html",
-      "permanent": false
-    }
   ]
 }
