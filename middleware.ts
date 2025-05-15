@@ -20,7 +20,7 @@ export async function middleware(req: NextRequest) {
     if (isInMaintenanceMode) {
       const maintenanceUrl = req.nextUrl.clone();
       maintenanceUrl.pathname = "/maintenance";
-      return NextResponse.rewrite(maintenanceUrl);
+      return NextResponse.redirect(maintenanceUrl);
     }
   } catch (error: unknown) {
     if (error instanceof Error) {
