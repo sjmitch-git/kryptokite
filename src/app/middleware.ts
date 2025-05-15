@@ -2,13 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { get } from "@vercel/edge-config";
 
 export const config = {
-  matcher: [
-    /*
-     * Match all pages and API routes except:
-     * - The maintenance page (`/maintenance`)
-     */
-    "/((?!maintenance|_next|favicon.ico|sw.js).*)",
-  ],
+  matcher: ["/portfolio"],
 };
 
 export async function middleware(req: NextRequest) {
