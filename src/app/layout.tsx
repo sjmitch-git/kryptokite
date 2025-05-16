@@ -8,6 +8,7 @@ import { CoinsProvider } from "@/lib/contexts/CoinsContext";
 import { UserProvider } from "@/lib/contexts/UserContext";
 import { MetaData } from "@/lib/config";
 import { URLs } from "@/lib/constants";
+import { get } from "@vercel/edge-config";
 
 export const metadata: Metadata = {
   title: {
@@ -44,11 +45,23 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const isInMaintenanceMode = await get<boolean>("maintenance");
+
+  if (isInMaintenanceMode) {
+    return (
+      <html lang="en">
+        <body className="bg-primary">
+          <main className="flex-grow container mx-auto max-w-4xl pt-12 pb-12 px-0">{children}</main>
+        </body>
+      </html>
+    );
+  }
+
   return (
     <html lang="en">
       <body className={`antialiased`}>
