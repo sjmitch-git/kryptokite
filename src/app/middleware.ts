@@ -1,4 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 import { get } from "@vercel/edge-config";
 
 /* export const config = {
@@ -7,19 +8,13 @@ import { get } from "@vercel/edge-config";
   ],
 }; */
 
-export const config = {
-  matcher: "/portfolio:path",
-};
-
 export async function middleware(req: NextRequest) {
   try {
     const isInMaintenanceMode = await get<boolean>("maintenance");
 
     if (isInMaintenanceMode) {
-      const maintenanceUrl = req.nextUrl.clone();
-      maintenanceUrl.pathname = "/maintenance";
-      return NextResponse.redirect(maintenanceUrl);
-    }
+      return NextResponse.redirect(new URL("/maintenance", req.url));
+    } else return NextResponse.redirect(new URL("/maintenance", req.url));
   } catch (error: unknown) {
     if (error instanceof Error) {
       console.error("Error message:", error.message);
@@ -28,3 +23,7 @@ export async function middleware(req: NextRequest) {
     }
   }
 }
+
+export const config = {
+  matcher: "/portfolio:path*",
+};
