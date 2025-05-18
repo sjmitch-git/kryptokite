@@ -3,7 +3,7 @@ import { get } from "@vercel/edge-config";
 
 export const config = {
   matcher: [
-    "/((?!maintenance|api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|logo.png).*)",
+    "/((?!maintenance|api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|logo.png|sitemaps/).*)",
   ],
 };
 
