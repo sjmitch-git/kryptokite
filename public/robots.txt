@@ -2,6 +2,7 @@ User-agent: *
 # Allow all crawlers to access the site except for the following:
 Disallow: */watchlist
 Disallow: */portfolio
+Crawl-delay: 10
 
 # Specify the location of the sitemap
 Sitemap: https://piqel.app/sitemap.xml
