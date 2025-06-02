@@ -5,10 +5,10 @@ export const MetaData = {
   defaultSitename: "Piqel",
   defaultTitle: "Cryptocurrency Tracker",
   defaultDescription:
-    "Piqel is a cryptocurrency tracker that allows you to track the latest prices of your favourite crypto currencies.",
+    "Piqel.app is a cryptocurrency tracker for real-time price monitoring and virtual portfolio management",
   defaultKeywords: "crypto, cryptocurrency, bitcoin, ethereum, crypto tracker, crypto prices",
-  defaultAuthor: "Stephen Mitchell",
-  defaultAuthorUrl: "https://www.linkedin.com/in/stephen-m-52a3a4192/",
+  defaultAuthor: "OBLONG",
+  defaultAuthorUrl: "https://oblong.digital/",
 };
 
 export const Links = [
