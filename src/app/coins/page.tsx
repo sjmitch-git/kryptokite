@@ -15,11 +15,11 @@ export const metadata: Metadata = {
 
 export default function CoinsPage() {
   return (
-    <article>
+    <>
       <Hero title={title} description={description} />
       <Suspense>
         <CoinsList />
       </Suspense>
-    </article>
+    </>
   );
 }

@@ -9,6 +9,7 @@ import { UserProvider } from "@/lib/contexts/UserContext";
 import { MetaData } from "@/lib/config";
 import { URLs } from "@/lib/constants";
 import { get } from "@vercel/edge-config";
+import CryptoNews from "@/components/CryptoNews";
 
 export const metadata: Metadata = {
   title: {
@@ -70,8 +71,11 @@ export default async function RootLayout({
         <CoinsProvider>
           <UserProvider>
             <Header />
-            <main className="flex-grow container mx-auto max-w-4xl pt-12 pb-12 px-0">
-              {children}
+            <main className="grid grid-cols-12 gap-4 lg:gap-8 flex-grow pt-8 lg:pt-8 md:pb-12 md:px-4">
+              <article className="col-span-12 md:col-span-8">{children}</article>
+              <aside className="col-span-12 md:col-span-4 p-0">
+                <CryptoNews />
+              </aside>
             </main>
             <Footer />
           </UserProvider>

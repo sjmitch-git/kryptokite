@@ -108,7 +108,7 @@ const CoinPage = async ({ params }: Props) => {
   }
 
   return (
-    <article>
+    <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -120,7 +120,7 @@ const CoinPage = async ({ params }: Props) => {
       />
 
       <CoinDetail coin={coin} />
-    </article>
+    </>
   );
 };
 

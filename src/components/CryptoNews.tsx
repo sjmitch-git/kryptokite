@@ -59,8 +59,8 @@ const CryptoNews = () => {
   }
 
   return (
-    <div className="crypto-news mb-8 px-2 md:px-4 lg:px-0">
-      <Heading level={2}>Crypto News</Heading>
+    <div className="crypto-news mb-8 p-2 bg-white">
+      <Heading level={3}>Crypto News</Heading>
       {loading && (
         <div className="px-4">
           <ul className="list-disc list-outside text-gray-600 space-y-4 text-lg ml-4">
@@ -89,7 +89,7 @@ const CryptoNews = () => {
                 icon="arrow"
               >
                 <div className="news">
-                  <p className="news-section md:py-4 px-2 md:px-4 max-w-prose text-lg">
+                  <p className="news-section p-2 max-w-prose text-lg">
                     {parse(section.body, {
                       replace: (domNode) => {
                         if (

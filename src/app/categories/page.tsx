@@ -15,11 +15,11 @@ export const metadata: Metadata = {
 
 export default function CategoriesPage() {
   return (
-    <article>
+    <>
       <Hero title={title} description={description} />
       <Suspense>
         <CategoriesList />
       </Suspense>
-    </article>
+    </>
   );
 }

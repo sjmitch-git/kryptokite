@@ -15,12 +15,12 @@ export const metadata: Metadata = {
 
 const Watchlist = () => {
   return (
-    <article>
+    <>
       <Hero title={title} description={description} />
       <Suspense>
         <WatchListCoins />
       </Suspense>
-    </article>
+    </>
   );
 };
 

@@ -23,12 +23,12 @@ const CategoryIdPage = async ({ params }: Props) => {
   const cleanedId = decodeURIComponent(id).trim();
 
   return (
-    <article>
+    <>
       <Hero title={cleanedId} className="!mb-0" />
       <Suspense>
         <CategoryCoinsList id={cleanedId} />
       </Suspense>
-    </article>
+    </>
   );
 };
 

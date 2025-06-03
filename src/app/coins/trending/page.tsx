@@ -12,9 +12,9 @@ export const metadata: Metadata = {
 
 export default function TrendingPage() {
   return (
-    <article>
+    <>
       <Hero title={title} description={description} />
       <TrendingSearch />
-    </article>
+    </>
   );
 }
