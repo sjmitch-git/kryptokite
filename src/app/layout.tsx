@@ -71,9 +71,9 @@ export default async function RootLayout({
         <CoinsProvider>
           <UserProvider>
             <Header />
-            <main className="grid grid-cols-12 gap-4 lg:gap-8 flex-grow pt-8 lg:pt-8 md:pb-12 md:px-4">
-              <article className="col-span-12 md:col-span-8">{children}</article>
-              <aside className="col-span-12 md:col-span-4 p-0">
+            <main className="grid grid-cols-12 gap-4 lg:gap-8 flex-grow pt-8 lg:pt-12 md:pb-12 lg:px-4">
+              <article className="col-span-12 lg:col-span-8">{children}</article>
+              <aside className="col-span-12 lg:col-span-4 p-2">
                 <CryptoNews />
               </aside>
             </main>
