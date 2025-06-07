@@ -1,7 +1,17 @@
+# Block AWS crawlers from the entire site
+User-agent: Amazonbot
+Disallow: /
+
+User-agent: amazon-kendra
+Disallow: /
+
+User-agent: amazon-QBusiness
+Disallow: /
+
+# Rules for all other crawlers
 User-agent: *
-# Allow all crawlers to access the site except for the following:
-Disallow: */watchlist
-Disallow: */portfolio
+Disallow: /watchlist/
+Disallow: /portfolio/
 Crawl-delay: 10
 
 # Specify the location of the sitemap
