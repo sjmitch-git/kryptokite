@@ -25,6 +25,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     }
 
     const storedStores = localStorage.getItem("stores");
+
     if (storedStores) {
       setStores(JSON.parse(storedStores));
     }

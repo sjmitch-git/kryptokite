@@ -10,7 +10,7 @@ const filter_amount = 5;
 const Ticker = () => {
   const { marketData, loading, error } = useCoins();
   const [tickerData, setTickerData] = useState<MarketDataCoin[]>([]);
-  const [timestamp, setTimestamp] = useState("");
+  const [timestamp, setTimestamp] = useState<string | null>(null);
 
   useEffect(() => {
     if (marketData) {
@@ -22,12 +22,11 @@ const Ticker = () => {
         )
         .slice(0, 50);
       setTickerData(filteredData);
-      const localTimestamp = new Date(marketData.date).toLocaleString();
-      setTimestamp(localTimestamp);
+      setTimestamp(new Date(marketData.date).toLocaleString());
     }
   }, [marketData]);
 
-  if (error || loading) return "";
+  if (error || loading || !tickerData) return "";
 
   return (
     <div className="ticker">
@@ -49,7 +48,9 @@ const Ticker = () => {
                 </Link>
               </li>
             ))}
-          <li className="ticker-item">Updated at: {timestamp}</li>
+          <li className="ticker-item">
+            Updated at: {timestamp ? timestamp : <span className="opacity-50">...</span>}
+          </li>
         </ul>
       </div>
     </div>

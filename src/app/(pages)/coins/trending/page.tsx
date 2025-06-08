@@ -14,6 +14,7 @@ export default function TrendingPage() {
   return (
     <>
       <Hero title={title} description={description} />
+      <p className="text-sm mb-2 text-right">Values are in USD</p>
       <TrendingSearch />
     </>
   );

@@ -11,6 +11,9 @@ Disallow: /
 User-agent: amazon-QBusiness
 Disallow: /
 
+User-agent: SemrushBot
+Disallow: /
+
 # Rules for all other crawlers
 User-agent: *
 Disallow: /watchlist/

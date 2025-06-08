@@ -46,7 +46,7 @@ const AddCoin = ({ storeId, storeBalance }: Props) => {
             suppressHydrationWarning
           />
         </Label>
-        {userCoins && (
+        {userCoins.length ? (
           <>
             <Label label="Watchlist:" size="lg" layout="row">
               <Input
@@ -63,6 +63,8 @@ const AddCoin = ({ storeId, storeBalance }: Props) => {
               ))}
             </datalist>
           </>
+        ) : (
+          ""
         )}
       </div>
       {coinId && (

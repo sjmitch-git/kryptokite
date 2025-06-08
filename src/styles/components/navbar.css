@@ -5,3 +5,7 @@
     @apply max-sm:w-full justify-between max-sm:flex-row;
   }
 }
+
+.navbar-link {
+  @apply hover:opacity-80;
+}

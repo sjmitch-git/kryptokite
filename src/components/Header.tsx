@@ -9,8 +9,8 @@ export default function Header() {
         brand={MetaData.defaultSitename}
         brandSrc={`${process.env.NEXT_PUBLIC_API_URL}logo.png`}
         links={Links}
-        navStyles="bg-[var(--light)] p-2 md:p-4 shadow-lg z-20"
-        btnBackground="info"
+        navStyles="bg-primary-light p-2 md:p-4 shadow-lg z-20 font-bold"
+        btnBackground="dark"
         btnColor="light"
         btnSize="lg"
         placement="top"
