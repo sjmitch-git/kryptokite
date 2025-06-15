@@ -1,4 +1,4 @@
-import { TwitterApi } from "twitter-api-v2";
+import { TwitterApi, ApiResponseError } from "twitter-api-v2";
 
 if (
   !process.env.TWITTER_API_KEY ||
@@ -33,9 +33,19 @@ export const postTweet = async (text: string) => {
     });
 
     if (!response.ok) {
+      if (response.status === 429) {
+        const limit = response.headers.get("x-rate-limit-limit");
+        const reset = response.headers.get("x-rate-limit-reset");
+        console.error(
+          `Rate limit reached. Limit: ${limit || "unknown"} requests. Resets at: ${
+            reset ? new Date(Number(reset) * 1000).toISOString() : "unknown"
+          }`
+        );
+        throw new Error("Rate limit reached");
+      }
       const errorText = await response.text();
-      console.error(`Request failed: ${response.status} - ${errorText}`);
-      throw new Error(`Failed to post tweet: ${response.status}`);
+      console.error(`Failed to post tweet: HTTP ${response.status} - ${errorText}`);
+      throw new Error(`Failed to post tweet: HTTP ${response.status}`);
     }
 
     const data = await response.json();
@@ -65,9 +75,19 @@ export const postThread = async (texts: string[]) => {
     });
 
     if (!response.ok) {
+      if (response.status === 429) {
+        const limit = response.headers.get("x-rate-limit-limit");
+        const reset = response.headers.get("x-rate-limit-reset");
+        console.error(
+          `Rate limit reached. Limit: ${limit || "unknown"} requests. Resets at: ${
+            reset ? new Date(Number(reset) * 1000).toISOString() : "unknown"
+          }`
+        );
+        throw new Error("Rate limit reached");
+      }
       const errorText = await response.text();
-      console.error(`Request failed: ${response.status} - ${errorText}`);
-      throw new Error(`Failed to post thread: ${response.status}`);
+      console.error(`Failed to post thread: HTTP ${response.status} - ${errorText}`);
+      throw new Error(`Failed to post thread: HTTP ${response.status}`);
     }
 
     const data = await response.json();
