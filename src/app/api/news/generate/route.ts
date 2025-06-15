@@ -1,7 +1,8 @@
 import { NextResponse, NextRequest } from "next/server";
+import { get } from "@vercel/edge-config";
 import { put } from "@vercel/blob";
 import OpenAI from "openai";
-import { postThread } from "@/lib/services/twitter.service";
+import { postThread, postTweet } from "@/lib/services/twitter.service";
 
 const isDebugMode = process.env.NODE_ENV === "development";
 
@@ -124,16 +125,30 @@ export async function GET(request: NextRequest) {
       throw new Error("No sections found in OpenAI response");
     }
 
-    try {
-      const threadContent = sections.map((section: { headline: string; body: string }) => {
-        const { headline, body } = section;
+    const postTwitterThread = await get<boolean>("twitterThread");
+
+    if (postTwitterThread) {
+      try {
+        const threadContent = sections.map((section: { headline: string; body: string }) => {
+          const { headline, body } = section;
+          const cleanHeadline = headline.replace(/<[^>]+>/g, "");
+          const cleanBody = body.replace(/<[^>]+>/g, "");
+          return `${cleanHeadline}:\n${cleanBody}`;
+        });
+        await postThread(threadContent);
+      } catch (threadError) {
+        console.error("Non-fatal thread error:", threadError);
+      }
+    } else {
+      try {
+        const { headline, body } = sections[0];
         const cleanHeadline = headline.replace(/<[^>]+>/g, "");
         const cleanBody = body.replace(/<[^>]+>/g, "");
-        return `${cleanHeadline}: ${cleanBody}`;
-      });
-      await postThread(threadContent);
-    } catch (threadError) {
-      console.error("Non-fatal thread error:", threadError);
+        const tweetContent = `${cleanHeadline}:\n${cleanBody}`;
+        await postTweet(tweetContent);
+      } catch (postError) {
+        console.error("Non-fatal post error:", postError);
+      }
     }
 
     const [newsBlob, marketBlob] = await Promise.all([
