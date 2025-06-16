@@ -1,104 +1,70 @@
-import { TwitterApi } from "twitter-api-v2";
-
-if (
-  !process.env.TWITTER_API_KEY ||
-  !process.env.TWITTER_API_SECRET ||
-  !process.env.TWITTER_ACCESS_TOKEN ||
-  !process.env.TWITTER_ACCESS_TOKEN_SECRET
-) {
-  console.error("Twitter API credentials are missing. Please check your environment variables.");
-  throw new Error("Twitter API credentials are not set.");
-}
+import { TwitterApi, ApiResponseError } from "twitter-api-v2";
+import { truncateText } from "@/lib/utils";
 
 export const twitterClient = new TwitterApi({
-  appKey: process.env.TWITTER_API_KEY,
-  appSecret: process.env.TWITTER_API_SECRET,
-  accessToken: process.env.TWITTER_ACCESS_TOKEN,
-  accessSecret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
+  appKey: process.env.TWITTER_API_KEY!,
+  appSecret: process.env.TWITTER_API_SECRET!,
+  accessToken: process.env.TWITTER_ACCESS_TOKEN!,
+  accessSecret: process.env.TWITTER_ACCESS_TOKEN_SECRET!,
 });
 
-export const postTweet = async (text: string) => {
-  if (!text) {
-    console.error("Tweet text cannot be empty");
-    throw new Error("Empty tweet text");
-  }
-
+export async function postTweet(text: string): Promise<{ id: string; text: string }> {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/twitter/post`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text }),
-    });
-
-    if (!response.ok) {
-      const data = await response.json();
-      if (response.status === 429) {
-        const { limit, reset } = data.rateLimit || {};
-        console.error(
-          `Rate limit reached. Limit: ${limit || "unknown"} requests. Resets at: ${
-            reset ? new Date(Number(reset) * 1000).toISOString() : "unknown"
-          }`
+    const tweet = await twitterClient.v2.tweet(truncateText(text, 280));
+    console.log("Tweet posted:", JSON.stringify(tweet, null, 2));
+    return { id: tweet.data.id, text: tweet.data.text };
+  } catch (error: unknown) {
+    console.error("Raw tweet error:", JSON.stringify(error, null, 2));
+    if (error instanceof ApiResponseError) {
+      console.error("Tweet API error code:", error.code);
+      console.error("Tweet API error data:", JSON.stringify(error.data, null, 2));
+      const errorData = error.data as unknown;
+      if (typeof errorData === "string" && errorData.includes("<!DOCTYPE")) {
+        throw new Error(
+          `Invalid API response: HTML received, likely rate limit exceeded (code ${
+            error.code || 429
+          })`
         );
-        throw new Error("Rate limit reached");
       }
-      console.error(
-        `Failed to post tweet: HTTP ${response.status} - ${data.error || "Unknown error"}`
-      );
-      throw new Error(data.error || `Failed to post tweet: HTTP ${response.status}`);
+      if (error.rateLimitError && error.rateLimit) {
+        throw new Error(
+          `Rate limit exceeded: limit=${error.rateLimit.limit}, remaining=${error.rateLimit.remaining}, reset=${error.rateLimit.reset}`
+        );
+      }
+      throw new Error(`Failed to post tweet: ${error.message} (code ${error.code || 400})`);
     }
-
-    const data = await response.json();
-    if (data.success) {
-      console.log("Tweet posted successfully");
-      return data.tweet;
-    } else {
-      console.error("Tweet error:", data.error || "Unknown error");
-      throw new Error(data.error || "Unknown API error");
-    }
-  } catch (error) {
-    console.error("Tweet post error:", error);
-    throw error;
+    throw error instanceof Error ? error : new Error("Unknown tweet error");
   }
-};
+}
 
-export const postThread = async (texts: string[]) => {
-  if (!texts || texts.length === 0 || texts.some((text) => !text)) {
-    console.error("Invalid thread texts: Must be non-empty array with non-empty strings");
-    throw new Error("Invalid thread texts");
+export async function postThread(texts: string[]): Promise<{ id: string; text: string }[]> {
+  if (!texts || !Array.isArray(texts) || texts.length === 0 || texts.some((text) => !text)) {
+    throw new Error("Texts must be a non-empty array of non-empty strings");
   }
-
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/twitter/thread`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ texts }),
-    });
-
-    if (!response.ok) {
-      if (response.status === 429) {
-        const limit = response.headers.get("x-rate-limit-limit");
-        const reset = response.headers.get("x-rate-limit-reset");
-        console.error(
-          `Rate limit reached. Limit: ${limit || "unknown"} requests. Resets at: ${
-            reset ? new Date(Number(reset) * 1000).toISOString() : "unknown"
-          }`
+    const thread = await twitterClient.v2.tweetThread(texts.map((text) => truncateText(text, 280)));
+    console.log("Thread posted:", JSON.stringify(thread, null, 2));
+    return thread.map((tweet) => ({ id: tweet.data.id, text: tweet.data.text }));
+  } catch (error: unknown) {
+    console.error("Raw thread error:", JSON.stringify(error, null, 2));
+    if (error instanceof ApiResponseError) {
+      console.error("Thread API error code:", error.code);
+      console.error("Thread API error data:", JSON.stringify(error.data, null, 2));
+      const errorData = error.data as unknown;
+      if (typeof errorData === "string" && errorData.includes("<!DOCTYPE")) {
+        throw new Error(
+          `Invalid API response: HTML received, likely rate limit exceeded (code ${
+            error.code || 429
+          })`
         );
-        throw new Error("Rate limit reached");
       }
-      const errorText = await response.text();
-      console.error(`Failed to post thread: HTTP ${response.status} - ${errorText}`);
-      throw new Error(`Failed to post thread: HTTP ${response.status}`);
+      if (error.rateLimitError && error.rateLimit) {
+        throw new Error(
+          `Rate limit exceeded: limit=${error.rateLimit.limit}, remaining=${error.rateLimit.remaining}, reset=${error.rateLimit.reset}`
+        );
+      }
+      throw new Error(`Failed to post thread: ${error.message} (code ${error.code || 400})`);
     }
-
-    const data = await response.json();
-    if (data.success) {
-      console.log("Thread posted:", data.thread);
-    } else {
-      console.error("Error:", data.error);
-    }
-  } catch (error) {
-    console.error("Request failed:", error);
+    throw error instanceof Error ? error : new Error("Unknown thread error");
   }
-};
+}

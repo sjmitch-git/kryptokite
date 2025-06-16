@@ -126,29 +126,34 @@ export async function GET(request: NextRequest) {
     }
 
     const postTwitterThread = await get<boolean>("twitterThread");
+    let twitterResult: { status: string; tweetId?: string; threadIds?: string[]; error?: string } =
+      {
+        status: "skipped",
+      };
 
-    if (postTwitterThread) {
-      try {
+    try {
+      if (postTwitterThread) {
         const threadContent = sections.map((section: { headline: string; body: string }) => {
           const { headline, body } = section;
           const cleanHeadline = headline.replace(/<[^>]+>/g, "");
           const cleanBody = body.replace(/<[^>]+>/g, "");
           return `${cleanHeadline}:\n${cleanBody}`;
         });
-        await postThread(threadContent);
-      } catch (threadError) {
-        console.error("Non-fatal thread error:", threadError);
-      }
-    } else {
-      try {
+        const thread = await postThread(threadContent);
+        twitterResult = { status: "thread_posted", threadIds: thread.map((t) => t.id) };
+      } else {
         const { headline, body } = sections[0];
         const cleanHeadline = headline.replace(/<[^>]+>/g, "");
         const cleanBody = body.replace(/<[^>]+>/g, "");
         const tweetContent = `${cleanHeadline}:\n${cleanBody}`;
-        await postTweet(tweetContent);
-      } catch (postError) {
-        console.error("Non-fatal post error:", postError);
+        const tweet = await postTweet(tweetContent);
+        twitterResult = { status: "tweet_posted", tweetId: tweet.id };
       }
+    } catch (twitterError: unknown) {
+      const errorMessage =
+        twitterError instanceof Error ? twitterError.message : "Unknown Twitter error";
+      console.error("Twitter posting error:", JSON.stringify(twitterError, null, 2));
+      twitterResult = { status: "failed", error: errorMessage };
     }
 
     const [newsBlob, marketBlob] = await Promise.all([
