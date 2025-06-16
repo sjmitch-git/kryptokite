@@ -156,6 +156,8 @@ export async function GET(request: NextRequest) {
       twitterResult = { status: "failed", error: errorMessage };
     }
 
+    console.log("twitterResult", twitterResult);
+
     const [newsBlob, marketBlob] = await Promise.all([
       put(
         "kk/news/latest.json",
