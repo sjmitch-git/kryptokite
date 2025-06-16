@@ -12,29 +12,66 @@ export async function POST(request: NextRequest) {
 
   try {
     const tweet = await twitterClient.v2.tweet(truncateText(text, 280));
-    return NextResponse.json({ success: true, tweet });
+
+    console.log("Tweet response:", JSON.stringify(tweet, null, 2));
+
+    return NextResponse.json({
+      success: true,
+      tweet: {
+        id: tweet.data.id,
+        text: tweet.data.text,
+      },
+    });
   } catch (error: unknown) {
-    if (error instanceof ApiResponseError && error.rateLimitError && error.rateLimit) {
+    console.error("Raw error:", JSON.stringify(error, null, 2));
+
+    if (error instanceof ApiResponseError) {
+      console.error("API error code:", error.code);
+      console.error("API error data:", JSON.stringify(error.data, null, 2));
+
+      // Type-safe check for HTML response
+      const errorData = error.data as unknown;
+      if (typeof errorData === "string" && errorData.includes("<!DOCTYPE")) {
+        return NextResponse.json(
+          {
+            error: "Invalid API response",
+            details: "Received HTML instead of JSON, likely rate limit exceeded",
+          },
+          { status: error.code || 429 }
+        );
+      }
+
+      if (error.rateLimitError && error.rateLimit) {
+        return NextResponse.json(
+          {
+            error: "Rate limit exceeded",
+            details: error.message,
+            rateLimit: {
+              limit: error.rateLimit.limit,
+              remaining: error.rateLimit.remaining,
+              reset: error.rateLimit.reset,
+              resetDate: error.rateLimit.reset
+                ? new Date(error.rateLimit.reset * 1000).toISOString()
+                : null,
+            },
+          },
+          {
+            status: error.code,
+            headers: {
+              "x-rate-limit-limit": error.rateLimit.limit?.toString() || "",
+              "x-rate-limit-reset": error.rateLimit.reset?.toString() || "",
+            },
+          }
+        );
+      }
+
       return NextResponse.json(
-        {
-          error: "Rate limit exceeded",
-          details: error.message,
-          rateLimit: {
-            limit: error.rateLimit.limit,
-            reset: error.rateLimit.reset,
-          },
-        },
-        {
-          status: error.code,
-          headers: {
-            "x-rate-limit-limit": error.rateLimit.limit?.toString() || "",
-            "x-rate-limit-reset": error.rateLimit.reset?.toString() || "",
-          },
-        }
+        { error: "Failed to post tweet", details: error.message },
+        { status: error.code || 400 }
       );
     }
+
     const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
-    console.error("Error posting tweet:", error);
     return NextResponse.json(
       { error: "Failed to post tweet", details: errorMessage },
       { status: 500 }
