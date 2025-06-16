@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { twitterClient } from "@/lib/services/twitter.service";
 import { ApiResponseError } from "twitter-api-v2";
 
-export async function GET(_request: NextRequest) {
+export async function GET() {
   try {
     const userResponse = await twitterClient.v2.me();
 
