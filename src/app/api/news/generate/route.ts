@@ -5,7 +5,7 @@ import OpenAI from "openai";
 import { postThread, postTweet } from "@/lib/services/twitter.service";
 
 const isDebugMode = process.env.NODE_ENV === "development";
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://piqel.app/";
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 interface Coin {
   id: string;
