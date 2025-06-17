@@ -5,7 +5,7 @@ import OpenAI from "openai";
 import { postThread, postTweet } from "@/lib/services/twitter.service";
 
 const isDebugMode = process.env.NODE_ENV === "development";
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://piqel.app/";
 
 interface Coin {
   id: string;
@@ -136,7 +136,7 @@ export async function GET(request: NextRequest) {
           const coinIdMatch = body.match(/<span class='([^']+)'>/);
           const coinId = coinIdMatch ? coinIdMatch[1] : "bitcoin";
           const cleanBody = body.replace(/<[^>]+>/g, "");
-          return `${cleanHeadline}\n${cleanBody}\n${baseUrl}${coinId}`;
+          return `${cleanHeadline}\n${cleanBody}\n${baseUrl}coins/${coinId}`;
         });
         await postThread(threadContent);
       } else {
@@ -145,7 +145,7 @@ export async function GET(request: NextRequest) {
         const coinIdMatch = body.match(/<span class='([^']+)'>/);
         const coinId = coinIdMatch ? coinIdMatch[1] : "bitcoin";
         const cleanBody = body.replace(/<[^>]+>/g, "");
-        const tweetContent = `${cleanHeadline}\n${cleanBody}\n${baseUrl}${coinId}`;
+        const tweetContent = `${cleanHeadline}\n${cleanBody}\n${baseUrl}coins/${coinId}`;
         await postTweet(tweetContent);
       }
     } catch (twitterError: unknown) {

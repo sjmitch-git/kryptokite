@@ -23,8 +23,6 @@ export async function POST(request: NextRequest) {
       texts.map((text: string) => truncateText(text, 280))
     );
 
-    console.log("Thread response:", JSON.stringify(thread, null, 2));
-
     return NextResponse.json({
       success: true,
       thread: thread.map((tweet) => ({
