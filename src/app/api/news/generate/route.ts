@@ -5,6 +5,7 @@ import OpenAI from "openai";
 import { postThread, postTweet } from "@/lib/services/twitter.service";
 
 const isDebugMode = process.env.NODE_ENV === "development";
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 interface Coin {
   id: string;
@@ -126,37 +127,28 @@ export async function GET(request: NextRequest) {
     }
 
     const postTwitterThread = await get<boolean>("twitterThread");
-    let twitterResult: { status: string; tweetId?: string; threadIds?: string[]; error?: string } =
-      {
-        status: "skipped",
-      };
 
     try {
       if (postTwitterThread) {
         const threadContent = sections.map((section: { headline: string; body: string }) => {
           const { headline, body } = section;
           const cleanHeadline = headline.replace(/<[^>]+>/g, "");
+          const coinId = body.match(/<span class='([^']+)'>/);
           const cleanBody = body.replace(/<[^>]+>/g, "");
-          return `${cleanHeadline}:\n${cleanBody}`;
+          return `${cleanHeadline}\n${cleanBody}\n${baseUrl}${coinId || ""}`;
         });
-        const thread = await postThread(threadContent);
-        twitterResult = { status: "thread_posted", threadIds: thread.map((t) => t.id) };
+        await postThread(threadContent);
       } else {
         const { headline, body } = sections[0];
         const cleanHeadline = headline.replace(/<[^>]+>/g, "");
+        const coinId = body.match(/<span class='([^']+)'>/);
         const cleanBody = body.replace(/<[^>]+>/g, "");
-        const tweetContent = `${cleanHeadline}:\n${cleanBody}`;
-        const tweet = await postTweet(tweetContent);
-        twitterResult = { status: "tweet_posted", tweetId: tweet.id };
+        const tweetContent = `${cleanHeadline}\n${cleanBody}\n${baseUrl}${coinId || ""}`;
+        await postTweet(tweetContent);
       }
     } catch (twitterError: unknown) {
-      const errorMessage =
-        twitterError instanceof Error ? twitterError.message : "Unknown Twitter error";
       console.error("Twitter posting error:", JSON.stringify(twitterError, null, 2));
-      twitterResult = { status: "failed", error: errorMessage };
     }
-
-    console.log("twitterResult", twitterResult);
 
     const [newsBlob, marketBlob] = await Promise.all([
       put(
@@ -187,7 +179,6 @@ export async function GET(request: NextRequest) {
     );
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
-    console.error("Error generating news or market data:", error);
     return NextResponse.json(
       { error: "Failed to generate news or market data", details: errorMessage },
       { status: 500 }

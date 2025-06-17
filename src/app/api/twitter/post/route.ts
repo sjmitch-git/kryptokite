@@ -26,10 +26,6 @@ export async function POST(request: NextRequest) {
     console.error("Raw error:", JSON.stringify(error, null, 2));
 
     if (error instanceof ApiResponseError) {
-      console.error("API error code:", error.code);
-      console.error("API error data:", JSON.stringify(error.data, null, 2));
-
-      // Type-safe check for HTML response
       const errorData = error.data as unknown;
       if (typeof errorData === "string" && errorData.includes("<!DOCTYPE")) {
         return NextResponse.json(

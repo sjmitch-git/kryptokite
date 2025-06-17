@@ -11,13 +11,9 @@ export const twitterClient = new TwitterApi({
 export async function postTweet(text: string): Promise<{ id: string; text: string }> {
   try {
     const tweet = await twitterClient.v2.tweet(truncateText(text, 280));
-    console.log("Tweet posted:", JSON.stringify(tweet, null, 2));
     return { id: tweet.data.id, text: tweet.data.text };
   } catch (error: unknown) {
-    console.error("Raw tweet error:", JSON.stringify(error, null, 2));
     if (error instanceof ApiResponseError) {
-      console.error("Tweet API error code:", error.code);
-      console.error("Tweet API error data:", JSON.stringify(error.data, null, 2));
       const errorData = error.data as unknown;
       if (typeof errorData === "string" && errorData.includes("<!DOCTYPE")) {
         throw new Error(
@@ -43,13 +39,9 @@ export async function postThread(texts: string[]): Promise<{ id: string; text: s
   }
   try {
     const thread = await twitterClient.v2.tweetThread(texts.map((text) => truncateText(text, 280)));
-    console.log("Thread posted:", JSON.stringify(thread, null, 2));
     return thread.map((tweet) => ({ id: tweet.data.id, text: tweet.data.text }));
   } catch (error: unknown) {
-    console.error("Raw thread error:", JSON.stringify(error, null, 2));
     if (error instanceof ApiResponseError) {
-      console.error("Thread API error code:", error.code);
-      console.error("Thread API error data:", JSON.stringify(error.data, null, 2));
       const errorData = error.data as unknown;
       if (typeof errorData === "string" && errorData.includes("<!DOCTYPE")) {
         throw new Error(
