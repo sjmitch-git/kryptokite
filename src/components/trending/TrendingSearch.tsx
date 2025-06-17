@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Alert, Heading, Loading } from "@/lib/fluid";
+import { Alert, Heading, Loading, Tabs } from "@/lib/fluid";
 import { TrendingCoin as Coin, TrendingCategory as Category } from "@/lib/types";
 import TrendingCoin from "./TrendingCoin";
 import TrendingCategory from "./TrendingCategory";
+import ButtonLink from "@/components/ui/ButtonLink";
 
 const TrendingSearch = () => {
   const [trendingCoins, setTrendingCoins] = useState<Coin[]>([]);
@@ -54,33 +55,52 @@ const TrendingSearch = () => {
   }
 
   return (
-    <div className="px-2 md:px-4 lg:px-0">
-      <Heading level={2} className="mb-4">
-        Coins
-      </Heading>
-      <ul className="space-y-2">
-        {loading ? (
-          <li className="flex justify-center items-center p-8">
-            <Loading size="lg" loadingColor="info" />
-          </li>
-        ) : (
-          trendingCoins.map((coin) => <TrendingCoin key={coin.item.id} coin={coin} />)
-        )}
-      </ul>
-      <hr className="my-8" />
-      <Heading level={2} className="mb-4">
-        Categories
-      </Heading>
-      <ul className="space-y-2">
-        {loading ? (
-          <li className="flex justify-center items-center p-8">
-            <Loading size="lg" loadingColor="info" />
-          </li>
-        ) : (
-          trendingCategories.map((cat) => <TrendingCategory key={cat.slug} item={cat} />)
-        )}
-      </ul>
-    </div>
+    <>
+      <Tabs
+        className="p-0 mb-8"
+        defaultActiveId="trending1"
+        tabSize="lg"
+        tabsPosition="full"
+        contentBorder={false}
+        minimalTabs={true}
+      >
+        <div id="trending1" title="Coins" className="bg-white p-2 md:p-4">
+          <Heading level={2} className="mb-4">
+            Coins
+          </Heading>
+          <ul className="space-y-2 mb-8">
+            {loading ? (
+              <li className="flex justify-center items-center p-8">
+                <Loading size="lg" loadingColor="info" />
+              </li>
+            ) : (
+              trendingCoins.map((coin) => <TrendingCoin key={coin.item.id} coin={coin} />)
+            )}
+          </ul>
+          <p className="text-center mt-4">
+            <ButtonLink href="/coins" label="Browse all coins" />
+          </p>
+        </div>
+
+        <div id="trending2" title="Categories" className="bg-white p-2 md:p-4">
+          <Heading level={2} className="mb-4">
+            Categories
+          </Heading>
+          <ul className="space-y-2 mb-8">
+            {loading ? (
+              <li className="flex justify-center items-center p-8">
+                <Loading size="lg" loadingColor="info" />
+              </li>
+            ) : (
+              trendingCategories.map((cat) => <TrendingCategory key={cat.slug} item={cat} />)
+            )}
+          </ul>
+          <p className="text-center mt-4">
+            <ButtonLink href="/categories" label="Browse all categories" />
+          </p>
+        </div>
+      </Tabs>
+    </>
   );
 };
 
