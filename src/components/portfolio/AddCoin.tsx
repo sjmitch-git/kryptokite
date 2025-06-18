@@ -33,6 +33,12 @@ const AddCoin = ({ storeId, storeBalance }: Props) => {
     return () => clearTimeout(searchCoins);
   }, [searchTerm, coins]);
 
+  const onCloseForm = () => {
+    setIsOpen(false);
+    setCoinId(null);
+    setSearchTerm("");
+  };
+
   return (
     <div className="space-y-4 py-4 px-2 md:px-4 md:border md:rounded bg-slate-200">
       <h2 className="text-2xl font-bold">Add Coin</h2>
@@ -95,7 +101,7 @@ const AddCoin = ({ storeId, storeBalance }: Props) => {
               storeBalance={storeBalance}
               coin={coin}
               coinPrice={coinPrice}
-              onClose={() => setIsOpen(false)}
+              onClose={onCloseForm}
             />
           )}
         </div>

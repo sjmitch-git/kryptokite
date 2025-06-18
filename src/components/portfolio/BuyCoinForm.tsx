@@ -17,12 +17,15 @@ interface BuyCoinFormProps {
 
 const BuyCoinForm = ({ storeId, storeBalance, coin, coinPrice, onClose }: BuyCoinFormProps) => {
   const { addCoinToStore } = useUser();
-  const [purchaseAmount, setPurchaseAmount] = useState<number>(0);
+  const [purchaseAmount, setPurchaseAmount] = useState<number>();
   const purchaseAmountRef = useRef<HTMLInputElement>(null);
   const allBalanceRef = useRef<HTMLInputElement>(null);
+
   const { currency } = STORES_CONFIG;
 
   const handleBuyCoin = () => {
+    if (!purchaseAmount) return;
+
     const coinAmount = purchaseAmount / coinPrice;
     addCoinToStore(storeId, coin, coinPrice, coinAmount, purchaseAmount, coin.image.large);
     handleClose();
@@ -49,8 +52,12 @@ const BuyCoinForm = ({ storeId, storeBalance, coin, coinPrice, onClose }: BuyCoi
     }, 100);
   };
 
-  const coinAmount = purchaseAmount > 0 && coinPrice > 0 ? purchaseAmount / coinPrice : 0;
-  const remainingBalance = storeBalance - purchaseAmount;
+  const coinAmount = !purchaseAmount
+    ? 0
+    : purchaseAmount > 0 && coinPrice > 0
+    ? purchaseAmount / coinPrice
+    : 0;
+  const remainingBalance = !purchaseAmount ? 0 : storeBalance - purchaseAmount;
 
   return (
     <form
@@ -68,7 +75,7 @@ const BuyCoinForm = ({ storeId, storeBalance, coin, coinPrice, onClose }: BuyCoi
             ref={purchaseAmountRef}
             value={purchaseAmount}
             onChange={(e) => purchaseAmountChange(Number(e.target.value))}
-            placeholder={`Enter amount in ${currency}`}
+            placeholder="0"
             max={storeBalance}
             min={0}
             step="any"
@@ -111,7 +118,11 @@ const BuyCoinForm = ({ storeId, storeBalance, coin, coinPrice, onClose }: BuyCoi
         <Button btnBackground="dark" btnColor="light" onClick={handleClose}>
           Cancel
         </Button>
-        <Button btnBackground="primary" type="submit" disabled={purchaseAmount <= 0}>
+        <Button
+          btnBackground="primary"
+          type="submit"
+          disabled={!purchaseAmount || purchaseAmount <= 0 || purchaseAmount > storeBalance}
+        >
           Buy
         </Button>
       </div>

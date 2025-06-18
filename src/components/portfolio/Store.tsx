@@ -137,6 +137,7 @@ const Store = ({ store }: StoreProps) => {
                         {coin.name}
                       </Link>
                       <p className="font-normal text-sm text-slate-500 whitespace-nowrap">
+                        Added:{" "}
                         {new Intl.DateTimeFormat("en-GB", {
                           day: "2-digit",
                           month: "short",
@@ -193,9 +194,7 @@ const Store = ({ store }: StoreProps) => {
               </tbody>
               <tfoot>
                 <tr className="bg-slate-100 font-semibold text-lg">
-                  <td className="p-2 md:p-4 whitespace-nowrap text-right" colSpan={2}>
-                    {store.name}
-                  </td>
+                  <td className="p-2 md:p-4" colSpan={2}></td>
                   <td className="p-2 md:p-4 text-right">
                     <p className="text-sm text-neutral">Balance:</p>
                     {store?.balance?.toFixed(2)}
