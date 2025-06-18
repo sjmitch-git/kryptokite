@@ -50,6 +50,7 @@ const CoinsList = () => {
     setSortBy(newSortBy);
     const query = new URLSearchParams({
       ...Object.fromEntries(searchParams.entries()),
+      page: "1",
       sortBy: newSortBy,
     }).toString();
     router.push(`${pathname}?${query}`);

@@ -42,6 +42,7 @@ const CategoryCoinsList = ({ id }: Props) => {
         }
 
         const data: Coin[] = await response.json();
+
         if (Array.isArray(data)) {
           setCoins(data);
         } else {
@@ -110,6 +111,7 @@ const CategoryCoinsList = ({ id }: Props) => {
     setSortBy(newSortBy);
     const query = new URLSearchParams({
       ...Object.fromEntries(searchParams.entries()),
+      page: "1",
       sortBy: newSortBy,
     }).toString();
     router.push(`${pathname}?${query}`);
