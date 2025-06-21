@@ -1,6 +1,5 @@
 "use client";
 
-import React, { useState } from "react";
 import { useUser } from "@/lib/contexts/UserContext";
 import { Switch } from "@smitch/fluid";
 
