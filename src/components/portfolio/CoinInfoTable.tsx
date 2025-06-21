@@ -2,7 +2,7 @@ import { Coin, currencySymbols } from "@/lib/types";
 import { Button } from "@smitch/fluid";
 import { STORES_CONFIG } from "@/lib/constants";
 import { formatNumber } from "@/lib/utils";
-import { FaDollarSign } from "@/components/ui/CustomIcons";
+import { FaPlusCircle } from "@/components/ui/CustomIcons";
 
 interface CoinInfoTableProps {
   coin: Coin;
@@ -18,7 +18,7 @@ const CoinInfoTable = ({ coin, setIsOpen, storeBalance }: CoinInfoTableProps) =>
     <div className="overflow-x-auto">
       <table className="table w-full">
         <thead>
-          <tr className="text-left font-semibold bg-slate-100">
+          <tr className="text-left font-semibold bg-slate-100 dark:bg-slate-800">
             {coin.market_cap_rank > 0 && <th>Rank</th>}
             <th className="text-center">Price</th>
             {coin.market_data.price_change_percentage_24h !== null &&
@@ -55,7 +55,7 @@ const CoinInfoTable = ({ coin, setIsOpen, storeBalance }: CoinInfoTableProps) =>
           </tr>
         </thead>
         <tbody>
-          <tr className="bg-white shadow">
+          <tr className="bg-white dark:bg-black shadow">
             {coin.market_cap_rank > 0 && <td className="text-left">#{coin.market_cap_rank}</td>}
             <td className="text-center p-2 md:p-4 font-semibold">
               {symbol}
@@ -84,8 +84,13 @@ const CoinInfoTable = ({ coin, setIsOpen, storeBalance }: CoinInfoTableProps) =>
                 className="ml-auto focus:bg-dark"
                 onClick={() => setIsOpen(true)}
                 disabled={storeBalance === 0}
+                btnBackground="info"
+                layout="circle"
+                title="Add coin to collection?"
+                size="lg"
               >
-                <FaDollarSign /> Buy
+                <FaPlusCircle size={"2rem"} />{" "}
+                <span className="sr-only">Add coin to collection</span>
               </Button>
             </td>
           </tr>

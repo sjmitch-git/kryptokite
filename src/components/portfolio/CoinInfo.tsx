@@ -75,7 +75,7 @@ const CoinInfo = ({
 
   return (
     <div className="space-y-8 mb-8">
-      <hr className="h-1 bg-slate-300" />
+      <hr className="h-1 bg-slate-300 dark:bg-slate-700" />
       <CoinInfoHero coin={coin} />
       <CoinInfoTable coin={coin} setIsOpen={setIsOpen} storeBalance={storeBalance || 0} />
       <CoinSentiment

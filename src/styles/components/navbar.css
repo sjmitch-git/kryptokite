@@ -1,5 +1,5 @@
 .navbrand {
-  @apply max-sm:hidden;
+  @apply max-sm:hidden invert;
 
   & + div {
     @apply max-sm:w-full justify-between max-sm:flex-row;
@@ -7,5 +7,5 @@
 }
 
 .navbar-link {
-  @apply hover:opacity-80;
+  @apply hover:opacity-80 !text-light;
 }

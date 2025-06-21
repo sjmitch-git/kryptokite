@@ -1,10 +1,6 @@
 .accordion {
   > div {
     @apply flex flex-col gap-2;
-
-    > div {
-      @apply border border-slate-300;
-    }
   }
 }
 

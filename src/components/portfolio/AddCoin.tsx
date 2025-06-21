@@ -40,7 +40,7 @@ const AddCoin = ({ storeId, storeBalance }: Props) => {
   };
 
   return (
-    <div className="space-y-4 py-4 px-2 md:px-4 md:border md:rounded bg-slate-200">
+    <div className="space-y-4 py-4 px-2 md:px-4 md:rounded bg-slate-200 dark:bg-slate-700">
       <h2 className="text-2xl font-bold">Add Coin</h2>
       <div className="grid md:grid-cols-2 gap-x-16 gap-y-4">
         <Label label="All Coins:" size="lg" layout="row">
@@ -83,8 +83,6 @@ const AddCoin = ({ storeId, storeBalance }: Props) => {
           storeBalance={storeBalance}
         />
       )}
-
-      <hr className="my-8" />
 
       <Dialog
         open={isOpen}

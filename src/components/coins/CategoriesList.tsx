@@ -118,7 +118,7 @@ const CategoriesList = () => {
               currentCategories.map((category) => (
                 <li
                   key={category.id}
-                  className="flex flex-col text-lg md:text-xl space-y-2 md:space-y-4 shadow p-2 md:p-4 border border-neutral-200 bg-white"
+                  className="flex flex-col text-lg md:text-xl space-y-2 md:space-y-4 shadow p-2 md:p-4 border border-neutral-200 dark:border-none bg-white dark:bg-black"
                 >
                   <div className="flex justify-between items-center space-x-2 md:space-x-4">
                     <Link

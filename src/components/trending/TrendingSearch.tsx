@@ -64,7 +64,7 @@ const TrendingSearch = () => {
         contentBorder={false}
         minimalTabs={true}
       >
-        <div id="trending1" title="Coins" className="bg-white p-2 md:p-4">
+        <div id="trending1" title="Coins" className="bg-white dark:bg-black p-2 md:p-4">
           <Heading level={2} className="mb-4">
             Coins
           </Heading>
@@ -77,12 +77,12 @@ const TrendingSearch = () => {
               trendingCoins.map((coin) => <TrendingCoin key={coin.item.id} coin={coin} />)
             )}
           </ul>
-          <p className="text-center mt-4">
+          <p className="text-center pb-4">
             <ButtonLink href="/coins" label="Browse all coins" />
           </p>
         </div>
 
-        <div id="trending2" title="Categories" className="bg-white p-2 md:p-4">
+        <div id="trending2" title="Categories" className="bg-white dark:bg-black p-2 md:p-4">
           <Heading level={2} className="mb-4">
             Categories
           </Heading>
@@ -95,7 +95,7 @@ const TrendingSearch = () => {
               trendingCategories.map((cat) => <TrendingCategory key={cat.slug} item={cat} />)
             )}
           </ul>
-          <p className="text-center mt-4">
+          <p className="text-center pb-4">
             <ButtonLink href="/categories" label="Browse all categories" />
           </p>
         </div>

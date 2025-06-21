@@ -8,7 +8,7 @@ import { Alert, Dialog, Button, Toast } from "@/lib/fluid";
 import { NEXT_PUBLIC_API_URL } from "@/lib/constants";
 import SellCoinForm from "./SellCoinForm";
 import { STORES_CONFIG } from "@/lib/constants";
-import { FaDollarSign } from "@/components/ui/CustomIcons";
+import { FaMinusCircle } from "@/components/ui/CustomIcons";
 
 interface StoreProps {
   store: Store;
@@ -104,7 +104,7 @@ const Store = ({ store }: StoreProps) => {
         {updatedCoins.length ? (
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-slate-100 border-b-2 border-slate-200">
+              <thead className="bg-slate-100 dark:bg-slate-800 border-b-2 border-slate-200 dark:border-slate-700">
                 <tr>
                   <th className="p-0 md:p-4 text-left"></th>
                   <th className="p-2 md:p-4"></th>
@@ -117,7 +117,10 @@ const Store = ({ store }: StoreProps) => {
               </thead>
               <tbody>
                 {updatedCoins.map((coin) => (
-                  <tr key={coin.createdAt} className="bg-white border-b-2 border-slate-200">
+                  <tr
+                    key={coin.createdAt}
+                    className="bg-white dark:bg-black border-b-2 border-slate-200 dark:border-slate-700"
+                  >
                     <td className="p-0 md:p-4">
                       <CoinThumb
                         src={coin.image}
@@ -185,15 +188,23 @@ const Store = ({ store }: StoreProps) => {
                       </span>
                     </td>
                     <td className="p-2 md:p-4 text-right">
-                      <Button className="ml-auto focus:bg-dark" onClick={() => sellCoin(coin)}>
-                        <FaDollarSign /> Sell
+                      <Button
+                        className="ml-auto focus:bg-dark"
+                        btnBackground="warning"
+                        layout="circle"
+                        title="Remove coin from collection?"
+                        size="lg"
+                        onClick={() => sellCoin(coin)}
+                      >
+                        <FaMinusCircle size={"2rem"} />{" "}
+                        <span className="sr-only">Remove coin from collection</span>
                       </Button>
                     </td>
                   </tr>
                 ))}
               </tbody>
               <tfoot>
-                <tr className="bg-slate-100 font-semibold text-lg">
+                <tr className="bg-slate-100 dark:bg-slate-800 font-semibold text-lg">
                   <td className="p-2 md:p-4" colSpan={2}></td>
                   <td className="p-2 md:p-4 text-right">
                     <p className="text-sm text-neutral">Balance:</p>

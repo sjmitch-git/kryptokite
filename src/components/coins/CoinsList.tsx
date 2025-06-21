@@ -16,7 +16,7 @@ const CoinsList = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [page, setPage] = useState(1);
-  const [perPage] = useState(10);
+  const [perPage] = useState(12);
   const [filterText, setFilterText] = useState("");
   const [sortBy, setSortBy] = useState("name-desc");
 
@@ -106,11 +106,11 @@ const CoinsList = () => {
             sortbyData={SortbyData}
             handleSortChange={handleSortChange}
           />
-          <ul className="space-y-2">
+          <ul className="gap-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {currentCoins.map((coin) => (
               <li
                 key={coin.id}
-                className="p-4 bg-white border-b shadow relative border-gray-300 flex justify-between items-center text-xl"
+                className="p-4 bg-white dark:bg-black shadow relative flex justify-between items-center text-xl"
               >
                 <div>
                   <p className="font-semibold">

@@ -59,11 +59,11 @@ const CryptoNews = () => {
   }
 
   return (
-    <div className="crypto-news mb-8 p-2 bg-white">
+    <div className="crypto-news mb-8 p-2 bg-primary-light dark:bg-primary-dark">
       <Heading level={3}>Crypto News</Heading>
       {loading && (
         <div className="px-4">
-          <ul className="list-disc list-outside text-gray-600 space-y-4 text-lg ml-4">
+          <ul className="list-disc list-outside space-y-4 text-lg ml-4">
             <li>Stay updated with the top crypto coins and their market performance.</li>
             <li>Discover the biggest gainers and losers of the day.</li>
             <li>Get insights into the latest trends and developments in the crypto world.</li>
@@ -77,7 +77,7 @@ const CryptoNews = () => {
       )}
       <div className="flex flex-col gap-4">
         {sections.length > 0 && (
-          <Accordion layout="spaced" size="md" opened={open}>
+          <Accordion layout="flush" size="md" opened={open}>
             {newsSections.map((section, index) => (
               <AccordionItem
                 id={index.toString()}
@@ -85,8 +85,8 @@ const CryptoNews = () => {
                 title={section.headline}
                 open={open}
                 setOpen={setOpen}
-                layoutClasses=""
                 icon="arrow"
+                layoutClasses=""
               >
                 <div className="news">
                   <p className="news-section p-2 max-w-prose text-lg">

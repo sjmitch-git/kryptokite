@@ -49,7 +49,7 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body className="dark">
         <Analytics />
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || ""} />
         <CoinsProvider>

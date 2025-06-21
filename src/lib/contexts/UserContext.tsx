@@ -2,11 +2,27 @@
 
 import { v4 as uuidv4 } from "uuid";
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import { SimpleCoin, Store, UserContextType, StoredCoin } from "@/lib/types";
+import { SimpleCoin, Store, UserContextType, StoredCoin, Theme } from "@/lib/types";
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
+  // Theme management
+  const [theme, setTheme] = useState<Theme>("dark");
+
+  const toggleTheme = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTheme(e.target.checked ? "dark" : "light");
+  };
+
+  useEffect(() => {
+    localStorage.setItem("theme", theme);
+    if (theme === "dark") {
+      document.body.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark");
+    }
+  }, [theme]);
+
   const [userCoins, setUserCoins] = useState<SimpleCoin[]>([]);
   const [loadingCoins, setLoadingCoins] = useState<boolean>(true);
 
@@ -18,6 +34,11 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     setLoadingCoins(true);
     setLoadingStores(true);
+
+    const storedTheme = localStorage.getItem("theme");
+    if (storedTheme) {
+      setTheme(storedTheme as Theme);
+    }
 
     const storedCoins = localStorage.getItem("userCoins");
     if (storedCoins) {
@@ -161,6 +182,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   return (
     <UserContext.Provider
       value={{
+        theme,
+        toggleTheme,
         userCoins,
         addUserCoin,
         removeUserCoin,

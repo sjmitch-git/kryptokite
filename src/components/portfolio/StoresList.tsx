@@ -26,14 +26,14 @@ const StoresList = () => {
             {stores.map((store) => (
               <li
                 key={store.id}
-                className="group flex flex-col justify-between space-y-4 border rounded shadow-md bg-slate-100 hover:shadow-lg"
+                className="group flex flex-col justify-between space-y-4 rounded shadow-md bg-slate-100 dark:bg-slate-800 hover:opacity-90 transition-opacity duration-200"
               >
                 <Link
                   href={`/portfolio/${store.name}`}
                   title="See more details about this collection"
                   className="p-4"
                 >
-                  <h3 className="font-semibold">{store.name}</h3>
+                  <h3 className="font-semibold text-lg uppercase">{store.name}</h3>
                   {store.description && <p className="lineclamp-2">{store.description}</p>}
                 </Link>
               </li>

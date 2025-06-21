@@ -8,8 +8,13 @@ body {
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
+  color: var(--dark);
+  background: var(--light);
+}
+
+body.dark {
+  color: var(--light);
+  background: var(--dark);
 }
 
 .hr {

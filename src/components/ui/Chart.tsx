@@ -30,7 +30,7 @@ const Chart = ({ data, labels, title }: ChartProps) => {
         ],
         labels: labels,
       }}
-      gridColor="#f7f7f7"
+      gridColor="#3d3d3d"
       options={{
         plugins: {
           legend: {

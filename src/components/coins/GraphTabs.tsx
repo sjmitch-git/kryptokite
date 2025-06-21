@@ -42,38 +42,38 @@ const GraphTabs = ({ coin }: CoinDetailProps) => {
       contentBorder={false}
       minimalTabs={true}
     >
-      <div id="graph1" title="24h Price" className="bg-white p-1 md:p-4">
+      <div id="graph1" title="24h Price" className="bg-white dark:bg-black p-1 md:p-4">
         {last24hPrices.length ? (
-          <div className='mx-auto max-w-2xl'>
-          <Chart data={last24hPrices} labels={labels_24h} title="1-Day Price Trend (USD)" />
+          <div className="mx-auto max-w-2xl">
+            <Chart data={last24hPrices} labels={labels_24h} title="1-Day Price Trend (USD)" />
           </div>
         ) : (
           <p>No information at this time.</p>
         )}
       </div>
 
-      <div id="graph2" title="7d Price" className="bg-white p-1 md:p-4">
+      <div id="graph2" title="7d Price" className="bg-white dark:bg-black p-1 md:p-4">
         {last7dPrices.length ? (
-          <div className='max-w-2xl mx-auto'>
-          <Chart
-            data={coin.market_data.sparkline_7d.price}
-            labels={labels_7d}
-            title="7-Day Price Trend (USD)"
-          />
+          <div className="max-w-2xl mx-auto">
+            <Chart
+              data={coin.market_data.sparkline_7d.price}
+              labels={labels_7d}
+              title="7-Day Price Trend (USD)"
+            />
           </div>
         ) : (
           <p>No information at this time.</p>
         )}
       </div>
 
-      <div id="graph3" title="1y Price" className="bg-white p-1 md:p-4">
+      <div id="graph3" title="1y Price" className="bg-white dark:bg-black p-1 md:p-4">
         {historicalPrices.length ? (
-          <div className='max-w-2xl mx-auto'>
-          <Chart
-            data={historicalPrices}
-            labels={historicalLabels}
-            title="1-Year Price Trend (USD)"
-          />
+          <div className="max-w-2xl mx-auto">
+            <Chart
+              data={historicalPrices}
+              labels={historicalLabels}
+              title="1-Year Price Trend (USD)"
+            />
           </div>
         ) : (
           <p>No information at this time.</p>

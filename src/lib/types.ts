@@ -183,7 +183,11 @@ export type Store = {
   description?: string;
 };
 
+export type Theme = "light" | "dark";
+
 export type UserContextType = {
+  theme: Theme;
+  toggleTheme: (e: React.ChangeEvent<HTMLInputElement>) => void;
   userCoins: SimpleCoin[];
   addUserCoin: (coin: SimpleCoin) => void;
   removeUserCoin: (coinId: string) => void;

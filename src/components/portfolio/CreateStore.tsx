@@ -61,7 +61,7 @@ const CreateStore = () => {
   return (
     <>
       <form onSubmit={handleCreateStore}>
-        <div className="space-y-4 py-4 px-2 md:px-4 md:border md:rounded bg-slate-200">
+        <div className="space-y-4 py-4 px-2 md:px-4 md:rounded-t-md bg-slate-200 dark:bg-slate-700">
           <h2 className="text-xl font-bold">Create a New Collection</h2>
           <div className="grid grid-cols-2 gap-x-8 md:gap-x-16 gap-y-4">
             <div className="col-span-2 md:col-span-1">
@@ -100,7 +100,7 @@ const CreateStore = () => {
             </div>
           </div>
         </div>
-        <div className="flex justify-center md:justify-end col-span-2 bg-slate-300 py-2 px-2 md:px-4">
+        <div className="flex justify-center md:justify-end col-span-2 bg-slate-300 dark:bg-slate-800 p-2 md:p-4">
           <Button type="submit" suppressHydrationWarning={true} disabled={isFormInvalid}>
             Create Collection
           </Button>

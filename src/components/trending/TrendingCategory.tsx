@@ -11,7 +11,7 @@ const TrendingCategory = ({ item }: TrendingItemProps) => {
   const symbol = "$";
 
   return (
-    <li className="flex justify-between items-center text-lg md:text-xl space-x-2 md:space-x-8 shadow p-2 md:p-4 border border-neutral-200 bg-white">
+    <li className="flex justify-between items-center text-lg md:text-xl space-x-2 md:space-x-8 shadow p-2 md:p-4 border border-neutral-200 dark:border-none bg-white dark:bg-dark">
       <div className="flex justify-between items-center space-x-2 md:space-x-4">
         <div>
           <p className="font-semibold">
@@ -25,9 +25,6 @@ const TrendingCategory = ({ item }: TrendingItemProps) => {
               {item.name}
             </Link>
           </p>
-          {/* <p className="text-base text-gray-500">
-            <strong>Coins:</strong> {item.coins_count}
-          </p> */}
         </div>
       </div>
       <div className="flex items-center justify-between space-x-4 md:space-x-8 font-semibold">

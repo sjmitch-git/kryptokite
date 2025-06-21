@@ -36,7 +36,7 @@ const WatchlistToggle = ({ id, name, symbol }: WatchlistToggleProps) => {
     <>
       <Button
         size="lg"
-        btnBackground="light"
+        btnBackground="transparent"
         layout="circle"
         onClick={() =>
           handleToggleCoin({

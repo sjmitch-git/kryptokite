@@ -5,7 +5,7 @@ import Ticker from "@/components/ui/Ticker";
 
 export default function Footer() {
   return (
-    <footer className="p-4 pb-16 mt-8 bg-slate-200 sticky top-full">
+    <footer className="p-4 pb-16 mt-8 bg-gradient-to-t from-primary-dark from-30% to-primary to-90% sticky top-full text-light">
       <div className="container mx-auto text-center space-y-4">
         <Link href="./" className="block mt-4" title="Go to homepage">
           <img

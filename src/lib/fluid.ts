@@ -23,4 +23,5 @@ export {
   Toast,
   Accordion,
   AccordionItem,
+  Switch,
 } from "@smitch/fluid";

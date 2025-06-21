@@ -24,11 +24,11 @@ const CoinTabs = ({ coin }: CoinDetailProps) => {
         contentBorder={false}
         minimalTabs={true}
       >
-        <div id="tab1" title="Market" className="bg-white p-2 md:p-4">
+        <div id="tab1" title="Market" className="bg-white dark:bg-black p-2 md:p-4">
           <CoinMarketData coin={coin} preferredCurrency={preferredCurrency} />
         </div>
 
-        <div id="tab2" title="Info" className="bg-white p-2 md:p-4">
+        <div id="tab2" title="Info" className="bg-white dark:bg-black p-2 md:p-4">
           <div>
             <Heading level={3}>{coin.name}</Heading>
             <CoinLinks coin={coin} />
@@ -40,7 +40,7 @@ const CoinTabs = ({ coin }: CoinDetailProps) => {
           <div
             id="tab3"
             title={`@${coin.links.twitter_screen_name}`}
-            className="bg-white p-0 h-[560px] md:h-[650px] overflow-y-scroll"
+            className="bg-white dark:bg-black p-2 lg:p-4 h-[560px] md:h-[650px] overflow-y-auto"
           >
             <Suspense>
               <TwitterEmbed handle={coin.links.twitter_screen_name} className="max-w-full" />
