@@ -1,6 +1,9 @@
 User-agent: Googlebot-Image
 Disallow: /
 
+User-agent: Cookiebot
+Disallow: /
+
 User-agent: DataForSeoBot
 Disallow: /
 

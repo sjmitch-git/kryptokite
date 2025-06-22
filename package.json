@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@next/third-parties": "^15.3.3",
-    "@smitch/fluid": "^3.0.37",
+    "@smitch/fluid": "^3.0.38",
     "@tailwindcss/forms": "^0.5.10",
     "@twitter-api-v2/plugin-rate-limit": "^1.1.0",
     "@vercel/analytics": "^1.5.0",
@@ -22,9 +22,11 @@
     "@vercel/speed-insights": "^1.2.0",
     "autoprefixer": "^10.4.20",
     "html-react-parser": "^5.2.3",
+    "js-cookie": "^3.0.5",
     "next": "15.1.7",
     "openai": "^4.93.0",
     "react": "^19.0.0",
+    "react-cookie-consent": "^9.0.0",
     "react-dom": "^19.0.0",
     "twitter-api-v2": "^1.22.0",
     "uuid": "^11.1.0"
