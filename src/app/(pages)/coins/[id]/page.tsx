@@ -24,15 +24,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata | nu
   try {
     const coin = await fetchCoinData(id);
 
-    const hashtag = coin.links.twitter_screen_name ? `#${coin.links.twitter_screen_name} ` : null;
-    const title = `${coin.name} - ${formatNumber(coin.market_data.current_price.usd)} USD`;
-
+    const title = `${coin.name} - ${coin.categories[0] || "Cryptocurrency"}`;
+    const description = coin.description.en
+      ? extractFirstSentence(coin.description.en)
+      : coin.categories.join(", ");
     return {
       title: title,
-      description: extractFirstSentence(coin.description.en),
+      description: description,
+      keywords: [coin.categories.join(","), coin.name],
       openGraph: {
         title: title,
-        description: `${hashtag}${extractFirstSentence(coin.description.en)}`,
+        description: description,
         images: [
           {
             url: coin.image.large,
@@ -58,6 +60,7 @@ const CoinPage = async ({ params }: Props) => {
 
   try {
     coin = await fetchCoinData(id);
+
     jsonLd = {
       "@context": "https://schema.org",
       "@type": "Product",

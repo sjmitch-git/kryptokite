@@ -30,6 +30,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: MetaData.defaultSitename,
     description: MetaData.defaultDescription,
+    type: "website",
     images: [
       {
         url: `${process.env.NEXT_PUBLIC_API_URL}icon.png`,
@@ -39,6 +40,9 @@ export const metadata: Metadata = {
       },
     ],
     siteName: MetaData.defaultSitename,
+  },
+  other: {
+    "og:logo": `${process.env.NEXT_PUBLIC_API_URL}logo.png`,
   },
 };
 

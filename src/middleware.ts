@@ -13,6 +13,17 @@ export async function middleware(req: NextRequest) {
     const ip = req.headers.get("x-forwarded-for")?.split(",")[0].trim() || "";
     const userAgent = req.headers.get("user-agent") || "";
 
+    // Allow social bots/crawlers through
+    if (
+      userAgent.includes("Twitterbot") ||
+      userAgent.includes("facebookexternalhit") ||
+      userAgent.includes("Slackbot-LinkExpanding") ||
+      userAgent.includes("Discordbot") ||
+      userAgent.includes("LinkedInBot")
+    ) {
+      return NextResponse.next();
+    }
+
     // Block specific IPs and DataForSeoBot
     if (
       ip === "98.80.220.72" ||
