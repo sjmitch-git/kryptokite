@@ -35,6 +35,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata | nu
       openGraph: {
         title: title,
         description: description,
+        type: "website",
+        url: `${process.env.NEXT_PUBLIC_API_URL}coins/${coin.id}`,
         images: [
           {
             url: coin.image.large,
