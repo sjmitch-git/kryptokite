@@ -133,7 +133,7 @@ export async function GET(request: NextRequest) {
         const threadContent = sections.map((section: { headline: string; body: string }) => {
           const { headline, body } = section;
           const cleanHeadline = headline.replace(/<[^>]+>/g, "");
-          const coinIdMatch = body.match(/<span class='([^']+)'>/);
+          const coinIdMatch = body.match(/<span class=['"]([^'"]+)['"]>/);
           const coinId = coinIdMatch ? coinIdMatch[1] : "bitcoin";
           const cleanBody = body.replace(/<[^>]+>/g, "");
           return `${cleanHeadline}\n${cleanBody}\n${baseUrl}coins/${coinId}`;
@@ -142,7 +142,7 @@ export async function GET(request: NextRequest) {
       } else {
         const { headline, body } = sections[0];
         const cleanHeadline = headline.replace(/<[^>]+>/g, "");
-        const coinIdMatch = body.match(/<span class='([^']+)'>/);
+        const coinIdMatch = body.match(/<span class=['"]([^'"]+)['"]>/);
         const coinId = coinIdMatch ? coinIdMatch[1] : "bitcoin";
         const cleanBody = body.replace(/<[^>]+>/g, "");
         const tweetContent = `${cleanHeadline}\n${cleanBody}\n${baseUrl}coins/${coinId}`;
