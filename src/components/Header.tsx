@@ -1,12 +1,10 @@
 import Nav from "./Nav";
-import NavTools from "./NavTools";
 import { NavBar } from "@/lib/fluid";
 import { Links, MetaData } from "@/lib/config";
 
 export default function Header() {
   return (
     <header style={{ display: "unset" }}>
-      <NavTools />
       <NavBar
         brand={MetaData.defaultSitename}
         brandSrc={`${process.env.NEXT_PUBLIC_API_URL}logo.png`}

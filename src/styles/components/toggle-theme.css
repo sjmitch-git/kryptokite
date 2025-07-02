@@ -1,0 +1,21 @@
+.toggle-theme {
+  @apply !gap-0;
+
+  & > .input {
+    @apply hidden;
+  }
+
+  & > .slider {
+    @apply !bg-info;
+  }
+}
+
+.toggle-theme > .slider::before {
+  content: "☼";
+  @apply text-center text-lg text-dark font-bold;
+}
+
+.toggle-theme > .input:checked + .slider::before {
+  content: "☾";
+  @apply text-light;
+}

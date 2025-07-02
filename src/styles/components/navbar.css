@@ -7,5 +7,5 @@
 }
 
 .navbar-link {
-  @apply hover:opacity-80 !text-light;
+  @apply hover:opacity-80 lg:!text-light;
 }

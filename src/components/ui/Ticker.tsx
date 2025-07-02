@@ -40,7 +40,7 @@ const Ticker = () => {
                   <span className="ticker-symbol">{coin.symbol.toUpperCase()}</span>
                   <span
                     className={`ticker-change ${
-                      coin.price_change_percentage_24h > 0 ? "text-success" : "text-danger"
+                      coin.price_change_percentage_24h > 0 ? "text-success" : "text-warning-light"
                     }`}
                   >
                     {coin.price_change_percentage_24h.toFixed(2)}%

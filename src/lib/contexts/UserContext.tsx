@@ -8,7 +8,15 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   // Theme management
-  const [theme, setTheme] = useState<Theme>("dark");
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window !== "undefined") {
+      const storedTheme = localStorage.getItem("theme");
+      if (storedTheme === "dark" || storedTheme === "light") {
+        return storedTheme as Theme;
+      }
+    }
+    return "dark";
+  });
 
   const toggleTheme = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTheme(e.target.checked ? "dark" : "light");

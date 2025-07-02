@@ -1,5 +1,5 @@
 .ticker {
-  @apply overflow-hidden bg-dark dark:bg-light text-white dark:text-dark fixed bottom-0 left-0 p-2 w-full;
+  @apply overflow-hidden bg-neutral-dark text-white fixed bottom-0 left-0 p-2 w-full;
 }
 
 .ticker-wrapper {
@@ -17,7 +17,7 @@
 }
 
 .ticker-item {
-  @apply text-sm font-semibold cursor-pointer;
+  @apply text-base font-semibold cursor-pointer;
 }
 
 @keyframes ticker-scroll {

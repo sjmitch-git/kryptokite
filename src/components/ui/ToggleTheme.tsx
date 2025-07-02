@@ -3,9 +3,9 @@
 import { useUser } from "@/lib/contexts/UserContext";
 import { Switch } from "@smitch/fluid";
 
-export const ToggleTheme = () => {
+const ToggleTheme = () => {
   const { theme, toggleTheme } = useUser();
-
+  console.log("Current theme:", theme);
   return (
     <Switch
       switchColor="primary"
@@ -13,9 +13,9 @@ export const ToggleTheme = () => {
       checked={theme === "dark"}
       defaultChecked={theme === "dark"}
       onChange={toggleTheme}
-      label={theme === "dark" ? "☾" : "☼"}
-      labelSize="xl"
-      labelIsBold
+      className="toggle-theme"
     />
   );
 };
+
+export default ToggleTheme;
