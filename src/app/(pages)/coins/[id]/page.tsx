@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { Coin } from "@/lib/types";
-import { extractFirstSentence, formatNumber } from "@/lib/utils";
+import { extractFirstSentence } from "@/lib/utils";
 import CoinDetail from "@/components/coins/CoinDetail";
 import { Alert } from "@/lib/fluid";
 import Hero from "@/components/Hero";
@@ -77,7 +77,7 @@ const CoinPage = async ({ params }: Props) => {
       },
       offers: {
         "@type": "Offer",
-        price: formatNumber(coin.market_data.current_price.usd),
+        price: coin.market_data.current_price.usd,
         priceCurrency: "USD",
         availability: "https://schema.org/InStock",
         url: `${process.env.NEXT_PUBLIC_API_URL}coins/${coin.id}`,
