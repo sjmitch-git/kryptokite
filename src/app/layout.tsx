@@ -6,6 +6,7 @@ import { CoinsProvider } from "@/lib/contexts/CoinsContext";
 import { UserProvider } from "@/lib/contexts/UserContext";
 import { MetaData } from "@/lib/config";
 import { URLs } from "@/lib/constants";
+// import CookieConsentBanner from "@/components/user/CookieConsetBanner";
 
 export const metadata: Metadata = {
   title: {
@@ -55,6 +56,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className="dark">
         <Analytics />
+        {/* <CookieConsentBanner /> */}
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || ""} />
         <CoinsProvider>
           <UserProvider>{children}</UserProvider>

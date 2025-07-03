@@ -5,7 +5,7 @@ import { Switch } from "@smitch/fluid";
 
 const ToggleTheme = () => {
   const { theme, toggleTheme } = useUser();
-  console.log("Current theme:", theme);
+
   return (
     <Switch
       switchColor="primary"
