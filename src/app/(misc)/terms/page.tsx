@@ -30,8 +30,8 @@ export default function TermsPage() {
         </p>
         <h2 className="text-xl font-semibold mt-6 mb-2">Limitation of Liability</h2>
         <p className="mb-4">
-          PIQEL is provided "as is" without warranties of any kind. We are not liable for any
-          damages or losses resulting from your use of the site.
+          PIQEL is provided &quot;as is&quot; without warranties of any kind. We are not liable for
+          any damages or losses resulting from your use of the site.
         </p>
         <h2 className="text-xl font-semibold mt-6 mb-2">Changes to Terms</h2>
         <p className="mb-4">
