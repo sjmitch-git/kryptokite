@@ -6,7 +6,7 @@ const title = "Trending";
 const description = "Top trending coins and categories (sorted by the most popular user searches)";
 
 export const metadata: Metadata = {
-  title: title,
+  title: "Trending crypto coins and categories",
   description: description,
 };
 

@@ -8,12 +8,15 @@ const ToggleTheme = () => {
 
   return (
     <Switch
-      switchColor="primary"
+      switchOffColor="info"
+      switchOffContent="☼"
+      switchOnColor="primary"
+      switchOnContent="☾"
       shape="circle"
       checked={theme === "dark"}
       defaultChecked={theme === "dark"}
       onChange={toggleTheme}
-      className="toggle-theme"
+      className="text-dark dark:text-light"
     />
   );
 };

@@ -59,7 +59,7 @@ const CryptoNews = () => {
   }
 
   return (
-    <div className="crypto-news mb-8 p-2 bg-neutral-light dark:bg-neutral">
+    <div className="crypto-news mb-8 p-2 bg-neutral-light dark:bg-neutral lg:sticky lg:top-32">
       <Heading level={3}>Crypto News</Heading>
       {loading && (
         <div className="px-4">

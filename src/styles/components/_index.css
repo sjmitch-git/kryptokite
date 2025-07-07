@@ -6,7 +6,6 @@
 @import "./tabs.css";
 @import "./toast.css";
 @import "./ticker.css";
-@import "./toggle-theme.css";
 
 .section {
   @apply space-y-4 py-4 px-2 md:px-4 md:rounded bg-slate-200 dark:bg-slate-700;

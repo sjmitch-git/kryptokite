@@ -5,17 +5,29 @@ import Ticker from "@/components/ui/Ticker";
 
 export default function Footer() {
   return (
-    <footer className="p-4 pb-16 mt-8 bg-gradient-to-t from-primary-dark from-30% to-primary to-90% sticky top-full text-light">
+    <footer className="p-4 pb-16 bg-gradient-to-t from-primary-dark from-30% to-primary to-90% sticky top-full text-light">
       <div className="container mx-auto text-center space-y-4">
-        <Link href="./" className="block mt-4" title="Go to homepage">
-          <img
-            src={`${process.env.NEXT_PUBLIC_API_URL}logo.png`}
-            alt="Logo"
-            width={250}
-            height={56}
-            className="mx-auto"
-          />
-        </Link>
+        <ul className="flex gap-4 justify-center mb-8 mt-4">
+          <li>
+            <Link href="/privacy" className="underline underline-offset-4" title="Privacy Policy">
+              Privacy Policy
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/terms"
+              className="underline underline-offset-4"
+              title="Terms and Conditions"
+            >
+              Terms and Conditions
+            </Link>
+          </li>
+          <li>
+            <Link href="/disclaimer" className="underline underline-offset-4" title="Disclaimer">
+              Disclaimer
+            </Link>
+          </li>
+        </ul>
         <p className="text-sm" suppressHydrationWarning>
           &copy; {new Date().getFullYear()} {MetaData.defaultSitename}. All rights reserved.
         </p>
@@ -52,6 +64,15 @@ export default function Footer() {
             CoinGecko API
           </a>
         </div>
+        <Link href="./" className="block" title="Go to homepage">
+          <img
+            src={`${process.env.NEXT_PUBLIC_API_URL}logo.png`}
+            alt="Logo"
+            width={250}
+            height={56}
+            className="mx-auto mt-12"
+          />
+        </Link>
       </div>
       <Suspense>
         <Ticker />

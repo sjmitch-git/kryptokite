@@ -1,5 +1,5 @@
 .navbrand {
-  @apply max-sm:hidden invert;
+  @apply max-sm:hidden invert opacity-85;
 
   & + div {
     @apply max-sm:w-full justify-between max-sm:flex-row;

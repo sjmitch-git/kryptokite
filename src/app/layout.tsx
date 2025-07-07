@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { Analytics } from "@vercel/analytics/react";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import "@/styles/index.css";
@@ -6,7 +8,8 @@ import { CoinsProvider } from "@/lib/contexts/CoinsContext";
 import { UserProvider } from "@/lib/contexts/UserContext";
 import { MetaData } from "@/lib/config";
 import { URLs } from "@/lib/constants";
-// import CookieConsentBanner from "@/components/user/CookieConsetBanner";
+import { get } from "@vercel/edge-config";
+import CookieConsentBanner from "@/components/user/CookieConsetBanner";
 
 export const metadata: Metadata = {
   title: {
@@ -52,14 +55,34 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const isInMaintenanceMode = await get<boolean>("maintenance");
+
+  if (isInMaintenanceMode) {
+    return (
+      <html lang="en">
+        <body className="dark">
+          <main className="h-full bg-gradient-to-b from-primary-dark from-20% to-primary-light to-90%">
+            {children}
+          </main>
+        </body>
+      </html>
+    );
+  }
+
   return (
     <html lang="en">
       <body className="dark">
         <Analytics />
-        {/* <CookieConsentBanner /> */}
+        <CookieConsentBanner />
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || ""} />
         <CoinsProvider>
-          <UserProvider>{children}</UserProvider>
+          <UserProvider>
+            <>
+              <Header />
+              {children}
+              <Footer />
+            </>
+          </UserProvider>
         </CoinsProvider>
       </body>
     </html>
