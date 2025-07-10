@@ -10,7 +10,7 @@ export default function Footer() {
         <ul className="flex gap-4 justify-center mb-8 mt-4">
           <li>
             <Link href="/privacy" className="underline underline-offset-4" title="Privacy Policy">
-              Privacy Policy
+              Privacy
             </Link>
           </li>
           <li>
@@ -19,7 +19,7 @@ export default function Footer() {
               className="underline underline-offset-4"
               title="Terms and Conditions"
             >
-              Terms and Conditions
+              Terms
             </Link>
           </li>
           <li>

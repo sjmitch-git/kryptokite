@@ -47,8 +47,8 @@ export const metadata: Metadata = {
   },
   other: {
     "og:logo": `${process.env.NEXT_PUBLIC_API_URL}logo.png`,
-    "theme-color": "#FFFFFF",
-    "apple-mobile-web-app-capable": "yes",
+    "theme-color": "#000000",
+    "mobile-web-app-capable": "yes",
     "apple-mobile-web-app-status-bar-style": "default",
   },
   manifest: "/manifest.json",
