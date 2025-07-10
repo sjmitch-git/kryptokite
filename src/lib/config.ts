@@ -4,7 +4,7 @@ export const COIN_GECKO_TOKEN = process.env.COIN_GECKO_TOKEN;
 export const MetaData = {
   defaultSitename: "Piqel",
   defaultTitle: "Cryptocurrency Tracker",
-  defaultDescription: "Real-time price monitoring and virtual portfolio management",
+  defaultDescription: "Real-time crypto price monitoring and virtual portfolio management",
   defaultKeywords: "crypto, cryptocurrency, bitcoin, ethereum, crypto tracker, crypto prices",
   defaultAuthor: "OBLONG",
   defaultAuthorUrl: "https://oblong.digital/",

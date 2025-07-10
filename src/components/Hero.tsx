@@ -15,7 +15,9 @@ const Hero = ({ title, description, imgSrc, className }: HeroProps) => {
       {imgSrc && <CoinThumb src={imgSrc} alt={title} size={200} className="max-sm:hidden" />}
       <div className="flex flex-col gap-4">
         <Heading>{title}</Heading>
-        {description && <p className="text-xl max-w-prose line-clamp-4">{description}</p>}
+        {description && (
+          <p className="text-xl max-w-prose line-clamp-4 dark:opacity-85">{description}</p>
+        )}
       </div>
     </div>
   );

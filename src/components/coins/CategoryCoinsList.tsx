@@ -209,6 +209,9 @@ const CategoryCoinsList = ({ id }: Props) => {
                 results={filteredCoins.length}
                 range={perPage}
                 onChange={handlePageChange}
+                btnShape="circle"
+                gap="md"
+                size="lg"
               />
             )}
           </div>

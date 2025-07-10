@@ -198,6 +198,9 @@ const CategoriesList = () => {
                   results={filtered.length}
                   range={perPage}
                   onChange={handlePageChange}
+                  btnShape="circle"
+                  gap="md"
+                  size="lg"
                 />
               )}
             </div>

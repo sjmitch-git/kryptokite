@@ -89,7 +89,7 @@ const CryptoNews = () => {
                 layoutClasses=""
               >
                 <div className="news">
-                  <p className="news-section p-2 max-w-prose text-lg">
+                  <p className="news-section p-2 max-w-prose text-lg dark:opacity-85">
                     {parse(section.body, {
                       replace: (domNode) => {
                         if (
