@@ -1,16 +1,12 @@
 "use client";
 
-import dynamic from "next/dynamic";
+import { SocialShare } from "@/lib/fluid";
 
-const SocialShare = dynamic(() => import("@smitch/fluid/lib/socialshare/SocialShare"), {
-  ssr: false,
-});
-
-export default function ClientSocialShare({ name }: { name: string }) {
+export default function ClientSocialShare({ text }: { text: string }) {
   return (
     <div className="flex justify-between items-center my-8">
       <SocialShare
-        text={name}
+        text={text}
         buttons={["X", "Facebook", "LinkedIn", "Slack", "WhatsApp", "Email"]}
         btnShape="circle"
         size="lg"

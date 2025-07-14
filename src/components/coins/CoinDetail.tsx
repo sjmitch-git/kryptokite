@@ -26,7 +26,7 @@ const CoinDetail = ({ coin }: CoinDetailProps) => {
       />
       <CoinTabs coin={coin} />
       <GraphTabs coin={coin} />
-      <ClientSocialShare name={coin.name} />
+      <ClientSocialShare text={coin.name} />
 
       <hr className="my-8" />
       <CoinNav id={coin.id} />
