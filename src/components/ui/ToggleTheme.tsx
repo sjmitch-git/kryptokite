@@ -8,9 +8,9 @@ const ToggleTheme = () => {
 
   return (
     <Switch
-      switchOffColor="info"
+      switchOffColor="warning"
       switchOffContent="☼"
-      switchOnColor="primary"
+      switchOnColor="warning"
       switchOnContent="☾"
       shape="circle"
       checked={theme === "dark"}

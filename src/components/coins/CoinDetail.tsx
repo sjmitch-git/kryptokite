@@ -1,6 +1,6 @@
 "use client";
 
-import { Alert } from "@/lib/fluid";
+import { Alert, SocialShare } from "@/lib/fluid";
 import { Coin } from "@/lib/types";
 import CoinNav from "@/components/coins/CoinNav";
 import CoinTabs from "@/components/coins/CoinTabs";
@@ -25,6 +25,18 @@ const CoinDetail = ({ coin }: CoinDetailProps) => {
       />
       <CoinTabs coin={coin} />
       <GraphTabs coin={coin} />
+      <div className="flex justify-between items-center my-8">
+        <SocialShare
+          text={coin.name}
+          buttons={["X", "Facebook", "LinkedIn", "Slack", "WhatsApp", "Email"]}
+          btnShape="circle"
+          size="lg"
+          gap="md"
+          layout="horizontal"
+          className="mx-auto"
+        />
+      </div>
+
       <hr className="my-8" />
       <CoinNav id={coin.id} />
     </div>

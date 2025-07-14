@@ -24,4 +24,5 @@ export {
   Accordion,
   AccordionItem,
   Switch,
+  SocialShare,
 } from "@smitch/fluid";
