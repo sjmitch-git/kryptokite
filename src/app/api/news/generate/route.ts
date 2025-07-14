@@ -20,7 +20,11 @@ const openai = new OpenAI({
 });
 
 const fetchCoinGeckoData = async (): Promise<Coin[]> => {
-  const url = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&per_page=100";
+  const currentDate = new Date();
+  const day = currentDate.getDate();
+  const page = day % 2 === 0 ? 2 : 1;
+
+  const url = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&per_page=100&page=${page}`;
   const options: RequestInit = {
     method: "GET",
     headers: {
