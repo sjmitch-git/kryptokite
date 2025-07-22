@@ -11,12 +11,12 @@ export const MetaData = {
 };
 
 export const Links = [
+  { name: "Trending", href: "/coins/trending" },
   {
     name: "Coins",
     href: "/coins",
   },
   { name: "Categories", href: "/categories" },
-  { name: "Trending", href: "/coins/trending" },
   { name: "Portfolio", href: "/portfolio" },
 ];
 

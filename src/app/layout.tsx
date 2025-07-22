@@ -50,6 +50,7 @@ export const metadata: Metadata = {
     "theme-color": "#000000",
     "mobile-web-app-capable": "yes",
     "apple-mobile-web-app-status-bar-style": "default",
+    "google-adsense-account": process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_ACCOUNT || "",
   },
   manifest: "/manifest.json",
   icons: {
