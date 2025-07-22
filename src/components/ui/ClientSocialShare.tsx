@@ -7,7 +7,7 @@ export default function ClientSocialShare({ text }: { text: string }) {
     <div className="flex justify-between items-center my-8">
       <SocialShare
         text={text}
-        buttons={["X", "Facebook", "LinkedIn", "Slack", "WhatsApp", "Email"]}
+        buttons={["X", "Facebook", "LinkedIn", "Bluesky", "WhatsApp", "Email"]}
         btnShape="circle"
         size="lg"
         gap="md"
